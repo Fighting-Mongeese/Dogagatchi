@@ -1,62 +1,58 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
-class Dog extends React.Component {
-  constructor() {
-    super();
+function Dog() {
+  const [hungry, setHunger] = useState(true);
+  const [happy, setHappy] = useState(false);
 
-    this.state = {
-      hungry: false,
-      needsWalk: false,
-    };
-  }
-
-  handleClick(event) {
-    const { hungry, needsWalk } = this.state;
-    if (event === 'feed') {
-      this.setState({
-        hungry: false,
-      });
+  const handleClick = (e) => {
+    if (e === 'feed') {
+      setHunger(false);
+      const hungerTimer = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+      // put request, add new deadline for feeding the dog 24hrs from click
     } else {
-      this.setState({
-        needsWalk: false,
-      });
+      setHappy(true);
+      const walkTimer = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+      // put request, add new deadline for feeding the dog 24hrs from click
     }
-  }
+  };
 
-  render() {
-    const { hungry, needsWalk } = this.state;
-
-    return (
-      <div className="dog">
-        <img src="https://images.dog.ceo/breeds/ovcharka-caucasian/IMG_20190801_112134.jpg" alt="Sorry, your dog is in another kennel." style={{ width: 200 }} />
-        <div className="dog-status">
-          <div>
-            hungry:
-            {' '}
-            {hungry}
+  return (
+    <div className="dog">
+      <img
+        src="https://images.dog.ceo/breeds/ovcharka-caucasian/IMG_20190801_112134.jpg"
+        alt="Sorry, your dog is in another kennel."
+        style={{ width: 200 }}
+      />
+      <div className="dog-status">
+        <div>
+          {hungry ? (
             <button
               type="button"
-              onClick={() => this.handleClick('feed')}
+              onClick={() => handleClick('feed')}
             >
               Feed
             </button>
-          </div>
-          <div>
-            needsWalk:
-            {' '}
-            {needsWalk}
-            <button
-              type="button"
-              onClick={() => this.handleClick('walk')}
-            >
-              Walk
-            </button>
-          </div>
+          ) : (
+            'FULL'
+          )}
+        </div>
+        <div>
+          {happy ? (
+            'HAPPY'
+          )
+            : (
+              <button
+                type="button"
+                onClick={() => handleClick('walk')}
+              >
+                Walk
+              </button>
+            )}
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default Dog;

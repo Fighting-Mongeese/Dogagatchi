@@ -26,29 +26,30 @@ function Dog() {
       />
       <div className="dog-status">
         <div>
+          HUNGER:
           {hungry ? (
             <button
               type="button"
               onClick={() => handleClick('feed')}
             >
-              Feed
+              🍖
             </button>
           ) : (
-            'FULL'
+            <>🐶</>
           )}
         </div>
         <div>
+          HAPPY:
           {happy ? (
-            'HAPPY'
-          )
-            : (
-              <button
-                type="button"
-                onClick={() => handleClick('walk')}
-              >
-                Walk
-              </button>
-            )}
+            <>🐾</>
+          ) : (
+            <button
+              type="button"
+              onClick={() => handleClick('walk')}
+            >
+              🐕‍🦺
+            </button>
+          )}
         </div>
       </div>
     </div>

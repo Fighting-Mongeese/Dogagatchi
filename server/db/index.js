@@ -3,12 +3,10 @@
 const mongoose = require('mongoose');
 const { MongoClient, ServerApiVersion } = require('mongodb');
 
-// const { ATLAS_PASSWORD } = process.env;
-
-const uri = 'mongodb+srv://dogagotchi:5M0u9BvJUfwNcQZZ@dogtrivia.gxhy4jj.mongodb.net/dogtrivia';
+const { ATLAS_URI } = require('../config');
 
 mongoose
-  .connect(uri, {
+  .connect(ATLAS_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -20,16 +18,17 @@ const userSchema = new mongoose.Schema({
   username: String,
   password: String, // may be changed with passport implementation
   coins: Number,
-  breeds: [String],
+  breeds: [String], // array of image strings that are correctly answered
+  achievements: [String],
 });
 // creates user docs in the db
 const User = mongoose.model('User', userSchema);
 // schema for Dogs
 const dogSchema = new mongoose.Schema({
   name: String,
-  img: String,
-  isHungry: Boolean,
-  isHappy: Boolean,
+  img: String, // breed
+  isHungry: Date, // timers
+  isHappy: Date, // timers
   owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 });
 

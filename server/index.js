@@ -12,6 +12,8 @@ const testFunc = () => {
   User.create({
     username: 'James',
     coins: 8,
+    breeds: ['https://images.dog.ceo/breeds/otterhound/n02091635_1580.jpg'],
+    achievements: ['Star Pupil'],
   })
     .then((newUser) => {
       console.log('Successful add', newUser);

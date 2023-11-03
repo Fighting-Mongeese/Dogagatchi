@@ -1,0 +1,19 @@
+{
+  "name": "dog_trivia",
+  "version": "1.0.0",
+  "description": "greenfield",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Fighting-Mongeese/dog_trivia.git"
+  },
+  "author": "fighting mongeese",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Fighting-Mongeese/dog_trivia/issues"
+  },
+  "homepage": "https://github.com/Fighting-Mongeese/dog_trivia#readme"
+}

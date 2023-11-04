@@ -1,4 +1,5 @@
 import React, { useState, useSound } from 'react';
+import { Button, ProgressBar } from 'react-bootstrap';
 import axios from 'axios';
 import barkSound from '../../server/barking-123909.mp3';
 
@@ -31,39 +32,53 @@ function Dog() {
       />
       <div className="dog-status">
         <div>
-          HUNGER:
+          <div className="hunger-bar" style={{ width: '25%' }}>
+            <ProgressBar
+              striped
+              variant="success"
+              now={40}
+              label="HUNGER"
+            />
+          </div>
           {hungry ? (
-            <button
-              type="button"
+            <Button
+              variant="info"
               onClick={() => handleClick('feed')}
             >
               🍖
-            </button>
+            </Button>
           ) : (
-            <button
-              type="button"
+            <Button
+              variant="info"
               onClick={() => handleClick('bark')}
             >
               🐶
-            </button>
+            </Button>
           )}
         </div>
         <div>
-          HAPPY:
+          <div className="happy-bar" style={{ width: '25%' }}>
+            <ProgressBar
+              striped
+              variant="success"
+              now={40}
+              label="HAPPINESS"
+            />
+          </div>
           {happy ? (
-            <button
-              type="button"
+            <Button
+              variant="info"
               onClick={() => handleClick('bark')}
             >
               🐾
-            </button>
+            </Button>
           ) : (
-            <button
-              type="button"
+            <Button
+              variant="info"
               onClick={() => handleClick('walk')}
             >
               🐕‍🦺
-            </button>
+            </Button>
           )}
         </div>
       </div>

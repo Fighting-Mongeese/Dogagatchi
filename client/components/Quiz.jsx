@@ -6,12 +6,12 @@ import Image from 'react-bootstrap/Image';
 
 function Quiz(props) {
   const [dogs, setDogs] = useState([]); // 4 urls of dog images loaded from API
-  const [solutionUrl, setSolutionUrl] = useState('') // default to zero, get set in set state; maybe math 
-
+  const [solutionUrl, setSolutionUrl] = useState(''); // default to zero, get set in set state; maybe math 
+  const [userId, setUserId] = useState('');
   // const [coins, setCoins] = useState(0); // user coins loaded from db
 
   const getDogs = () => new Promise((resolve, reject) => {
-    axios.get('/api/quiz')
+    axios.get('/getDogs')
       .then((dogArray) => {
         console.log(dogArray.data);
         setDogs(dogArray.data);
@@ -33,9 +33,9 @@ function Quiz(props) {
     const { value } = e.target; // unpack event
 
     if (value === solutionUrl) {
-      console.log('Correct! You gained coins!')
+      console.log('Correct! You gained coins!', userId)
     } else {
-      console.log('Wrong answer! You gained no points!')
+      alert('Wrong answer! You gained no points!', userId)
     }
   };
 
@@ -58,7 +58,9 @@ function Quiz(props) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
 
-      <h1>Oh Gawd, what is that thing?</h1>
+      <h3>Add your user ID in the input below</h3>
+      <input type='text' onChange={(e) => setUserId(e.target.value)} />
+      <h3>Oh Gawd, what is that thing?</h3>
       <Image style={{ maxHeight: '500px', maxWidth: '500px' }} src={solutionUrl} rounded />
       <h2>Select the correct dog breed to win coins</h2>
       <div style={{ display: 'flex' }}>

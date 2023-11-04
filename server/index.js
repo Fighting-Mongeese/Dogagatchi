@@ -5,7 +5,9 @@ const axios = require('axios');
 const app = express();
 const port = 4000;
 const { User, Dog } = require('./db/index');
+
 const { ATLAS_URI } = require('./config');
+
 
 const distPath = path.resolve(__dirname, '..', 'dist');
 
@@ -130,7 +132,9 @@ app.get('/leaderboard/:type', (req, res) => {
   }
 });
 // SERVER CONNECTION
+
 // ****************END OF ACHIEVEMENTS********************
+
 app.listen(port, () => {
   console.log(`
   Listening at: http://127.0.0.1:${port}

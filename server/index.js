@@ -4,7 +4,7 @@ const axios = require('axios');
 
 const app = express();
 const port = 4000;
-const { User } = require('./db/index');
+const { User, Dog } = require('./db/index');
 
 const distPath = path.resolve(__dirname, '..', 'dist');
 
@@ -57,6 +57,19 @@ app.put('/correctAnswerUpdate/:_id', (req, res) => {
     })
     .catch((err) => {
       console.error('SERVER ERROR: failed to PUT user after correct answer', err);
+      res.sendStatus(500);
+    });
+});
+
+app.get('/kennel/:userId', (req, res) => {
+  const { userId } = req.params;
+  Dog.find().where({ owner: userId })
+    .then((data) => {
+      res.status(200)
+        .send(data);
+    })
+    .catch((err) => {
+      console.error('SERVER ERROR: failed to GET dog by userId', err);
       res.sendStatus(500);
     });
 });

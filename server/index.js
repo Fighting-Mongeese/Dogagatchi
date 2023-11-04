@@ -73,6 +73,7 @@ app.get('/kennel/:userId', (req, res) => {
       res.sendStatus(500);
     });
 });
+
 /// //////////////LEADER BOARD ROUTES///////////////////////////
 const filterUsers = (filterProp) => User.find({}, null, { limit: 5 }).sort({ [filterProp]: -1 });
 

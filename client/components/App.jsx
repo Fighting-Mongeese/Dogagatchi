@@ -1,8 +1,12 @@
 import React from 'react';
 
+
 function App() {
   return (
-    <div>APP RENDERING</div>
+    <div>
+      <div>APP RENDERING</div>
+
+    </div>
   );
 }
 

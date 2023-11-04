@@ -8,21 +8,21 @@ import axios from 'axios';
 // From the user information, add some logic to determine when an achievement is unlocked
 // (if (user.coins > 5)) then add achievement to user info through put request
 
-//then check if user account has achievements. if so render to page
+// then check if user account has achievements. if so render to page
 
 function Achievements() {
-  const [activeUser, setActiveUser] = useState('')
-  const [achievementsEarned, setAchievementsEarned] = useState('')
+  const [activeUser, setActiveUser] = useState('');
+  const [achievementsEarned, setAchievementsEarned] = useState('');
   const [userCoins, setUserCoins] = useState(0);
 
-  //set up function to collect user data of current user
+  // set up function to collect user data of current user
   const getUserData = () => new Promise((resolve, reject) => {
     axios.get('/achievements')
       .then((userArray) => {
         console.log('achievements', userArray.data[0]);
         setActiveUser(userArray.data[0].username);
-        setUserCoins(userArray.data[0].coinCount)
-        console.log('active user', activeUser, userCoins)
+        setUserCoins(userArray.data[0].coinCount);
+        console.log('active user', activeUser, userCoins);
         resolve(userArray.data);
       })
       .catch((err) => {
@@ -30,23 +30,23 @@ function Achievements() {
         reject(err);
       });
   });
-  console.log('active user outside', activeUser, userCoins)
-  //set up function to change achievements on user data
+  console.log('active user outside', activeUser, userCoins);
+  // set up function to change achievements on user data
 
-const addAchievement = () => {
-  if (userCoins > 5) {
-    axios.put(`/achievements`, {
-      achievements: 'Moneybags'
-    })
-    .then((user) => {
-      setAchievementsEarned(user)
-      console.log(user);
-    })
-    .catch((err) => {
-      console.error('CLIENT ACHIEVEMENT ERROR', err)
-    })
-  }
-}
+  const addAchievement = () => {
+    if (userCoins > 5) {
+      axios.put('/achievements', {
+        achievements: 'Moneybags',
+      })
+        .then((user) => {
+          setAchievementsEarned(user);
+          console.log(user);
+        })
+        .catch((err) => {
+          console.error('CLIENT ACHIEVEMENT ERROR', err);
+        });
+    }
+  };
 
   const [user, setUser] = useState(null);
   useEffect(() => {

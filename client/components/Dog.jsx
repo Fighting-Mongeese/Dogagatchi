@@ -5,9 +5,11 @@ import barkSound from '../../server/barking-123909.mp3';
 
 const bark = new Audio(barkSound);
 
-function Dog() {
+function Dog(props) {
   const [hungry, setHunger] = useState(true);
   const [happy, setHappy] = useState(false);
+
+  const { dog } = props;
 
   const handleClick = (e) => {
     if (e === 'feed') {
@@ -26,7 +28,7 @@ function Dog() {
   return (
     <div className="dog">
       <img
-        src="https://images.dog.ceo/breeds/ovcharka-caucasian/IMG_20190801_112134.jpg"
+        src={dog.img}
         alt="Sorry, your dog is in another kennel."
         style={{ width: 200 }}
       />

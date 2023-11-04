@@ -17,7 +17,9 @@ mongoose
 const userSchema = new mongoose.Schema({
   username: String,
   password: String, // may be changed with passport implementation
-  coins: Number,
+  coinCount: Number, // increments with correct question and decrements to feed play with dog
+  questionCount: Number, // increments with correct answer and stays
+  dogCount: Number, // increments when dogogachi is creates and decrements if dogogachi is deleted
   breeds: [String], // array of image strings that are correctly answered
   achievements: [String],
 });

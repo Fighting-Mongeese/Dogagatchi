@@ -5,7 +5,8 @@ import axios from 'axios';
 import Achievements from '../components/Achievements.jsx';
 
 import '../app.css'; // imports css to apply to all components in App component
-
+import LeaderBoard from './Leaderboard.jsx';
+import Quiz from './Quiz.jsx';
 function App() {
   return (
     <div>
@@ -13,6 +14,7 @@ function App() {
       <Button>Bootstrap Buttons</Button>
       <Quiz />
       <Achievements />
+      <LeaderBoard />
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 
-import '../app.css';
+import '../app.css'; // imports css to apply to all components in App component
 
 function App() {
   return (

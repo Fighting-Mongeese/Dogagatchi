@@ -5,13 +5,16 @@ const axios = require('axios');
 const app = express();
 const port = 4000;
 const { User } = require('./db/index');
+const { ATLAS_URI } = require('./config');
 
 const distPath = path.resolve(__dirname, '..', 'dist');
 
+// MIDDLEWARE - every request runs through this middleware
+// (functions that all requests go through)
 app.use(express.static(distPath)); // Statically serve up client directory
 app.use(express.json());
 
-// add users to db
+// ~~~~~~~~~~ add users to db~~~~~~~~~~~~~~~
 const testFunc = () => {
   User.create({
     username: 'James',
@@ -30,6 +33,22 @@ const testFunc = () => {
     });
 };
 // testFunc();
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+// *****************ACHIEVEMENTS************************
+// set up a net to catch requests (server side request handling for achievements)
+app.get('/achievements', (req, res) => {
+  User.find({}) // empty filter object to TEST IN POSTMAN
+    .then((user) => { // now we have a collection to send back
+    // success case send the data in the response
+      res.status(200).send(user);
+    })
+    .catch((err) => {
+    // handle errors
+      console.error('FAILED to find all users', err);
+      res.sendStatus(500);
+    });
+});
 
 // GET dog picture and 4 other random dogs from dogs api
 app.get('/getDogs', (req, res) => {

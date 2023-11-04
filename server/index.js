@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const axios = require('axios');
 
 const app = express();
 const port = 4000;
@@ -28,6 +29,14 @@ const testFunc = () => {
     });
 };
 // testFunc();
+
+// GET dog picture and 4 other random dogs from dogs api
+app.get('/api/quiz', (req, res) => {
+  axios.get('https://dog.ceo/api/breeds/image/random/4')
+    .then((response) => {
+      res.status(200).send(response.data.message);
+    });
+});
 
 app.listen(port, () => {
   console.log(`

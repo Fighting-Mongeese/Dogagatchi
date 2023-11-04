@@ -1,8 +1,10 @@
 import React, {useState} from 'react'
+import {useNavigate} from 'react-router-dom'
 import axios from 'axios'
 
-const Login = ({history}) => {
+const Login = () => {
     const [userData, setUserData] = useState({username: '', password: ''})
+    const navigate = useNavigate()
 
     const inputChange = (e) => {
         const {name, value} = e.target
@@ -12,10 +14,11 @@ const Login = ({history}) => {
 
     const submit = (e) => {
         e.preventDefault()
-        axios.post('auth/login', userdata)
+        axios.post('auth/login', userData)
         .then((loginResponse) => {
+            console.log('loginres', loginResponse)
             if(loginResponse.data.success){
-                history.push('/home')
+                navigate({pathanme: '/home'})
             }
         })
         .catch((err) => {
@@ -37,10 +40,12 @@ const Login = ({history}) => {
                 type='password'
                 name='password'
                 placeholder='Password'
-                onchange={inputChange}
+                onChange={inputChange}
                 />
                 <button type='submit'>Login</button>
             </form>
         </div>
     )
 }
+
+export default Login

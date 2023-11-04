@@ -8,7 +8,7 @@ const DIST_DIR = path.resolve(__dirname, 'dist');
 module.exports = {
   entry: {
     app: path.resolve(SRC_DIR, 'index.jsx'),
-  }, 
+  },
 
   output: {
     path: DIST_DIR,
@@ -31,6 +31,10 @@ module.exports = {
       {
         test: /\.css$/i,
         use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(gif|jpg|png|mp3|aac|ogg)$/,
+        type: 'asset/resource',
       },
       {
         test: /\.(js|jsx)$/,

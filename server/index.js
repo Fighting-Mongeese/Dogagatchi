@@ -49,6 +49,7 @@ app.get('/achievements', (req, res) => {
       res.sendStatus(500);
     });
 });
+// ****************END OF ACHIEVEMENTS********************
 
 // GET dog picture and 4 other random dogs from dogs api
 app.get('/getDogs', (req, res) => {
@@ -80,7 +81,7 @@ app.put('/correctAnswerUpdate/:_id', (req, res) => {
     });
 });
 
-// ****************END OF ACHIEVEMENTS********************
+
 app.listen(port, () => {
   console.log(`
   Listening at: http://127.0.0.1:${port}

@@ -38,7 +38,7 @@ const testFunc = () => {
 // *****************ACHIEVEMENTS************************
 // set up a net to catch requests (server side request handling for achievements)
 app.get('/achievements', (req, res) => {
-  User.find({}) // empty filter object to TEST IN POSTMAN
+  User.find() // empty filter object to TEST IN POSTMAN
     .then((user) => { // now we have a collection to send back
     // success case send the data in the response
       res.status(200).send(user);

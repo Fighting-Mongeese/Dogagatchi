@@ -11,7 +11,6 @@ function Quiz(props) {
   // const [userCoins, setCoins] = useState(0); // user coins loaded from db
   const [alertText, setAlertText] = useState('Start earning coins by correctly selecting the breed pictured!');
 
-
   const getDogs = () => new Promise((resolve, reject) => {
     axios.get('/getDogs')
       .then((dogArray) => {
@@ -40,7 +39,7 @@ function Quiz(props) {
           url: solutionUrl,
         },
       })
-        .then((user) => {
+        .then((user) => { // put request returns updated user object
           console.log(user);
           setAlertText(`Correct! Keep up the good work! You now have ${user.data.coinCount} coins`);
           getDogs()
@@ -51,7 +50,7 @@ function Quiz(props) {
         .catch((err) => {
           console.error('CLIENT ERROR: failed to start new round after correct answer', err);
         });
-    } else {
+    } else { // if the answer is wrong
       setAlertText('Nice try! Have another go!');
       getDogs()
         .then((dogArray) => {

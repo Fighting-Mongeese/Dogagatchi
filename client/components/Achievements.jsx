@@ -21,8 +21,9 @@ function Achievements() {
       .then((userArray) => {
         console.log('achievements', userArray.data[0]);
         setActiveUser(userArray.data[0].username);
-        setUserCoins(userArray.data[0].coinCount);
-        console.log('active user', activeUser, userCoins);
+        setUserCoins(userArray.data[0].coinCount)
+        setAchievementsEarned(userArray.data[0].achievements)
+        console.log('active user', activeUser, userCoins)
         resolve(userArray.data);
       })
       .catch((err) => {
@@ -30,23 +31,24 @@ function Achievements() {
         reject(err);
       });
   });
-  console.log('active user outside', activeUser, userCoins);
-  // set up function to change achievements on user data
+  console.log('active user outside', activeUser, userCoins, achievementsEarned)
+  //set up function to change achievements on user data
 
-  const addAchievement = () => {
-    if (userCoins > 5) {
-      axios.put('/achievements', {
-        achievements: 'Moneybags',
-      })
-        .then((user) => {
-          setAchievementsEarned(user);
-          console.log(user);
-        })
-        .catch((err) => {
-          console.error('CLIENT ACHIEVEMENT ERROR', err);
-        });
-    }
-  };
+const addAchievement = () => {
+  console.log('usercoins', userCoins)
+  if (userCoins > 5) {
+    axios.put('/achievements', {
+      achievements: 'Moneybags'
+    })
+    .then((user) => {
+      setAchievementsEarned(user)
+      console.log(user);
+    })
+    .catch((err) => {
+      console.error('CLIENT ACHIEVEMENT ERROR', err)
+    })
+  }
+}
 
   const [user, setUser] = useState(null);
   useEffect(() => {
@@ -76,6 +78,12 @@ function Achievements() {
         {count}
         {' '}
         times
+      </p>
+      <p>
+        Welcome
+        {' '}
+        {activeUser}
+        {' '}
       </p>
       <button type="button" onClick={() => setCount(count + 1)}>Click me for achievements</button>
       <button type="button" onClick={() => getUserData()}>Get user</button>

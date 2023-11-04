@@ -49,6 +49,8 @@ app.get('/achievements', (req, res) => {
       res.sendStatus(500);
     });
 });
+
+//app.put populate
 // ****************END OF ACHIEVEMENTS********************
 
 // GET dog picture and 4 other random dogs from dogs api

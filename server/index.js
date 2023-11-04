@@ -60,7 +60,40 @@ app.put('/correctAnswerUpdate/:_id', (req, res) => {
       res.sendStatus(500);
     });
 });
+/// //////////////LEADER BOARD ROUTES///////////////////////////
+const filterUsers = (filterProp) => User.find({}, null, { limit: 5 }).sort({ [filterProp]: -1 });
 
+app.get('/leaderboard/:type', (req, res) => {
+  const { type } = req.params;
+  if (type === 'smartest') {
+    filterUsers('questionCount')
+      .then((users) => {
+        if (users) {
+          res.status(200).send(users);
+        } else {
+          res.sendStatus(404);
+        }
+      })
+      .catch((err) => {
+        console.error('get LB/smartest ERROR (server):', err);
+        res.sendStatus(500);
+      });
+  } else if (type === 'richest') {
+    filterUsers('coinCount')
+      .then((users) => {
+        if (users) {
+          res.status(200).send(users);
+        } else {
+          res.sendStatus(404);
+        }
+      })
+      .catch((err) => {
+        console.error('get LB/richest ERROR (server):', err);
+        res.sendStatus(500);
+      });
+  }
+});
+// SERVER CONNECTION
 app.listen(port, () => {
   console.log(`
   Listening at: http://127.0.0.1:${port}

@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useSound } from 'react';
 import axios from 'axios';
+import barkSound from '../../server/barking-123909.mp3';
+
+const bark = new Audio(barkSound);
 
 function Dog() {
   const [hungry, setHunger] = useState(true);
@@ -10,10 +13,12 @@ function Dog() {
       setHunger(false);
       const hungerTimer = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
       // put request, add new deadline for feeding the dog 24hrs from click
-    } else {
+    } else if (e === 'walk') {
       setHappy(true);
       const walkTimer = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
       // put request, add new deadline for feeding the dog 24hrs from click
+    } else {
+      bark.play();
     }
   };
 
@@ -35,13 +40,23 @@ function Dog() {
               🍖
             </button>
           ) : (
-            <>🐶</>
+            <button
+              type="button"
+              onClick={() => handleClick('bark')}
+            >
+              🐶
+            </button>
           )}
         </div>
         <div>
           HAPPY:
           {happy ? (
-            <>🐾</>
+            <button
+              type="button"
+              onClick={() => handleClick('bark')}
+            >
+              🐾
+            </button>
           ) : (
             <button
               type="button"

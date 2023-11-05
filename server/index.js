@@ -139,6 +139,33 @@ app.get('/achievements', (req, res) => {
 });
 
 
+//app.put populate
+// watch your slashes. 2nd time getting tripped up by not placing a slash before userId
+app.put('/achievements/:userId', (req, res) => {
+  //destructure params from req obj
+  const { userId } = req.params;
+  const newAchieve  = req.body.achievements;
+console.log('SERVER PUT',req.body.achievements, newAchieve)
+//return the updated user
+  User.findByIdAndUpdate(
+    userId,
+    { $push: { achievements: newAchieve }},
+    {new: true},//sends back the updated user with new
+  )
+  .then((user) => {
+    if (user) {
+      console.log('Updated user', user)
+      res.status(200).send(user);
+    } else { //else get back null
+      res.sendStatus(404);
+    }
+  })
+  .catch((err) => {
+    console.error('SERVER ERROR: failed to PUT user achievements', err);
+    res.sendStatus(500);
+  })
+})
+// ****************END OF ACHIEVEMENTS********************
 
 // GET dog picture and 4 other random dogs from dogs api
 app.get('/getDogs', (req, res) => {
@@ -170,18 +197,55 @@ app.put('/correctAnswerUpdate/:_id', (req, res) => {
     });
 });
 
+// *****************KENNEL************************
 app.get('/kennel/:userId', (req, res) => {
   const { userId } = req.params;
   Dog.find().where({ owner: userId })
-    .then((data) => {
+    .then((dogArr) => {
       res.status(200)
-        .send(data);
+        .send(dogArr);
     })
     .catch((err) => {
       console.error('SERVER ERROR: failed to GET dog by userId', err);
       res.sendStatus(500);
     });
 });
+
+app.put('/kennel/:dogId', (req, res) => {
+  const { dogId } = req.params;
+  const { status } = req.body;
+
+  Dog.findByIdAndUpdate(dogId, status, { returnDocument: 'after' })
+    .then((updatedDog) => {
+      if(updatedDog){
+        res.status(200).send(updatedDog);
+      } else {
+        res.sendStatus(404);
+      }
+    })
+    .catch((err) => {
+      console.error('SERVER ERROR: failed to UPDATE dog status by id', err);
+      res.sendStatus(500);
+    });
+});
+
+app.delete('/kennel/:dogId', (req, res) => {
+  const { dogId } = req.params;
+
+  Dog.findByIdAndDelete(dogId)
+    .then((deletedDog) => {
+      if(deletedDog){
+        return res.status(200).send(deletedDog);
+      } else {
+        res.sendStatus(404);
+      }
+    })
+    .catch((err) => {
+      console.error('SERVER ERROR: failed to DELETE dog by id', err);
+      res.sendStatus(500);
+    });
+})
+// ****************END OF KENNEL********************
 
 /// //////////////LEADER BOARD ROUTES///////////////////////////
 const filterUsers = (filterProp) => User.find({}, null, { limit: 5 }).sort({ [filterProp]: -1 });
@@ -217,14 +281,26 @@ app.get('/leaderboard/:type', (req, res) => {
   }
 });
 
+<<<<<<< HEAD
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'dist', 'index.html'))
+=======
+//GET request to '/search/:username' should query the database for the user and send back user data
+app.get('/searchUser/:username', (req, res) => {
+  const { username } = req.params;
+
+  User.findOne({ username })
+  .then((user) => {
+    user ? res.status(200).send(user) : res.sendStatus(404);
+  })
+  .catch((err) => {
+    console.error('search user (server) error:', err)
+    res.sendStatus(500);
+  })
+>>>>>>> 7f1bf169100aacbb47413ab0e997f867426de894
 })
 
 // SERVER CONNECTION
-
-// ****************END OF ACHIEVEMENTS********************
-
 app.listen(port, () => {
   console.log(`
   Listening at: http://127.0.0.1:${port}

@@ -6,10 +6,7 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 const { ATLAS_URI } = require('../config');
 
 mongoose
-  .connect(ATLAS_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(ATLAS_URI)
   .then(() => console.log('Database connected!'))
   .catch((err) => console.log(err));
 
@@ -21,7 +18,7 @@ const userSchema = new mongoose.Schema({
   questionCount: Number, // increments with correct answer and stays
   dogCount: Number, // increments when dogogachi is creates and decrements if dogogachi is deleted
   breeds: [String], // array of image strings that are correctly answered
-  achievements: [String],
+  achievements: [{id: Number, name: String, image: String}],
 });
 // creates user docs in the db
 const User = mongoose.model('User', userSchema);
@@ -29,8 +26,8 @@ const User = mongoose.model('User', userSchema);
 const dogSchema = new mongoose.Schema({
   name: String,
   img: String, // breed
-  isHungry: Date, // timers
-  isHappy: Date, // timers
+  feedDeadline: Date, // timers
+  walkDeadline: Date, // timers
   owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 });
 

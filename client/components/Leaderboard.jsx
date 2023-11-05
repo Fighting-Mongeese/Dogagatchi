@@ -18,7 +18,6 @@ function LeaderBoard() {
 
   // leader board defaults to smartest parents on rendering
   useEffect(() => {
-    console.log('passesesh' ,sessionStorage.getItem('username'))
     if (leaders.length === 0) { getLeaders('smartest'); }
   });
 

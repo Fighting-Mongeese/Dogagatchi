@@ -29,7 +29,7 @@ h5,h4,h3,h2,h1 {
   color: blue
 }
 
-.home{
+.home, .login{
   background-color: lightblue;
   display: flex;
   flex-direction: column;
@@ -40,6 +40,19 @@ h5,h4,h3,h2,h1 {
 
 body {
   background-color: lightblue;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.group-form {
+  margin:10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 
@@ -59,11 +72,19 @@ body {
   margin: 20px;
 }
 
-.achievement-container {
-
-}
 .user-stats-container, .achievement-container {
   display: flex;
   justify-content: space-between; 
   
+}
+
+.boot-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 30px;
+  text-align: center;
+  border: none;
+  border-radius: 15px;
 }

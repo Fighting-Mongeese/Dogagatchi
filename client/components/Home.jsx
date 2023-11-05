@@ -8,8 +8,9 @@ const Home = () => {
     const [user, setUser] = useState('')
 
     useEffect(() => {
-        const username = sessionStorage.getItem('username')
-        setUser(username)
+        const user = JSON.parse(sessionStorage.getItem('user'))
+        console.log('user', user)
+        setUser(user._id)
     }, [])
 
     return (

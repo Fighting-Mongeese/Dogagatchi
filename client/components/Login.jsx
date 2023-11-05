@@ -23,7 +23,7 @@ const Login = () => {
             .then((loginResponse) => {
                 console.log('data?', loginResponse)
                 if(loginResponse.data.message === 'success'){
-                    setUserContext({username: loginResponse.data.user.username, id: loginResponse.data.user._id})
+                    setUserContext(loginResponse.data.user)
                     localStorage.setItem('isAuthenticated', JSON.stringify(true))
                     navigate('/home')
                 }else{
@@ -39,7 +39,7 @@ const Login = () => {
             axios.post('/auth/register', {username, password})
             .then((loginResponse) => {
                 if(loginResponse.data.message === 'success'){
-                    setUserContext({username: loginResponse.data.user.username, id: loginResponse.data.user._id})
+                    setUserContext(loginResponse.data.user)
                     localStorage.setItem('isAuthenticated', JSON.stringify(true))
                     navigate('/home')
                 }else{

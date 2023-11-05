@@ -6,14 +6,15 @@ export const Context = ({children}) => {
     const [user, setUser] = useState(null)
 
     useEffect(() => {
-        console.log('sesh',sessionStorage.getItem('username'))
+        console.log('sesh',sessionStorage.getItem('user'))
     }, [])
 
     const setUserContext = (userData) => {
         setUser(userData)
-        const {username} = userData
+        console.log('userd', userData)
+        const user = JSON.stringify(userData)
 
-        sessionStorage.setItem('username', username)
+        sessionStorage.setItem('user', user)
     }
 
     return(

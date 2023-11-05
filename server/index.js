@@ -4,28 +4,47 @@ const axios = require('axios');
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const session = require('express-session')
+const bcrypt = require('bcrypt')
+const flash = require('express-flash')
 require('dotenv').config()
 
 const app = express();
 const port = 4000;
-const { User } = require('./db/index');
+const { User, Dog } = require('./db/index');
+
+const { ATLAS_URI } = require('./config');
+
 
 const distPath = path.resolve(__dirname, '..', 'dist');
 
 
-app.use(express.static(distPath)); 
-app.use(session({secret: 'secret', resave: true, saveUninitialized: true}))
+// MIDDLEWARE - every request runs through this middleware
+// (functions that all requests go through)
+app.use(express.static(distPath)); // Statically serve up client directory
+app.use(express.json());
+app.use(session({secret:'secret', resave: true, saveUninitialized: true}))
+app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session())
-app.use(express.json());
 
-passport.use(new LocalStrategy((username, password, done) => {
-  User.findOne({username: username, password: password})
+passport.use(new LocalStrategy({
+  passReqToCallback: true
+}, (req, username, password, done) => {
+  User.findOne({username: username})
   .then((user) => {
-    if(user){
-      return done(null, user)
+    if(!user){
+      return done(null, false, {message: "Incorrect username/password"})
     }
-    return done(null, false, {message: "incorrect username/password"})
+
+    bcrypt.compare(password, user.password)
+    .then((cryptPassword) => {
+      console.log('crypt', cryptPassword)
+  
+      if(!cryptPassword){
+        return done(null, false, {message: "Incorrect username/password"})
+      }
+    return done(null, user)
+    })
   })
 }))
 
@@ -33,29 +52,16 @@ passport.serializeUser((user, done) => {
   done(null, user.id)
 })
 
-passport.deserializeUser((id, done) => {
-  User.findOne({_id: id})
-  .then((user) => {
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await User.findById({_id: id})
     done(null, user)
-  })
+  }catch(err){
+    done(err)
+  }
 })
 
-app.post('/auth/login', passport.authenticate('local', {
-  successRedirect: '/success',
-  failureRedirect: '/failure',
-}))
-
-app.get('/success', (req, res) => {
-  res.send({success: true})
-})
-
-app.get('/failure', (req, res) => {
-  res.send({success: false})
-})
-
-
-
-// add users to db
+// ~~~~~~~~~~ add users to db~~~~~~~~~~~~~~~
 const testFunc = () => {
   User.create({
     username: 'James',
@@ -73,7 +79,66 @@ const testFunc = () => {
       console.error('Failed to add user', err);
     });
 };
-testFunc();
+// testFunc();
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+app.post('/auth/login', passport.authenticate('local', {failureRedirect: '/fail', failureFlash: true}), (req, res) => {
+  const user = req.user
+  res.json({message: "success", user})
+})
+
+app.post('/auth/register', (req, res) => {
+  const {username, password} = req.body
+
+  
+
+  if(!username || !password){
+    console.log('none')
+    return res.status(400).json({message: "Must enter a usernme and password"})
+  }
+
+  
+
+  User.findOne({username: username})
+  .then((user) => {
+    if(user){
+      console.log('user', user)
+      return res.status(400).json({message: "User already exists"})
+    }
+    bcrypt.hash(password, 10)
+    .then((pass) => {
+      User.create({username: username, password: pass})
+      .then((user) => {
+        console.log('final', user)
+        return res.status(201).json({message: 'success'})
+      })
+    })
+    })
+})
+
+app.get('/fail', (req, res) => {
+ res.json({message: req.flash('error')[0]})
+})
+
+
+
+
+// *****************ACHIEVEMENTS************************
+// set up a net to catch requests (server side request handling for achievements)
+app.get('/achievements', (req, res) => {
+  User.find() // empty filter object to TEST IN POSTMAN
+    .then((user) => { // now we have a collection to send back
+    // success case send the data in the response
+      res.status(200).send(user);
+    })
+    .catch((err) => {
+    // handle errors
+      console.error('FAILED to find all users', err);
+      res.sendStatus(500);
+    });
+});
+
+
 
 // GET dog picture and 4 other random dogs from dogs api
 app.get('/getDogs', (req, res) => {
@@ -105,14 +170,60 @@ app.put('/correctAnswerUpdate/:_id', (req, res) => {
     });
 });
 
-app.get('/*', function(req, res) {
-  res.sendFile(path.resolve(__dirname, '..', 'dist', 'index.html'), function(err) {
-    if (err) {
-      console.log(err)
-      res.status(500).send(err)
-    }
-  })
+app.get('/kennel/:userId', (req, res) => {
+  const { userId } = req.params;
+  Dog.find().where({ owner: userId })
+    .then((data) => {
+      res.status(200)
+        .send(data);
+    })
+    .catch((err) => {
+      console.error('SERVER ERROR: failed to GET dog by userId', err);
+      res.sendStatus(500);
+    });
+});
+
+/// //////////////LEADER BOARD ROUTES///////////////////////////
+const filterUsers = (filterProp) => User.find({}, null, { limit: 5 }).sort({ [filterProp]: -1 });
+
+app.get('/leaderboard/:type', (req, res) => {
+  const { type } = req.params;
+  if (type === 'smartest') {
+    filterUsers('questionCount')
+      .then((users) => {
+        if (users) {
+          res.status(200).send(users);
+        } else {
+          res.sendStatus(404);
+        }
+      })
+      .catch((err) => {
+        console.error('get LB/smartest ERROR (server):', err);
+        res.sendStatus(500);
+      });
+  } else if (type === 'richest') {
+    filterUsers('coinCount')
+      .then((users) => {
+        if (users) {
+          res.status(200).send(users);
+        } else {
+          res.sendStatus(404);
+        }
+      })
+      .catch((err) => {
+        console.error('get LB/richest ERROR (server):', err);
+        res.sendStatus(500);
+      });
+  }
+});
+
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'dist', 'index.html'))
 })
+
+// SERVER CONNECTION
+
+// ****************END OF ACHIEVEMENTS********************
 
 app.listen(port, () => {
   console.log(`

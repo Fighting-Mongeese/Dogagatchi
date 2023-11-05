@@ -14,7 +14,7 @@ function Quiz(props) {
   const getDogs = () => new Promise((resolve, reject) => {
     axios.get('/getDogs')
       .then((dogArray) => {
-        console.log(dogArray.data);
+        //console.log(dogArray.data);
         setDogs(dogArray.data);
         resolve(dogArray.data);
       })

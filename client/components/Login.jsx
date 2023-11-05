@@ -39,6 +39,7 @@ const Login = () => {
             axios.post('/auth/register', {username, password})
             .then((loginResponse) => {
                 if(loginResponse.data.message === 'success'){
+                    console.log('log', loginResponse)
                     setUserContext(loginResponse.data.user)
                     localStorage.setItem('isAuthenticated', JSON.stringify(true))
                     navigate('/home')

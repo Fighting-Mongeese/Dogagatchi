@@ -132,8 +132,9 @@ app.put('/kennel/:dogId', (req, res) => {
     .then((updatedDog) => {
       if(updatedDog){
         res.status(200).send(updatedDog);
+      } else {
+        res.sendStatus(404);
       }
-      res.sendStatus(404);
     })
     .catch((err) => {
       console.error('SERVER ERROR: failed to UPDATE dog status by id', err);
@@ -147,9 +148,10 @@ app.delete('/kennel/:dogId', (req, res) => {
   Dog.findByIdAndDelete(dogId)
     .then((deletedDog) => {
       if(deletedDog){
-        res.status(200).send(deletedDog);
+        return res.status(200).send(deletedDog);
+      } else {
+        res.sendStatus(404);
       }
-      res.sendStatus(404);
     })
     .catch((err) => {
       console.error('SERVER ERROR: failed to DELETE dog by id', err);

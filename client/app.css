@@ -1,5 +1,10 @@
 Button {
- margin-left: 100px;
+ margin: 20px;
+
+}
+
+h5,h4,h3,h2,h1 {
+  margin: 20px;
 }
 
 .img-trivia {

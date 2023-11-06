@@ -101,7 +101,7 @@ function Quiz(props) {
   const dogButtons = dogs.map((url, index) => {
     const breed = parseUrl(url);
     return (
-      <Button value={url} style={{ margin: '20px' }} key={index} onClick={handleAnswerSubmission} type="button">{breed}</Button>
+      <Button value={url} key={index} onClick={handleAnswerSubmission} type="button">{breed}</Button>
     );
   });
 
@@ -121,7 +121,7 @@ function Quiz(props) {
       <h2>{alertText}</h2>
       <div style={{ display: 'flex' }}>
         {dogButtons}
-        <Button variant='info' onClick={getNewRound}>Refresh Dog</Button>
+        <Button variant='outline-primary' onClick={getNewRound}>Refresh Dog</Button>
       </div>
       <div>
 

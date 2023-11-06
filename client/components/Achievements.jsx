@@ -4,7 +4,6 @@ import Achieve from './Achieve.jsx'
 
 // CHILD OF APP PARENT OF ACHIEVE
 
-// Goals for achievements:
 
 // Access the user who is currently logged in to get information from the database about them
 
@@ -14,7 +13,7 @@ import Achieve from './Achieve.jsx'
 // then check if user account has achievements. if so render to page
 
 function Achievements() {
-  
+
   const [activeUser, setActiveUser] = useState('');
   const [achievementsEarned, setAchievementsEarned] = useState([]);
   const [userCoins, setUserCoins] = useState(0);
@@ -24,9 +23,9 @@ function Achievements() {
     axios.get('/achievements')
       .then((userArray) => {
         //console.log('On load', userArray.data);
-        setActiveUser(userArray.data[2]);
-        setUserCoins(userArray.data[2].coinCount)
-        setAchievementsEarned(userArray.data[2].achievements)
+        setActiveUser(userArray.data[1]);
+        setUserCoins(userArray.data[1].coinCount)
+        setAchievementsEarned(userArray.data[1].achievements)
         resolve(userArray.data);
       })
       .then (() => {
@@ -38,9 +37,11 @@ function Achievements() {
       });
   });
   //console.log('active user outside', activeUser, userCoins, achievementsEarned)
- 
 
-  // From the user information, add some logic to determine when an achievement is unlocked
+
+  //other achievements: Top Dawg for the Smartest Leaderboard
+  //An achievement for Each dog owned
+  //An achievement for number of times dog fed or played with
 const addAchievementMoneybags = () => {
   //console.log('userCoins', userCoins)
   // (if (user.coins > 5)) then add achievement to user info through put request also an and statement to prevent same achievement from being earned more than once
@@ -59,25 +60,40 @@ const addAchievementMoneybags = () => {
     .catch((err) => {
       console.error('CLIENT ACHIEVEMENT ERROR', err)
     })
-  } 
-  // else if (userCoins > 11 && !achievementsEarned.includes('Super Saver')) {
-  //   //axios put request with activeUser hook
-  //   axios.put(`/achievements/${activeUser}`, {
-  //     achievements: 'Super Saver'
-  //   })
-  //   .then((user) => {
-  //     //use promise to set state of achievements earned
-  //     setAchievementsEarned(user.data)
-  //     console.log('Post put achievements', achievementsEarned);
-  //   })
-  //   //error handling
-  //   .catch((err) => {
-  //     console.error('CLIENT ACHIEVEMENT ERROR', err)
-  //   })
-  // }
+  } else if (userCoins > 20 && !achievementsEarned.includes('Super Saver')) {
+    //axios put request with activeUser hook
+    axios.put(`/achievements/${activeUser}`, {
+      name: 'Super Saver',
+      image: 'https://www.trueachievements.com/imagestore/0006900900/6900915.jpg'
+    })
+    .then((user) => {
+      //use promise to set state of achievements earned
+      setAchievementsEarned(user.data)
+      console.log('Post put achievements', achievementsEarned);
+    })
+    //error handling
+    .catch((err) => {
+      console.error('CLIENT ACHIEVEMENT ERROR', err)
+    })
+  } else if (userCoins > 30 && !achievementsEarned.includes('Money Bags')) {
+    //axios put request with activeUser hook
+    axios.put(`/achievements/${activeUser}`, {
+      name: 'Money Bags',
+      image: 'https://www.trueachievements.com/imagestore/0006900800/6900859.jpg'
+    })
+    .then((user) => {
+      //use promise to set state of achievements earned
+      setAchievementsEarned(user.data)
+      console.log('Post put achievements', achievementsEarned);
+    })
+    //error handling
+    .catch((err) => {
+      console.error('CLIENT ACHIEVEMENT ERROR', err)
+    })
+  }
 }
 
-  const [user, setUser] = useState(null);
+ // const [user, setUser] = useState(null);
   useEffect(() => {
       getUserData();
   }, []);

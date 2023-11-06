@@ -193,10 +193,22 @@ app.get('/leaderboard/:type', (req, res) => {
       });
   }
 });
+
+//GET request to '/search/:username' should query the database for the user and send back user data
+app.get('/searchUser/:username', (req, res) => {
+  const { username } = req.params;
+
+  User.findOne({ username })
+  .then((user) => {
+    user ? res.status(200).send(user) : res.sendStatus(404);
+  })
+  .catch((err) => {
+    console.error('search user (server) error:', err)
+    res.sendStatus(500);
+  })
+})
+
 // SERVER CONNECTION
-
-// ****************END OF ACHIEVEMENTS********************
-
 app.listen(port, () => {
   console.log(`
   Listening at: http://127.0.0.1:${port}

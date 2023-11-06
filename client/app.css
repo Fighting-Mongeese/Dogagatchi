@@ -15,3 +15,12 @@ h5,h4,h3,h2,h1 {
 .achievement-element {
   font-weight: bold;
 }
+
+.leader-username {
+  text-decoration: underline;
+}
+
+.leader-username:hover {
+  cursor: pointer;
+  color: blue
+}

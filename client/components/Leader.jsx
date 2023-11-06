@@ -7,7 +7,15 @@ function Leader(props) {
     <tbody>
       <tr>
         <th scope="row" className="leader-info">{`${props.leader.username} `}</th>
-        <th scope="row" className="leader-info">{`${props.leader.coinCount} `}</th>
+        <th scope="row" className="leader-info">
+          {
+          props.view === 'smartest'
+            ? `${props.leader.questionCount} quest`
+            : `${props.leader.coinCount} coin`
+          }
+
+        </th>
+
       </tr>
     </tbody>
 

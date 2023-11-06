@@ -53,6 +53,30 @@ app.get('/achievements', (req, res) => {
 });
 
 //app.put populate
+// watch your slashes. 2nd time getting tripped up by not placing a slash before userId
+app.put('/achievements/:userId', (req, res) => {
+  //destructure params from req obj
+  const { userId } = req.params;
+  const { newAchieve } = req.body.achievements;
+console.log('SERVER PUT',req.body.achievements)
+//return the updated user
+  User.findByIdAndUpdate(
+    userId,
+    { $push: { newAchieve }},
+    {safe: true, upsert: true, new: true},//sends back the updated user with new
+  )
+  .then((user) => {
+    if (user) {
+      res.status(200).send(user);
+    } else { //else get back null
+      res.sendStatus(404);
+    }
+  })
+  .catch((err) => {
+    console.error('SERVER ERROR: failed to PUT user achievements', err);
+    res.sendStatus(500);
+  })
+})
 // ****************END OF ACHIEVEMENTS********************
 
 // GET dog picture and 4 other random dogs from dogs api

@@ -19,8 +19,8 @@ function Achievements() {
   const getUserData = () => new Promise((resolve, reject) => {
     axios.get('/achievements')
       .then((userArray) => {
-        console.log('achievements', userArray.data[0]);
-        setActiveUser(userArray.data[0].username);
+        console.log('achievements', userArray.data);
+        setActiveUser(userArray.data[0]._id);
         setUserCoins(userArray.data[0].coinCount)
         setAchievementsEarned(userArray.data[0].achievements)
         console.log('active user', activeUser, userCoins)
@@ -31,19 +31,22 @@ function Achievements() {
         reject(err);
       });
   });
-  console.log('active user outside', activeUser, userCoins, achievementsEarned)
+  //console.log('active user outside', activeUser, userCoins, achievementsEarned)
   //set up function to change achievements on user data
 
 const addAchievement = () => {
-  console.log('usercoins', userCoins)
+  console.log('userCoins', userCoins)
+  //const { moneybags } = user.data.achievements
   if (userCoins > 5) {
-    axios.put('/achievements', {
+    axios.put(`/achievements/${activeUser}`, {
       achievements: 'Moneybags'
     })
     .then((user) => {
-      setAchievementsEarned(user)
-      console.log(user);
+      setAchievementsEarned(user.data)
+     
+      console.log('Post put achievements', achievementsEarned);
     })
+
     .catch((err) => {
       console.error('CLIENT ACHIEVEMENT ERROR', err)
     })
@@ -73,21 +76,14 @@ const addAchievement = () => {
     <div>
       <h3>Achievement Test Rendering</h3>
       <p>
-        You clicked
-        {' '}
-        {count}
-        {' '}
-        times
-      </p>
-      <p>
         Welcome
         {' '}
         {activeUser}
         {' '}
       </p>
-      <button type="button" onClick={() => setCount(count + 1)}>Click me for achievements</button>
-      <button type="button" onClick={() => getUserData()}>Get user</button>
-      <button type="button" onClick={() => addAchievement()}>Check if achievement earned</button>
+      <button type="button" className="btn btn-outline-success" onClick={() => setCount(count + 1)}>Click me for achievements</button>
+      <button type="button" className="btn btn-outline-success" onClick={() => getUserData()}>Get user</button>
+      <button type="button" className="btn btn-outline-success" onClick={() => addAchievement()}>Check if achievement earned</button>
     </div>
   );
 }

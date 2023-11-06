@@ -2,11 +2,14 @@ import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 
-function Search(){
+function Search(props){
   const [searchedUser, setSearchedUser] = useState('')
   function searchUser(){
     axios.get(`/searchUser/${searchedUser}`)
-    .then((user) => console.log(user))
+    .then(({ data }) => {
+      console.log(data)
+      props.setSearchedUserData(data)
+    })
     .then(() => setSearchedUser(''))
     .catch((err) => console.error('search user error (client)', err))
   }

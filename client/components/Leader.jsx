@@ -5,7 +5,7 @@ import axios from 'axios';
 function Leader(props) {
   function seeLeader(){
     axios.get(`/searchUser/${props.leader.username}`)
-    .then((user) => console.log(user))
+    .then(({ data }) => props.setSearchedUserData(data))
     .catch((err) => console.error('search user error (client)', err))
   }
   return (

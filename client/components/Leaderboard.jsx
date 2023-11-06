@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import Leader from './Leader.jsx';
 
-function LeaderBoard() {
+function LeaderBoard(props) {
   const [leaders, setLeaders] = useState([]);
   const [board, setBoard] = useState('smartest');
 
@@ -66,6 +66,7 @@ function LeaderBoard() {
             leader={leaderObj}
             key={leaderObj._id}
             view={board}
+            setSearchedUserData={props.setSearchedUserData}
           />
         ))}
 

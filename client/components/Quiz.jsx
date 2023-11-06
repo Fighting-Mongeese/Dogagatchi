@@ -56,6 +56,11 @@ function Quiz(props) {
     setSolutionUrl(dogArray[randomIndex]);
   };
 
+  const getNewRound = () => {
+    getDogs()
+      .then((dogs) => setSolutionDog(dogs))
+  }
+
   const handleAnswerSubmission = (e) => {
     const { value } = e.target; // unpack event
 
@@ -90,8 +95,7 @@ function Quiz(props) {
   };
 
   useEffect(() => {
-    getDogs()
-      .then((dogArray) => setSolutionDog(dogArray));
+    getNewRound();
   }, []);
 
   const dogButtons = dogs.map((url, index) => {
@@ -113,10 +117,11 @@ function Quiz(props) {
       <p>654660d5a2683bbdcb573a83, 6546609aa2683bbdcb573a82, 65466062a2683bbdcb573a81</p>
       <input type="text" onChange={(e) => setUserId(e.target.value)} value={userId} />
       <h3>Oh Gawd, what is that thing?</h3>
-      <Image style={{ maxHeight: '500px', maxWidth: '500px' }} src={solutionUrl} rounded />
+      <Image alt="Sorry, someone let the dog out! Click 'Refresh' to fetch a new pup." className='img-trivia' src={solutionUrl} rounded />
       <h2>{alertText}</h2>
       <div style={{ display: 'flex' }}>
         {dogButtons}
+        <Button variant='info' onClick={getNewRound}>Refresh Dog</Button>
       </div>
       <div>
 

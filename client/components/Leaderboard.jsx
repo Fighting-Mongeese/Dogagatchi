@@ -8,33 +8,44 @@ import Leader from './Leader.jsx';
 function LeaderBoard() {
   const [leaders, setLeaders] = useState([]);
   const [board, setBoard] = useState('smartest');
-  function getLeaders(type) {
-    axios.get(`/leaderboard/${type}`)
+
+  function getLeaders() {
+    axios.get(`/leaderboard/${board}`)
       .then(({ data }) => {
         setLeaders(data); // sets leaders to data property from User query obj
-      })
-      .then(() => {
-        if (type === 'smartest') {
-          setBoard('smartest');
-          console.log('smartest');
-        } else if (type === 'richest') {
-          console.log('richest');
-          setBoard('richest');
-        }
       })
       .catch((err) => console.error('getLeaders ERROR (client):', err));
   }
 
+  function changeBoard(type){
+    if (type === 'smartest') {
+      setBoard('smartest');
+      //console.log('smartest');
+    } else if (type === 'richest') {
+      //console.log('richest');
+      setBoard('richest');
+    }
+  }
   // leader board defaults to smartest parents on rendering
   useEffect(() => {
-    if (leaders.length === 0) { getLeaders('smartest'); }
+    getLeaders()
   });
 
   return (
     <div>
       <h2>Leader Board</h2>
-      <Button onClick={() => getLeaders('smartest')}>Smartest Parents</Button>
-      <Button onClick={() => getLeaders('richest')}>Richest Parents</Button>
+      <Button onClick={() => {
+        changeBoard('smartest');
+        getLeaders()
+      }
+    }
+      >Smartest Parents</Button>
+      <Button onClick={() => {
+        changeBoard('richest');
+        getLeaders()
+        }
+      }
+        >Richest Parents</Button>
       <Table className="table">
         <thead className="leader-table">
           <tr>

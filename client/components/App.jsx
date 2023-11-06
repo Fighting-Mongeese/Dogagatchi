@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Quiz from './Quiz.jsx';
 import axios from 'axios';
 import Achievements from '../components/Achievements.jsx';
+import Kennel from './Kennel.jsx'
 
 
 import '../app.css'; // imports css to apply to all components in App component
@@ -19,6 +20,8 @@ function App() {
       <Achievements />
 
       <LeaderBoard />
+
+      <Kennel />
     </div>
   );
 }

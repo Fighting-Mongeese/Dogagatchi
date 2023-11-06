@@ -8,8 +8,10 @@ const bark = new Audio(barkSound);
 function Dog(props) {
   const [hungry, setHunger] = useState(true);
   const [happy, setHappy] = useState(false);
-  const [feedStatus, setFeedStatus] = useState('');
-  const [walkStatus, setWalkStatus] = useState('');
+  const [feedStatus, setFeedStatus] = useState("");
+  const [walkStatus, setWalkStatus] = useState("");
+  const [feedTimer, setFeedTimer] = useState(0);
+  const [walkTimer, setWalkTimer] = useState(0);
 
   const { dog } = props;
 
@@ -28,7 +30,7 @@ function Dog(props) {
     }
     axios
       .put(`/kennel/${dog._id}`, { status })
-      .then((data) => {
+      .then(({ data }) => {
         console.log("dog updated:", data);
       })
       .catch((err) => {
@@ -40,31 +42,36 @@ function Dog(props) {
     const x = setInterval(() => {
       let now = new Date().getTime();
 
-      let feedTimer = dog.feedDeadline - now;
-      let walkTimer = dog.walkDeadline - now;
+      let feedTimer = ((Date.parse(dog.feedDeadline) - now) / 86400000) * 100;
+      let walkTimer = ((Date.parse(dog.walkDeadline) - now) / 86400000) * 100;
 
-      if (feedTimer < 0) {
-        setFeedStatus('success');
-      } else if (feedTimer < 50) {
-        setFeedStatus('warning');
-        setHunger(true);
-      } else if (feedTimer < 25) {
-        setFeedStatus('danger');
-        setHunger(true);
-      } else if (feedTimer === 0) {
+      setFeedTimer(feedTimer);
+      setWalkTimer(walkTimer);
+
+      if (feedTimer === 0) {
         alert("dog ran away");
+        //delete dog from user
+      } else if (feedTimer < 25) {
+        setFeedStatus("danger");
+        setHunger(true);
+      } else if (feedTimer < 50) {
+        setFeedStatus("warning");
+        setHunger(true);
+      } else {
+        setFeedStatus("success");
       }
 
-      if (walkTimer < 0) {
-        setWalkStatus('success');
-      } else if (walkTimer < 50) {
-        setWalkStatus('warning');
-        setHappy(false);
-      } else if (walkTimer < 25) {
-        setWalkStatus('danger');
-        setHappy(false)
-      } else if (walkTimer === 0) {
+      if (walkTimer === 0) {
         alert("dog ran away");
+        //delete dog from user
+      } else if (walkTimer < 25) {
+        setWalkStatus("danger");
+        setHappy(false);
+      } else if (feedTimer < 50) {
+        setWalkStatus("warning");
+        setHappy(false);
+      } else {
+        setWalkStatus("success");
       }
     }, 1000);
   });
@@ -86,7 +93,7 @@ function Dog(props) {
               animated={true}
               striped
               variant={feedStatus}
-              now={40}
+              now={feedTimer}
               label="HUNGER"
             />
           </div>
@@ -115,7 +122,7 @@ function Dog(props) {
               animated={true}
               striped
               variant={walkStatus}
-              now={40}
+              now={walkTimer}
               label="HAPPINESS"
             />
           </div>

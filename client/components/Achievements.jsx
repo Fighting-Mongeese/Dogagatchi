@@ -19,12 +19,14 @@ function Achievements() {
   const getUserData = () => new Promise((resolve, reject) => {
     axios.get('/achievements')
       .then((userArray) => {
-        console.log('achievements', userArray.data);
+        console.log('On load', userArray.data);
         setActiveUser(userArray.data[0]._id);
         setUserCoins(userArray.data[0].coinCount)
         setAchievementsEarned(userArray.data[0].achievements)
-        console.log('active user', activeUser, userCoins)
         resolve(userArray.data);
+      })
+      .then (() => {
+        console.log('active user', activeUser, userCoins)
       })
       .catch((err) => {
         console.error('CLIENT ERROR: failed to get user', err);
@@ -34,10 +36,9 @@ function Achievements() {
   //console.log('active user outside', activeUser, userCoins, achievementsEarned)
   //set up function to change achievements on user data
 
-const addAchievement = () => {
-  console.log('userCoins', userCoins)
-  //const { moneybags } = user.data.achievements
-  if (userCoins > 5) {
+const addAchievementMoneybags = () => {
+  //console.log('userCoins', userCoins)
+  if (userCoins > 5 && !achievementsEarned.includes('Moneybags')) {
     axios.put(`/achievements/${activeUser}`, {
       achievements: 'Moneybags'
     })
@@ -83,7 +84,7 @@ const addAchievement = () => {
       </p>
       <button type="button" className="btn btn-outline-success" onClick={() => setCount(count + 1)}>Click me for achievements</button>
       <button type="button" className="btn btn-outline-success" onClick={() => getUserData()}>Get user</button>
-      <button type="button" className="btn btn-outline-success" onClick={() => addAchievement()}>Check if achievement earned</button>
+      <button type="button" className="btn btn-outline-success" onClick={() => addAchievementMoneybags()}>Check if achievement earned</button>
     </div>
   );
 }

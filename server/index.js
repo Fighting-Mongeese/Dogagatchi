@@ -57,16 +57,17 @@ app.get('/achievements', (req, res) => {
 app.put('/achievements/:userId', (req, res) => {
   //destructure params from req obj
   const { userId } = req.params;
-  const { newAchieve } = req.body.achievements;
-console.log('SERVER PUT',req.body.achievements)
+  const newAchieve  = req.body.achievements;
+console.log('SERVER PUT',req.body.achievements, newAchieve)
 //return the updated user
   User.findByIdAndUpdate(
     userId,
-    { $push: { newAchieve }},
-    {safe: true, upsert: true, new: true},//sends back the updated user with new
+    { $push: { achievements: newAchieve }},
+    {new: true},//sends back the updated user with new
   )
   .then((user) => {
     if (user) {
+      console.log('Updated user', user)
       res.status(200).send(user);
     } else { //else get back null
       res.sendStatus(404);

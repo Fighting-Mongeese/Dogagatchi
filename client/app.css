@@ -11,3 +11,7 @@ h5,h4,h3,h2,h1 {
   max-width: 500px;
   max-height: 500px;
 }
+
+.achievement-element {
+  font-weight: bold;
+}

@@ -59,6 +59,7 @@ function Dog(props) {
         setHunger(true);
       } else {
         setFeedStatus("success");
+        setHunger(false);
       }
 
       if (walkTimer === 0) {
@@ -72,6 +73,7 @@ function Dog(props) {
         setHappy(false);
       } else {
         setWalkStatus("success");
+        setHappy(true);
       }
     }, 1000);
   });

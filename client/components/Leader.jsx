@@ -6,7 +6,10 @@ function Leader(props) {
   function seeLeader(){
     axios.get(`/searchUser/${props.leader.username}`)
     .then(({ data }) => props.setSearchedUserData(data))
-    .catch((err) => console.error('search user error (client)', err))
+    .catch((err) =>{
+      console.error('search user error (client)', err)
+      props.setSearchedUserData('not found')
+    })
   }
   return (
     <tbody>

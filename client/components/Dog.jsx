@@ -12,17 +12,27 @@ function Dog(props) {
   const { dog } = props;
 
   const handleClick = (e) => {
+    const status = {};
     if (e === 'feed') {
       setHunger(false);
-      const hungerTimer = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-      // put request, add new deadline for feeding the dog 24hrs from click
+      const feedDeadline = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+      status.feedDeadline = feedDeadline;
+      console.log(status);
     } else if (e === 'walk') {
       setHappy(true);
-      const walkTimer = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-      // put request, add new deadline for feeding the dog 24hrs from click
+      const walkDeadline = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+      status.walkDeadline = walkDeadline;
+      console.log(status)
     } else {
       bark.play();
     }
+    axios.put(`/kennel/${dog._id}`, {status})
+      .then((data) => {
+        console.log('dog updated:', data);
+      })
+      .catch((err) => {
+        console.error(err);
+      })
   };
 
   return (

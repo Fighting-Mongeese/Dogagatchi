@@ -29,8 +29,8 @@ const User = mongoose.model('User', userSchema);
 const dogSchema = new mongoose.Schema({
   name: String,
   img: String, // breed
-  isHungry: Date, // timers
-  isHappy: Date, // timers
+  feedDeadline: Date, // timers
+  walkDeadline: Date, // timers
   owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 });
 

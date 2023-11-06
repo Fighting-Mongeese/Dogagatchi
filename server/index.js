@@ -85,6 +85,7 @@ app.put('/correctAnswerUpdate/:_id', (req, res) => {
     });
 });
 
+// *****************KENNEL************************
 app.get('/kennel/:userId', (req, res) => {
   const { userId } = req.params;
   Dog.find().where({ owner: userId })
@@ -97,6 +98,19 @@ app.get('/kennel/:userId', (req, res) => {
       res.sendStatus(500);
     });
 });
+
+app.put('/kennel/:dogId', (req, res) => {
+  const { dogId } = req.params;
+  const { status } = req.body;
+
+  Dog.findByIdAndUpdate(dogId, status, { returnDocument: 'after' })
+    .then((updatedDog) => res.status(200).send(updatedDog))
+    .catch((err) => {
+      console.error('SERVER ERROR: failed to UPDATE dog status id', err);
+      res.sendStatus(500);
+    });
+});
+// ****************END OF KENNEL********************
 
 /// //////////////LEADER BOARD ROUTES///////////////////////////
 const filterUsers = (filterProp) => User.find({}, null, { limit: 5 }).sort({ [filterProp]: -1 });

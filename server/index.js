@@ -198,6 +198,22 @@ app.put('/correctAnswerUpdate/:_id', (req, res) => {
 });
 
 // *****************KENNEL************************
+app.get('/kennel', (req, res) => {
+  const { id } = req.body;
+
+  User.findById(id)
+  .then(({breeds}) => {
+    console.log(breeds);
+    res.send(breeds);
+  })
+  .catch((err) =>{
+    console.error('FAILED to GET dog list from user by id', err);
+    res.sendStatus(500);
+  })
+
+})
+
+
 app.get('/kennel/:userId', (req, res) => {
   const { userId } = req.params;
   Dog.find().where({ owner: userId })

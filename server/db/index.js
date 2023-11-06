@@ -6,10 +6,7 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 const { ATLAS_URI } = require('../config');
 
 mongoose
-  .connect(ATLAS_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(ATLAS_URI)
   .then(() => console.log('Database connected!'))
   .catch((err) => console.log(err));
 

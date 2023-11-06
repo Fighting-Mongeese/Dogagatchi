@@ -114,9 +114,9 @@ app.put('/correctAnswerUpdate/:_id', (req, res) => {
 app.get('/kennel/:userId', (req, res) => {
   const { userId } = req.params;
   Dog.find().where({ owner: userId })
-    .then((data) => {
+    .then((dogArr) => {
       res.status(200)
-        .send(data);
+        .send(dogArr);
     })
     .catch((err) => {
       console.error('SERVER ERROR: failed to GET dog by userId', err);
@@ -129,12 +129,35 @@ app.put('/kennel/:dogId', (req, res) => {
   const { status } = req.body;
 
   Dog.findByIdAndUpdate(dogId, status, { returnDocument: 'after' })
-    .then((updatedDog) => res.status(200).send(updatedDog))
+    .then((updatedDog) => {
+      if(updatedDog){
+        res.status(200).send(updatedDog);
+      } else {
+        res.sendStatus(404);
+      }
+    })
     .catch((err) => {
-      console.error('SERVER ERROR: failed to UPDATE dog status id', err);
+      console.error('SERVER ERROR: failed to UPDATE dog status by id', err);
       res.sendStatus(500);
     });
 });
+
+app.delete('/kennel/:dogId', (req, res) => {
+  const { dogId } = req.params;
+
+  Dog.findByIdAndDelete(dogId)
+    .then((deletedDog) => {
+      if(deletedDog){
+        return res.status(200).send(deletedDog);
+      } else {
+        res.sendStatus(404);
+      }
+    })
+    .catch((err) => {
+      console.error('SERVER ERROR: failed to DELETE dog by id', err);
+      res.sendStatus(500);
+    });
+})
 // ****************END OF KENNEL********************
 
 /// //////////////LEADER BOARD ROUTES///////////////////////////

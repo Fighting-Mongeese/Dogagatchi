@@ -28,30 +28,22 @@ function Dog(props) {
     } else {
       bark.play();
     }
-    axios
-      .put(`/kennel/${dog._id}`, { status })
-      .then(({ data }) => {
-        console.log("dog updated:", data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    axios.put(`/kennel/${dog._id}`, { status }).catch((err) => {
+      console.error(err);
+    });
   };
 
   useEffect(() => {
     const x = setInterval(() => {
-      let now = new Date().getTime();
+      const now = new Date().getTime();
 
-      let feedTimer = ((Date.parse(dog.feedDeadline) - now) / 86400000) * 100;
-      let walkTimer = ((Date.parse(dog.walkDeadline) - now) / 86400000) * 100;
+      const feedTimer = ((Date.parse(dog.feedDeadline) - now) / 86400000) * 100;
+      const walkTimer = ((Date.parse(dog.walkDeadline) - now) / 86400000) * 100;
 
       setFeedTimer(feedTimer);
       setWalkTimer(walkTimer);
 
-      if (feedTimer === 0) {
-        alert("dog ran away");
-        //delete dog from user
-      } else if (feedTimer < 25) {
+      if (feedTimer < 25) {
         setFeedStatus("danger");
         setHunger(true);
       } else if (feedTimer < 50) {
@@ -59,12 +51,10 @@ function Dog(props) {
         setHunger(true);
       } else {
         setFeedStatus("success");
+        setHunger(false);
       }
 
-      if (walkTimer === 0) {
-        alert("dog ran away");
-        //delete dog from user
-      } else if (walkTimer < 25) {
+      if (walkTimer < 25) {
         setWalkStatus("danger");
         setHappy(false);
       } else if (feedTimer < 50) {
@@ -72,12 +62,16 @@ function Dog(props) {
         setHappy(false);
       } else {
         setWalkStatus("success");
+        setHappy(true);
       }
     }, 1000);
-  });
+  }, []);
 
   return (
     <div className="dog">
+      <div className="dog-name">
+        <h3>{dog.name}</h3>
+      </div>
       <img
         src={dog.img}
         alt="Sorry, your dog is in another kennel."

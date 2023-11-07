@@ -57,7 +57,7 @@ function Dog(props) {
       if (walkTimer < 25) {
         setWalkStatus("danger");
         setHappy(false);
-      } else if (feedTimer < 50) {
+      } else if (walkTimer < 50) {
         setWalkStatus("warning");
         setHappy(false);
       } else {

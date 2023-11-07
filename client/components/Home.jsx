@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import Button from 'react-bootstrap/Button';
 import {Link} from 'react-router-dom'
 
 
@@ -16,10 +17,17 @@ const Home = () => {
         <div className='home'>
             <h1>{`Welcome, ${user}!`}</h1>
             <img src='https://i.ibb.co/rQGfGH5/sweeticon-removebg-preview.png' />
-
+      <span>
             <Link to='/quiz'>
-            <button>Quiz</button>
+            <Button>Quiz</Button>
             </Link>
+            <Link to='/user'>
+            <Button>User</Button>
+            </Link>
+            <Link to='/kennel'>
+            <Button>Kennel</Button>
+            </Link>
+        </span>
         </div>
 
     )

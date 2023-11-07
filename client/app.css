@@ -41,3 +41,29 @@ h5,h4,h3,h2,h1 {
 body {
   background-color: lightblue;
 }
+
+
+.user-main-div {
+  background-color: lightblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.user-stats, .user-achievements {
+  border: 3px solid blue;
+  flex: 1;
+  min-width: 100px;
+  padding: 10px;
+  margin: 20px;
+}
+
+.achievement-container {
+
+}
+.user-stats-container, .achievement-container {
+  display: flex;
+  justify-content: space-between; 
+  
+}

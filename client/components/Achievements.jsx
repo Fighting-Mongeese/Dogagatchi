@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Achieve from './Achieve.jsx'
 
-// CHILD OF APP PARENT OF ACHIEVE
 
-// Goals for achievements:
+// CHILD OF USER PARENT OF ACHIEVE
+
+//POSSIBLY ADD ANIMATION ON TRIGGERING ACHIEVEMENT
 
 // Access the user who is currently logged in to get information from the database about them
 
@@ -13,34 +14,37 @@ import Achieve from './Achieve.jsx'
 
 // then check if user account has achievements. if so render to page
 
-function Achievements() {
-  
+function Achievements(props) { //access props.user to get id for subsequent get requests
+
   const [activeUser, setActiveUser] = useState('');
   const [achievementsEarned, setAchievementsEarned] = useState([]);
   const [userCoins, setUserCoins] = useState(0);
 
   // set up function to collect user data of current user
+  //put in a useEffect so it can be updated
   const getUserData = () => new Promise((resolve, reject) => {
-    axios.get('/achievements')
+    axios.get('/achievements') //slash users slash achievements refactor
       .then((userArray) => {
         //console.log('On load', userArray.data);
-        setActiveUser(userArray.data[2]);
-        setUserCoins(userArray.data[2].coinCount)
-        setAchievementsEarned(userArray.data[2].achievements)
+        setActiveUser(userArray.data[3]);
+        setUserCoins(userArray.data[3].coinCount)
+        setAchievementsEarned(userArray.data[3].achievements)
         resolve(userArray.data);
       })
-      .then (() => {
-        //console.log('active user, coins, achievements', activeUser, userCoins, achievementsEarned)
-      })
+      // .then (() => {
+      //   console.log('active user, coins, achievements', activeUser, userCoins, achievementsEarned)
+      // })
       .catch((err) => {
         console.error('CLIENT ERROR: failed to get user', err);
         reject(err);
       });
   });
   //console.log('active user outside', activeUser, userCoins, achievementsEarned)
- 
 
-  // From the user information, add some logic to determine when an achievement is unlocked
+
+  //other achievements: Top Dawg for the Smartest Leaderboard
+  //An achievement for Each dog owned
+  //An achievement for number of times dog fed or played with
 const addAchievementMoneybags = () => {
   //console.log('userCoins', userCoins)
   // (if (user.coins > 5)) then add achievement to user info through put request also an and statement to prevent same achievement from being earned more than once
@@ -59,36 +63,52 @@ const addAchievementMoneybags = () => {
     .catch((err) => {
       console.error('CLIENT ACHIEVEMENT ERROR', err)
     })
-  } 
-  // else if (userCoins > 11 && !achievementsEarned.includes('Super Saver')) {
-  //   //axios put request with activeUser hook
-  //   axios.put(`/achievements/${activeUser}`, {
-  //     achievements: 'Super Saver'
-  //   })
-  //   .then((user) => {
-  //     //use promise to set state of achievements earned
-  //     setAchievementsEarned(user.data)
-  //     console.log('Post put achievements', achievementsEarned);
-  //   })
-  //   //error handling
-  //   .catch((err) => {
-  //     console.error('CLIENT ACHIEVEMENT ERROR', err)
-  //   })
-  // }
+  } else if (userCoins > 20 && !achievementsEarned.includes('Super Saver')) {
+    //axios put request with activeUser hook
+    axios.put(`/achievements/${activeUser}`, {
+      name: 'Super Saver',
+      image: 'https://www.trueachievements.com/imagestore/0006900900/6900915.jpg'
+    })
+    .then((user) => {
+      //use promise to set state of achievements earned
+      setAchievementsEarned(user.data)
+      console.log('Post put achievements', achievementsEarned, userCoins);
+    })
+    //error handling
+    .catch((err) => {
+      console.error('CLIENT ACHIEVEMENT ERROR', err)
+    })
+  } else if (userCoins > 30 && !achievementsEarned.includes('Money Bags')) {
+    //axios put request with activeUser hook
+    axios.put(`/achievements/${activeUser}`, {
+      name: 'Money Bags',
+      image: 'https://www.trueachievements.com/imagestore/0006900800/6900859.jpg'
+    })
+    .then((user) => {
+      //use promise to set state of achievements earned
+      setAchievementsEarned(user.data)
+      console.log('Post put achievements', achievementsEarned);
+    })
+    //error handling
+    .catch((err) => {
+      console.error('CLIENT ACHIEVEMENT ERROR', err)
+    })
+  }
 }
 
-  const [user, setUser] = useState(null);
+ // const [user, setUser] = useState(null);
   useEffect(() => {
       getUserData();
-  }, []);
+  }, []);//empty it won't keep rendering put coinCount in brackets to keep refreshing it
   
   const [count, setCount] = useState(0);
 
  // use effect will run once things loads
   // // anything from your client is going to go through your server. Let the server do the listing
   return (
-    <div>
-      <h3>Current achievements:</h3>
+  <div className="achievement-container">
+    <div className="user-achievements">
+      <p>Current achievements:</p>
       <div>
         {achievementsEarned.map((achievement) => (
           <Achieve 
@@ -102,6 +122,7 @@ const addAchievementMoneybags = () => {
         {' '}
       </div>
     </div>
+  </div>
   );
 }
 

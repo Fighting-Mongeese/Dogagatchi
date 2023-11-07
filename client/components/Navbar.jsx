@@ -1,7 +1,6 @@
 import React from "react";
 import { Container, Nav, Navbar, } from "react-bootstrap";
 import { useNavigate, Link } from 'react-router-dom';
-import axios from "axios";
 
 function NavBar(props) {
 

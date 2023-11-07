@@ -198,7 +198,6 @@ app.put('/quiz/updateUser/:_id', (req, res) => {
 
 // **************** END OF QUIZ ********************
 
-
 // *****************KENNEL************************
 
 app.get('/kennel/:userId', (req, res) => {
@@ -265,8 +264,8 @@ app.delete('/kennel/:dogId', (req, res) => {
       console.error('SERVER ERROR: failed to DELETE dog by id', err);
       res.sendStatus(500);
     });
-})
-// ****************END OF KENNEL********************
+  })
+  // ****************END OF KENNEL********************
 
 /// //////////////LEADER BOARD ROUTES///////////////////////////
 const filterUsers = (filterProp) => User.find({}, null, { limit: 5 }).sort({ [filterProp]: -1 });
@@ -302,9 +301,23 @@ app.get('/leaderboard/:type', (req, res) => {
   }
 });
 
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'dist', 'index.html'))
-})
+//put request to add meal to user's meal array and subtract coins from user's coinCount
+app.put('/meals/:userId', (req, res) =>{
+  const { coinCount, meals } = req.body
+  const { userId } = req.params;
+
+  User.findByIdAndUpdate(userId, {
+    $set: {coinCount: coinCount.newCount},
+    $push: {meals: meals.meal}
+  }, {returnDocument: 'after'} )
+  .then((updatedUser) => {
+    updatedUser ? res.status(200).send(updatedUser) : res.sendStatus(404)
+  })
+  .catch((err) => console.error('meals put req server ERROR:', err))
+  
+  })
+
+
 //GET request to '/search/:username' should query the database for the user and send back user data
 app.get('/searchUser/:username', (req, res) => {
   const { username } = req.params
@@ -317,6 +330,7 @@ app.get('/searchUser/:username', (req, res) => {
       res.sendStatus(500);
     })
 })
+
 
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'dist', 'index.html'))

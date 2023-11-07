@@ -6,6 +6,11 @@ import Meal from './Meal.jsx';
 
 function Restaurant(){
   //const [meals, setMeals] = useState([])
+  const [user, setUser] = useState('');
+  useEffect( () => {
+    const userObj= JSON.parse(sessionStorage.user)
+    setUser(userObj)
+  }, [])
 
   return(
     <div>
@@ -15,6 +20,7 @@ function Restaurant(){
           <Meal 
           key={mealObj.idMeal}
           meal={mealObj}
+          user={user}
           />
         ))}
       </div>

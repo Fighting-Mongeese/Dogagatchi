@@ -29,7 +29,7 @@ function LeaderBoard(props) {
   // leader board defaults to smartest parents on rendering
   useEffect(() => {
     getLeaders()
-  });
+  }, []);
 
   return (
     <div>
@@ -46,11 +46,11 @@ function LeaderBoard(props) {
         }
       }
         >Richest Parents</Button>
-      <Table className="table">
+      <Table bordered>
         <thead className="leader-table">
-          <tr>
-            <th scope="col" className="header-name">Username</th>
-            <th scope="col" className="header-name">
+          <tr size="sm">
+            <th scope="col" width="100" className="header-name">Username</th>
+            <th scope="col" width="100" className="header-name">
               {
             board === 'smartest'
               ? 'Correct Questions'
@@ -61,14 +61,14 @@ function LeaderBoard(props) {
           </tr>
         </thead>
 
-        {/* {leaders.map((leaderObj) => (
+        {leaders.map((leaderObj) => (
           <Leader
             leader={leaderObj}
             key={leaderObj._id}
             view={board}
             setSearchedUserData={props.setSearchedUserData}
           />
-        ))} */}
+        ))}
 
       </Table>
     </div>

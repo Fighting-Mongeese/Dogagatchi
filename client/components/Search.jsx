@@ -8,10 +8,13 @@ function Search(props){
     axios.get(`/searchUser/${searchedUser}`)
     .then(({ data }) => {
       console.log(data)
-      props.setSearchedUserData(data)
+      //props.setSearchedUserData(data)
     })
     .then(() => setSearchedUser(''))
-    .catch((err) => console.error('search user error (client)', err))
+    .catch((err) => {
+      console.error('search user error (client)', err)
+      props.setSearchedUserData('not found')
+    })
   }
   function handleEnter(event) {
     if (event.key === 'Enter') {

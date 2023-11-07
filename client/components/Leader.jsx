@@ -5,14 +5,17 @@ import axios from 'axios';
 function Leader(props) {
   function seeLeader(){
     axios.get(`/searchUser/${props.leader.username}`)
-    .then(({ data }) => props.setSearchedUserData(data))
-    .catch((err) => console.error('search user error (client)', err))
+    .then(({ data }) => console.log('see user page:', data) )//props.setSearchedUserData(data))
+    .catch((err) =>{
+      console.error('search user error (client)', err)
+      //props.setSearchedUserData('not found')
+    })
   }
   return (
-    <tbody>
+    <tbody >
       <tr>
         <th scope="row" className="leader-username"
-        onClick={() => { seeLeader() }}
+        onClick={() => { console.log(props.leader.username); seeLeader() }}
         >{`${props.leader.username} `}</th>
         <th scope="row" className="leader-info">
           {

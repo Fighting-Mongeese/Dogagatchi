@@ -298,7 +298,11 @@ app.get('/leaderboard/:type', (req, res) => {
 
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'dist', 'index.html'))
-});
+
+})
+
+
+
 
 //GET request to '/search/:username' should query the database for the user and send back user data
 app.get('/searchUser/:username', (req, res) => {

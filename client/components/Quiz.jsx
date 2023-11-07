@@ -71,7 +71,6 @@ function Quiz(props) {
         },
       })
         .then((user) => { // put request returns updated user object
-          console.log(user);
           setAlertText(`Correct! Keep up the good work! You now have ${user.data.coinCount} coins`);
           getDogs()
             .then((dogArray) => {

@@ -16,31 +16,38 @@ import Achieve from './Achieve.jsx'
 
 function Achievements(props) { //access props.user to get id for subsequent get requests
 
-  const [activeUser, setActiveUser] = useState('');
+  const [userList, setUserList] = useState([]);
+  const [activeUser, setActiveUser] = useState({});
+  const [userObj, setUserObj] = useState({})
   const [achievementsEarned, setAchievementsEarned] = useState([]);
   const [userCoins, setUserCoins] = useState(0);
-
+  const _id  = JSON.parse(sessionStorage.getItem('user'))
+  const user = _id._id
+  console.log('top of achievements user:', user, 'id:', _id)
   // set up function to collect user data of current user
-  //put in a useEffect so it can be updated
+  //put in a useEffect so it can be updated 
+
   const getUserData = () => new Promise((resolve, reject) => {
-    axios.get('/achievements') //slash users slash achievements refactor
+    axios.get(`/achievements`) //slash users slash achievements refactor
       .then((userArray) => {
-        //console.log('On load', userArray.data);
-        setActiveUser(userArray.data[3]);
-        setUserCoins(userArray.data[3].coinCount)
-        setAchievementsEarned(userArray.data[3].achievements)
-        resolve(userArray.data);
+        console.log('before filter', user, userArray.data)
+      const filteredArray = userArray.data.filter((item) => {
+        return item._id === user
       })
-      // .then (() => {
-      //   console.log('active user, coins, achievements', activeUser, userCoins, achievementsEarned)
-      // })
+        setActiveUser(filteredArray[0]);
+        console.log('Please God', filteredArray[0], 'ACTIVE', activeUser)
+        resolve(filteredArray[0]);
+      })
       .catch((err) => {
         console.error('CLIENT ERROR: failed to get user', err);
         reject(err);
       });
   });
-  //console.log('active user outside', activeUser, userCoins, achievementsEarned)
+   console.log('active user outside', activeUser)
 
+  useEffect(() => {
+    getUserData();
+}, []);//empty it won't keep rendering put coinCount in brackets to keep refreshing it
 
   //other achievements: Top Dawg for the Smartest Leaderboard
   //An achievement for Each dog owned
@@ -97,9 +104,7 @@ const addAchievementMoneybags = () => {
 }
 
  // const [user, setUser] = useState(null);
-  useEffect(() => {
-      getUserData();
-  }, []);//empty it won't keep rendering put coinCount in brackets to keep refreshing it
+
   
   const [count, setCount] = useState(0);
 
@@ -121,6 +126,7 @@ const addAchievementMoneybags = () => {
         ))}
         {' '}
       </div>
+
     </div>
   </div>
   );

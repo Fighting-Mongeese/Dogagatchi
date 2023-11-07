@@ -90,7 +90,6 @@ app.post('/auth/login', passport.authenticate('local', {failureRedirect: '/fail'
 app.post('/auth/register', (req, res) => {
   const {username, password} = req.body
 
-  
 
   if(!username || !password){
     console.log('none')
@@ -110,7 +109,7 @@ app.post('/auth/register', (req, res) => {
       User.create({username: username, password: pass})
       .then((user) => {
         console.log('final', user)
-        return res.status(201).json({message: 'success'})
+        return res.status(201).json({message: 'success', user})
       })
     })
     })
@@ -312,6 +311,7 @@ app.get('/searchUser/:username', (req, res) => {
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'dist', 'index.html'))
 })
+
 // SERVER CONNECTION
 app.listen(port, () => {
   console.log(`

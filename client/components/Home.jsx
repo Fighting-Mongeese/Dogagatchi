@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {Link} from 'react-router-dom'
-import Quiz from './Quiz.jsx'
-import Leaderboard from './Leaderboard.jsx'
+
 
 
 const Home = () => {
@@ -10,7 +9,7 @@ const Home = () => {
     useEffect(() => {
         const user = JSON.parse(sessionStorage.getItem('user'))
         console.log('user', user)
-        setUser(user._id)
+        setUser(user.username)
     }, [])
 
     return (

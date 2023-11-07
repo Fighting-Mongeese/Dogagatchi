@@ -119,9 +119,6 @@ app.get('/fail', (req, res) => {
  res.json({message: req.flash('error')[0]})
 })
 
-
-
-
 // *****************ACHIEVEMENTS************************
 // set up a net to catch requests (server side request handling for achievements)
 app.get('/achievements', (req, res) => {
@@ -180,7 +177,6 @@ app.get('/quiz/getDogs', (req, res) => {
 app.put('/quiz/updateUser/:_id', (req, res) => {
   const { _id } = req.params;
   const { url } = req.body.dog;
-  console.log('add coins', _id, url);
   User.findByIdAndUpdate(
     { _id },
     { $inc: { questionCount: 1, coinCount: 1, dogCount: 1 }, $push: { breeds: url } },

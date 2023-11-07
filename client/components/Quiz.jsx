@@ -7,7 +7,6 @@ import Image from 'react-bootstrap/Image';
 function Quiz(props) {
   const [dogs, setDogs] = useState([]); // 4 urls of dog images loaded from API
   const [solutionUrl, setSolutionUrl] = useState(''); // default to zero, get set in set state; maybe math 
-  const [userId, setUserId] = useState('');
   const [alertText, setAlertText] = useState('Start earning coins by correctly selecting the breed pictured!');
 
   const parseUrl = (url) => {
@@ -33,9 +32,8 @@ function Quiz(props) {
   };
 
   const getDogs = () => new Promise((resolve, reject) => {
-    axios.get('/getDogs')
+    axios.get('/quiz/getDogs')
       .then((dogArray) => {
-        // console.log(dogArray.data);
 
         // if there are duplicates
         if (checkForDuplicateDogs(dogArray.data)) {
@@ -62,17 +60,17 @@ function Quiz(props) {
   }
 
   const handleAnswerSubmission = (e) => {
-    const { value } = e.target; // unpack event
+    const { _id, } = JSON.parse(sessionStorage.getItem('user')) // unpack session user
 
+    const { value } = e.target; // unpack event
     // value is a url assigned to the button's value
     if (value === solutionUrl) {
-      axios.put(`/correctAnswerUpdate/${userId}`, {
+      axios.put(`/quiz/updateUser/${_id}`, {
         dog: {
           url: solutionUrl,
         },
       })
         .then((user) => { // put request returns updated user object
-          console.log(user);
           setAlertText(`Correct! Keep up the good work! You now have ${user.data.coinCount} coins`);
           getDogs()
             .then((dogArray) => {
@@ -113,15 +111,13 @@ function Quiz(props) {
       justifyContent: 'center',
     }}>
 
-      <h3>Add your user ID in the input below</h3>
-      <p>654660d5a2683bbdcb573a83, 6546609aa2683bbdcb573a82, 65466062a2683bbdcb573a81</p>
-      <input type="text" onChange={(e) => setUserId(e.target.value)} value={userId} />
-      <h3>Oh Gawd, what is that thing?</h3>
-      <Image alt="Sorry, someone let the dog out! Click 'Refresh' to fetch a new pup." className='img-trivia' src={solutionUrl} rounded />
-      <h2>{alertText}</h2>
+      
+      <h1>Pooch Picker</h1>
+      <Image alt="Sorry, someone let the dog out! Click 'Refresh Dog' to fetch a new pup." className='img-trivia' src={solutionUrl} rounded />
+      <h4>{alertText}</h4>
       <div style={{ display: 'flex' }}>
         {dogButtons}
-        <Button variant='outline-primary' onClick={getNewRound}>Refresh Dog</Button>
+        <Button variant='secondary' onClick={getNewRound}>Refresh Dog</Button>
       </div>
       <div>
 

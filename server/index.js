@@ -166,15 +166,18 @@ console.log('SERVER PUT',req.body.achievements, newAchieve)
 })
 // ****************END OF ACHIEVEMENTS********************
 
+
+// **************** START OF QUIZ ********************
+
 // GET dog picture and 4 other random dogs from dogs api
-app.get('/getDogs', (req, res) => {
+app.get('/quiz/getDogs', (req, res) => {
   axios.get('https://dog.ceo/api/breeds/image/random/4')
     .then((response) => {
       res.status(200).send(response.data.message);
     });
 });
 
-app.put('/correctAnswerUpdate/:_id', (req, res) => {
+app.put('/quiz/updateUser/:_id', (req, res) => {
   const { _id } = req.params;
   const { url } = req.body.dog;
   console.log('add coins', _id, url);
@@ -195,6 +198,10 @@ app.put('/correctAnswerUpdate/:_id', (req, res) => {
       res.sendStatus(500);
     });
 });
+
+
+// **************** END OF QUIZ ********************
+
 
 // *****************KENNEL************************
 app.get('/user/:userId', (req, res) => {

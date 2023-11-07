@@ -1,21 +1,15 @@
 import React from "react";
 import { Container, Nav, Navbar, } from "react-bootstrap";
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from "axios";
 
 function NavBar(props) {
 
+  const navigate = useNavigate()
+
   const logout = () => {
-    console.log('pre sign out', sessionStorage.getItem('user'))
-    
     sessionStorage.setItem('user', null)
-    
-    
-    // axios.post('/auth/logout', {}, { withCredentials: true })
-    //   .then((res) => console.log('response', res, sessionStorage.getItem('user')))
-    //   .catch((err) => {
-    //     console.error('server error: failed to logout', err)
-    //   })
+    navigate('/');
   }
 
 

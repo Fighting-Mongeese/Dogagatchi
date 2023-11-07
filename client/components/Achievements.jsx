@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Achieve from './Achieve.jsx'
 
-// CHILD OF APP PARENT OF ACHIEVE
+
+// CHILD OF USER PARENT OF ACHIEVE
 
 //POSSIBLY ADD ANIMATION ON TRIGGERING ACHIEVEMENT
 
@@ -13,13 +14,14 @@ import Achieve from './Achieve.jsx'
 
 // then check if user account has achievements. if so render to page
 
-function Achievements() {
+function Achievements(props) { //access props.user to get id for subsequent get requests
 
   const [activeUser, setActiveUser] = useState('');
   const [achievementsEarned, setAchievementsEarned] = useState([]);
   const [userCoins, setUserCoins] = useState(0);
 
   // set up function to collect user data of current user
+  //put in a useEffect so it can be updated
   const getUserData = () => new Promise((resolve, reject) => {
     axios.get('/achievements') //slash users slash achievements refactor
       .then((userArray) => {
@@ -29,9 +31,9 @@ function Achievements() {
         setAchievementsEarned(userArray.data[3].achievements)
         resolve(userArray.data);
       })
-      .then (() => {
-        console.log('active user, coins, achievements', activeUser, userCoins, achievementsEarned)
-      })
+      // .then (() => {
+      //   console.log('active user, coins, achievements', activeUser, userCoins, achievementsEarned)
+      // })
       .catch((err) => {
         console.error('CLIENT ERROR: failed to get user', err);
         reject(err);
@@ -97,15 +99,16 @@ const addAchievementMoneybags = () => {
  // const [user, setUser] = useState(null);
   useEffect(() => {
       getUserData();
-  }, []);
+  }, []);//empty it won't keep rendering put coinCount in brackets to keep refreshing it
   
   const [count, setCount] = useState(0);
 
  // use effect will run once things loads
   // // anything from your client is going to go through your server. Let the server do the listing
   return (
+  <div className="achievement-container">
     <div className="user-achievements">
-      <h3>Current achievements:</h3>
+      <p>Current achievements:</p>
       <div>
         {achievementsEarned.map((achievement) => (
           <Achieve 
@@ -118,9 +121,8 @@ const addAchievementMoneybags = () => {
         ))}
         {' '}
       </div>
-      <button onClick={() => {getUserData()}}>Update user</button>
-      <button onClick={() => {addAchievementMoneybags()}}>Update achievements</button>
     </div>
+  </div>
   );
 }
 

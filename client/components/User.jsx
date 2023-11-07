@@ -6,19 +6,22 @@ import Kennel from './Kennel.jsx';
 function User(props) {
   const [user, setUser] = useState('');
   useEffect( () => {
+    const userObj= JSON.parse(sessionStorage.user)
+    setUser(userObj)
+  }, [])
 
-  })
 return(
 <div>
-    <NavBar />
-    
+
+
   <div className="user-main-div">
-    <div className="user-stats">
+    <div className="user-stats-container">
+      <div className="user-stats">
       Stats
+      </div>
     </div>
     <Kennel className="user-kennel"/>
-    <Achievements className="user-achievements"/>
-   
+    <Achievements user={user} className="user-achievements"/>
   </div>
  </div>
 )

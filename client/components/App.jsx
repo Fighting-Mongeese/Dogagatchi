@@ -10,6 +10,7 @@ import '../app.css'; // imports css to apply to all components in App component
 import LeaderBoard from './Leaderboard.jsx';
 import Kennel from './Kennel.jsx'
 import User from './User.jsx';
+import NavBar from './Navbar.jsx';
 
 function App() {
   return (
@@ -18,11 +19,11 @@ function App() {
         <Routes>
             <Route element={<ProtectedRoute/>}>
             <Route path='/home' element={<Home/>}/>
-            <Route path='/leaderBoard' element={<LeaderBoard/>}/>
-            <Route path='/quiz' element={<Quiz/>}/>
-            <Route path='/user' element={<User/>}/>
-            <Route path='/kennel' element={<Kennel/>}/>
-            <Route path='/achievements' element={<Achievements/>}/>
+            <Route path='/leaderBoard' element={<div><NavBar/><LeaderBoard/></div>}/>
+            <Route path='/quiz' element={<div><NavBar/><Quiz/></div>}/>
+            <Route path='/user' element={<div><NavBar/><User/></div>}/>
+            <Route path='/kennel' element={<div><NavBar/><Kennel/></div>}/>
+            <Route path='/achievements' element={<div><NavBar/><Achievements/></div>}/>
             </Route>
             <Route path='/' element={<Login/>}/>
         </Routes>

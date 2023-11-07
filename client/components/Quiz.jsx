@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { capitalize, uniq } from 'lodash'
-import Button from 'react-bootstrap/Button';
-import Image from 'react-bootstrap/Image';
-import Alert from 'react-bootstrap/Alert';
+//import Button from 'react-bootstrap/Button';
+//import Image from 'react-bootstrap/Image';
+//import Alert from 'react-bootstrap/Alert';
+//import Container from 'react-bootstrap/Container';
+import { Row, Col, Container, Alert, Image, Button } from 'react-bootstrap';
+//import Col from 'react-bootstrap';
+
 
 function Quiz(props) {
   const [dogs, setDogs] = useState([]); // 4 urls of dog images loaded from API
   const [solutionUrl, setSolutionUrl] = useState(''); // default to zero, get set in set state; maybe math 
-  const [alert, setAlert] = useState({text: 'Start earning coins by correctly selecting the breed pictured!', variant: 'light'});
+  const [alert, setAlert] = useState({ text: 'Start earning coins by correctly selecting the breed pictured!', variant: 'light' });
 
   const parseUrl = (url) => {
     const noDomain = url.slice(url.indexOf('breeds/') + 7);
@@ -72,7 +76,7 @@ function Quiz(props) {
         },
       })
         .then((user) => { // put request returns updated user object
-          setAlert({text: `Correct! Keep up the good work! You now have ${user.data.coinCount} coins`, variant: 'success'});
+          setAlert({ text: `Correct! Keep up the good work! You now have ${user.data.coinCount} coins`, variant: 'success' });
           getDogs()
             .then((dogArray) => {
               setSolutionDog(dogArray);
@@ -82,7 +86,7 @@ function Quiz(props) {
           console.error('CLIENT ERROR: failed to start new round after correct answer', err);
         });
     } else { // if the answer is wrong
-      setAlert({text: 'Nice try! Have another go!', variant: 'danger'});
+      setAlert({ text: 'Nice try! Have another go!', variant: 'danger' });
       getDogs()
         .then((dogArray) => {
           setSolutionDog(dogArray);
@@ -100,30 +104,38 @@ function Quiz(props) {
   const dogButtons = dogs.map((url, index) => {
     const breed = parseUrl(url);
     return (
-      <Button style={{width: '250px', margin: '5px'}} value={url} key={index} onClick={handleAnswerSubmission} type="button">{breed}</Button>
+      <Button style={{ width: '250px', margin: '5px' }} value={url} key={index} onClick={handleAnswerSubmission} type="button">{breed}</Button>
     );
   });
 
-  return (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-    }}>
-      <h1>Pooch Picker</h1>
-      <div style={{ height: '550px', width: '550px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <Image style={{ margin: 'auto', }}alt="Sorry, someone let the dog out! Click 'Refresh Dog' to fetch a new pup." className='img-trivia' src={solutionUrl} rounded />
-      </div>
-      <Alert style= {{fontSize: '24px', margin: '20px', }} variant={alert.variant}>{alert.text}</Alert>
-      <div style={{ display: 'grid', gridTemplateColumns: 'auto auto' }}>
-        {dogButtons}
-        <Button variant='secondary' style= {{width: '250px'}} onClick={getNewRound}>Refresh Dog</Button>
-      </div>
-      <div>
+  /*
+  
+  */
 
-      </div>
-    </div>
+
+  return (
+    <Container >
+      <Row>
+        <Col style= {{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
+          <h1 style={{fontSize:'96px', color: 'white'}}>Pooch Picker</h1>
+          <div style={{ height: '550px', width: '550px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <Image style={{ margin: 'auto', }} alt="Sorry, someone let the dog out! Click 'Refresh Dog' to fetch a new pup." className='img-trivia' src={solutionUrl} rounded />
+          </div>
+          <Alert style={{ fontSize: '24px', margin: '20px', }} variant={alert.variant}>{alert.text}</Alert>
+          <div style={{ display: 'grid', gridTemplateColumns: 'auto auto' }}>
+            {dogButtons}
+            <Button variant='danger' style={{ width: '250px' }} onClick={getNewRound}>Refresh Dog</Button>
+          </div>
+          <div>
+          </div>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

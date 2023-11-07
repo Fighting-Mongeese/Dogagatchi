@@ -200,21 +200,7 @@ app.put('/quiz/updateUser/:_id', (req, res) => {
 
 
 // *****************KENNEL************************
-app.get('/user/:userId', (req, res) => {
-  const { userId } = req.params;
-
-  User.findById(userId)
-  .then((user) => {
-    res.status(200).send(user);
-  })
-  .catch((err) =>{
-    console.error('FAILED to GET dog list from user by id', err);
-    res.sendStatus(500);
-  })
-
-})
-
-
+fg
 app.get('/kennel/:userId', (req, res) => {
   const { userId } = req.params;
   Dog.find().where({ owner: userId })

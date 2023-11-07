@@ -1,6 +1,12 @@
 const express = require('express');
 const path = require('path');
 const axios = require('axios');
+const passport = require('passport')
+const LocalStrategy = require('passport-local').Strategy
+const session = require('express-session')
+const bcrypt = require('bcrypt')
+const flash = require('express-flash')
+require('dotenv').config()
 
 const app = express();
 const port = 4000;
@@ -11,10 +17,49 @@ const { ATLAS_URI } = require('./config');
 
 const distPath = path.resolve(__dirname, '..', 'dist');
 
+
 // MIDDLEWARE - every request runs through this middleware
 // (functions that all requests go through)
 app.use(express.static(distPath)); // Statically serve up client directory
 app.use(express.json());
+app.use(session({secret:'secret', resave: true, saveUninitialized: true}))
+app.use(flash())
+app.use(passport.initialize())
+app.use(passport.session())
+
+passport.use(new LocalStrategy({
+  passReqToCallback: true
+}, (req, username, password, done) => {
+  User.findOne({username: username})
+  .then((user) => {
+    if(!user){
+      return done(null, false, {message: "Incorrect username/password"})
+    }
+
+    bcrypt.compare(password, user.password)
+    .then((cryptPassword) => {
+      console.log('crypt', cryptPassword)
+  
+      if(!cryptPassword){
+        return done(null, false, {message: "Incorrect username/password"})
+      }
+    return done(null, user)
+    })
+  })
+}))
+
+passport.serializeUser((user, done) => {
+  done(null, user.id)
+})
+
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await User.findById({_id: id})
+    done(null, user)
+  }catch(err){
+    done(err)
+  }
+})
 
 // ~~~~~~~~~~ add users to db~~~~~~~~~~~~~~~
 const testFunc = () => {
@@ -37,6 +82,47 @@ const testFunc = () => {
 // testFunc();
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+app.post('/auth/login', passport.authenticate('local', {failureRedirect: '/fail', failureFlash: true}), (req, res) => {
+  const user = req.user
+  res.json({message: "success", user})
+})
+
+app.post('/auth/register', (req, res) => {
+  const {username, password} = req.body
+
+  
+
+  if(!username || !password){
+    console.log('none')
+    return res.status(400).json({message: "Must enter a usernme and password"})
+  }
+
+  
+
+  User.findOne({username: username})
+  .then((user) => {
+    if(user){
+      console.log('user', user)
+      return res.status(400).json({message: "User already exists"})
+    }
+    bcrypt.hash(password, 10)
+    .then((pass) => {
+      User.create({username: username, password: pass})
+      .then((user) => {
+        console.log('final', user)
+        return res.status(201).json({message: 'success'})
+      })
+    })
+    })
+})
+
+app.get('/fail', (req, res) => {
+ res.json({message: req.flash('error')[0]})
+})
+
+
+
+
 // *****************ACHIEVEMENTS************************
 // set up a net to catch requests (server side request handling for achievements)
 app.get('/achievements', (req, res) => {
@@ -51,6 +137,7 @@ app.get('/achievements', (req, res) => {
       res.sendStatus(500);
     });
 });
+
 
 //app.put populate
 // watch your slashes. 2nd time getting tripped up by not placing a slash before userId
@@ -194,6 +281,10 @@ app.get('/leaderboard/:type', (req, res) => {
   }
 });
 
+<<<<<<< HEAD
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'dist', 'index.html'))
+=======
 //GET request to '/search/:username' should query the database for the user and send back user data
 app.get('/searchUser/:username', (req, res) => {
   const { username } = req.params;
@@ -206,6 +297,7 @@ app.get('/searchUser/:username', (req, res) => {
     console.error('search user (server) error:', err)
     res.sendStatus(500);
   })
+>>>>>>> 7f1bf169100aacbb47413ab0e997f867426de894
 })
 
 // SERVER CONNECTION

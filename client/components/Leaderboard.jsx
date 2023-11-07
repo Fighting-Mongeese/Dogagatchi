@@ -61,14 +61,14 @@ function LeaderBoard(props) {
           </tr>
         </thead>
 
-        {leaders.map((leaderObj) => (
+        {/* {leaders.map((leaderObj) => (
           <Leader
             leader={leaderObj}
             key={leaderObj._id}
             view={board}
             setSearchedUserData={props.setSearchedUserData}
           />
-        ))}
+        ))} */}
 
       </Table>
     </div>

@@ -24,6 +24,7 @@ function App() {
             <Route path='/kennel' element={<div><NavBar/><Kennel/></div>}/>
             </Route>
             <Route path='/' element={<Login/>}/>
+            <Route path='/restaurant' element={<Restaurant />}/>
         </Routes>
     </Router>
     </Context>

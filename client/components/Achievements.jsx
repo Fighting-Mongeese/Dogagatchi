@@ -4,6 +4,7 @@ import Achieve from './Achieve.jsx'
 
 // CHILD OF APP PARENT OF ACHIEVE
 
+//POSSIBLY ADD ANIMATION ON TRIGGERING ACHIEVEMENT
 
 // Access the user who is currently logged in to get information from the database about them
 
@@ -20,7 +21,7 @@ function Achievements() {
 
   // set up function to collect user data of current user
   const getUserData = () => new Promise((resolve, reject) => {
-    axios.get('/achievements')
+    axios.get('/achievements') //slash users slash achievements refactor
       .then((userArray) => {
         //console.log('On load', userArray.data);
         setActiveUser(userArray.data[3]);
@@ -103,7 +104,7 @@ const addAchievementMoneybags = () => {
  // use effect will run once things loads
   // // anything from your client is going to go through your server. Let the server do the listing
   return (
-    <div>
+    <div className="user-achievements">
       <h3>Current achievements:</h3>
       <div>
         {achievementsEarned.map((achievement) => (

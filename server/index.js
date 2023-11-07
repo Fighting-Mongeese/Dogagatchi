@@ -119,16 +119,6 @@ app.get('/fail', (req, res) => {
  res.json({message: req.flash('error')[0]})
 })
 
-app.post('/auth/logout', async (req, res)=>{
-  console.log('inside  post')
-  await req.logout(function(err) {
-    if (err) { return next(err); }
-    res.redirect('/');
-  });
-});
-
-
-
 // *****************ACHIEVEMENTS************************
 // set up a net to catch requests (server side request handling for achievements)
 app.get('/achievements', (req, res) => {

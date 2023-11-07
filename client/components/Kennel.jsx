@@ -21,6 +21,15 @@ function Kennel() {
         });
     });
 
+const addDog = () => {
+  axios.get(`/user/${userId}`)
+  .then(({data}) => {
+    //get breeds data
+    console.log(data.breeds);
+  })
+  .catch((err) => console.error(err))
+}
+
   return (
     <div>
       <input
@@ -30,6 +39,10 @@ function Kennel() {
       />
       <div>
         <Button onClick={() => fillKennel()}>fill kennel</Button>
+      </div>
+
+      <div>
+        <Button onClick={() => addDog()}>add dog</Button>
       </div>
       {dogs
         .filter((dog) => {

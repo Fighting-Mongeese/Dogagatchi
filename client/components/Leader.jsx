@@ -12,8 +12,8 @@ function Leader(props) {
     })
   }
   return (
-    <tbody>
-      <tr>
+    <tbody >
+      <tr stripped>
         <th scope="row" className="leader-username"
         onClick={() => { seeLeader() }}
         >{`${props.leader.username} `}</th>

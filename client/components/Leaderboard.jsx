@@ -46,11 +46,11 @@ function LeaderBoard(props) {
         }
       }
         >Richest Parents</Button>
-      <Table className="table">
+      <Table bordered>
         <thead className="leader-table">
-          <tr>
-            <th scope="col" className="header-name">Username</th>
-            <th scope="col" className="header-name">
+          <tr size="sm">
+            <th scope="col" width="100" className="header-name">Username</th>
+            <th scope="col" width="100" className="header-name">
               {
             board === 'smartest'
               ? 'Correct Questions'

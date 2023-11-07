@@ -8,7 +8,7 @@ function Search(props){
     axios.get(`/searchUser/${searchedUser}`)
     .then(({ data }) => {
       console.log(data)
-      props.setSearchedUserData(data)
+      //props.setSearchedUserData(data)
     })
     .then(() => setSearchedUser(''))
     .catch((err) => {

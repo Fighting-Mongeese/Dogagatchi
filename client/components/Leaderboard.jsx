@@ -29,7 +29,7 @@ function LeaderBoard(props) {
   // leader board defaults to smartest parents on rendering
   useEffect(() => {
     getLeaders()
-  });
+  }, []);
 
   return (
     <div>
@@ -61,14 +61,14 @@ function LeaderBoard(props) {
           </tr>
         </thead>
 
-        {/* {leaders.map((leaderObj) => (
+        {leaders.map((leaderObj) => (
           <Leader
             leader={leaderObj}
             key={leaderObj._id}
             view={board}
             setSearchedUserData={props.setSearchedUserData}
           />
-        ))} */}
+        ))}
 
       </Table>
     </div>

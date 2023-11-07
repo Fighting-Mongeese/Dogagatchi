@@ -296,18 +296,9 @@ app.get('/leaderboard/:type', (req, res) => {
   }
 });
 
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'dist', 'index.html'))
-
-})
-
-
-
-
 //GET request to '/search/:username' should query the database for the user and send back user data
 app.get('/searchUser/:username', (req, res) => {
-  const { username } = req.params;
-
+  const { username } = req.params
   User.findOne({ username })
   .then((user) => {
     user ? res.status(200).send(user) : res.sendStatus(404);
@@ -316,6 +307,10 @@ app.get('/searchUser/:username', (req, res) => {
     console.error('search user (server) error:', err)
     res.sendStatus(500);
   })
+})
+
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'dist', 'index.html'))
 })
 // SERVER CONNECTION
 app.listen(port, () => {

@@ -1,6 +1,5 @@
 Button {
- margin: 20px;
-
+ margin: 5px;
 }
 
 h5,h4,h3,h2,h1 {
@@ -14,7 +13,6 @@ h5,h4,h3,h2,h1 {
 .img-trivia {
   max-width: 500px;
   max-height: 500px;
-  border: white 2px solid;
 }
 
 .achievement-element {

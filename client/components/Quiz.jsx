@@ -8,7 +8,7 @@ import Alert from 'react-bootstrap/Alert';
 function Quiz(props) {
   const [dogs, setDogs] = useState([]); // 4 urls of dog images loaded from API
   const [solutionUrl, setSolutionUrl] = useState(''); // default to zero, get set in set state; maybe math 
-  const [alert, setAlert] = useState({text: 'Start earning coins by correctly selecting the breed pictured!', variant: 'primary'});
+  const [alert, setAlert] = useState({text: 'Start earning coins by correctly selecting the breed pictured!', variant: 'light'});
 
   const parseUrl = (url) => {
     const noDomain = url.slice(url.indexOf('breeds/') + 7);
@@ -100,7 +100,7 @@ function Quiz(props) {
   const dogButtons = dogs.map((url, index) => {
     const breed = parseUrl(url);
     return (
-      <Button style={{width: '200px'}} value={url} key={index} onClick={handleAnswerSubmission} type="button">{breed}</Button>
+      <Button style={{width: '250px', margin: '5px'}} value={url} key={index} onClick={handleAnswerSubmission} type="button">{breed}</Button>
     );
   });
 
@@ -116,9 +116,9 @@ function Quiz(props) {
         <Image style={{ margin: 'auto', }}alt="Sorry, someone let the dog out! Click 'Refresh Dog' to fetch a new pup." className='img-trivia' src={solutionUrl} rounded />
       </div>
       <Alert style= {{fontSize: '24px', margin: '20px', }} variant={alert.variant}>{alert.text}</Alert>
-      <div style={{ display: 'grid' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'auto auto' }}>
         {dogButtons}
-        <Button variant='secondary' onClick={getNewRound}>Refresh Dog</Button>
+        <Button variant='secondary' style= {{width: '250px'}} onClick={getNewRound}>Refresh Dog</Button>
       </div>
       <div>
 

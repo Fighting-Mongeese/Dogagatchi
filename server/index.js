@@ -111,13 +111,12 @@ app.put('/correctAnswerUpdate/:_id', (req, res) => {
 });
 
 // *****************KENNEL************************
-app.get('/kennel', (req, res) => {
-  const { id } = req.body;
+app.get('/user/:userId', (req, res) => {
+  const { userId } = req.params;
 
-  User.findById(id)
-  .then(({breeds}) => {
-    console.log(breeds);
-    res.send(breeds);
+  User.findById(userId)
+  .then((user) => {
+    res.status(200).send(user);
   })
   .catch((err) =>{
     console.error('FAILED to GET dog list from user by id', err);

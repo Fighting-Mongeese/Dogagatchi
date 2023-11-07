@@ -16,20 +16,21 @@ function Kennel() {
     const user = JSON.parse(sessionStorage.getItem("user"));
     setUserId(user._id);
     setUserCoins(user.coinCount);
-    setList(user.breeds);
   }, []);
 
 const getDogs = () => {
   axios
   .get(`/kennel/${userId}`)
   .then(({ data }) => {
-    console.log(data);
-    setDogs(data);
+    console.log(data.dogsArr)
+    setDogs(data.dogsArr);
+    setList(data.breeds);
   })
   .catch((err) => {
     console.error(err);
   });
 }
+
 
   useEffect(getDogs, [userId]);
 
@@ -41,8 +42,10 @@ const getDogs = () => {
         img: dogView,
         owner: userId,
       });
+
       getDogs();
       setDogs([])
+      setBreeds([])
       setShop(false);
   };
 

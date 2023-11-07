@@ -198,6 +198,21 @@ app.put('/correctAnswerUpdate/:_id', (req, res) => {
 });
 
 // *****************KENNEL************************
+app.get('/user/:userId', (req, res) => {
+  const { userId } = req.params;
+
+  User.findById(userId)
+  .then((user) => {
+    res.status(200).send(user);
+  })
+  .catch((err) =>{
+    console.error('FAILED to GET dog list from user by id', err);
+    res.sendStatus(500);
+  })
+
+})
+
+
 app.get('/kennel/:userId', (req, res) => {
   const { userId } = req.params;
   Dog.find().where({ owner: userId })
@@ -281,10 +296,10 @@ app.get('/leaderboard/:type', (req, res) => {
   }
 });
 
-<<<<<<< HEAD
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'dist', 'index.html'))
-=======
+});
+
 //GET request to '/search/:username' should query the database for the user and send back user data
 app.get('/searchUser/:username', (req, res) => {
   const { username } = req.params;
@@ -297,7 +312,6 @@ app.get('/searchUser/:username', (req, res) => {
     console.error('search user (server) error:', err)
     res.sendStatus(500);
   })
->>>>>>> 7f1bf169100aacbb47413ab0e997f867426de894
 })
 
 // SERVER CONNECTION

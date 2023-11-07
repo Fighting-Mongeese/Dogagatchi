@@ -7,33 +7,30 @@ function Kennel() {
   const [dogs, setDogs] = useState([]);
   const [userId, setUserId] = useState("");
   const [coins, setUserCoins] = useState(0);
+  const [breeds, setList] = useState([]);
+
+  const addDog = () => {
+    console.log(breeds);
+  };
 
   useEffect(() => {
     const user = JSON.parse(sessionStorage.getItem("user"));
-    console.log(user._id)
-    setUserId(user._id.trim());
+    setUserId(user._id);
     setUserCoins(user.coinCount);
+    setList(user.breeds)
+  }, []);
 
+  useEffect(() => {
     axios
       .get(`/kennel/${userId}`)
       .then(({ data }) => {
-        console.log(data)
+        console.log(data);
         setDogs(data);
       })
       .catch((err) => {
         console.error(err);
       });
-  }, []);
-
-  const addDog = () => {
-    axios
-      .get(`/user/${userId}`)
-      .then(({ data }) => {
-        //get breeds data
-        console.log(data.breeds);
-      })
-      .catch((err) => console.error(err));
-  };
+  }, [userId]);
 
   return (
     <div>
@@ -42,7 +39,7 @@ function Kennel() {
       </div>
 
       <div>
-        {dogs.length > 0 ? (
+        {Array.isArray(dogs) && dogs.length > 0 ? (
           dogs
             .filter((dog) => {
               const now = new Date().getTime();

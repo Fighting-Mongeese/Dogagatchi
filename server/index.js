@@ -200,7 +200,7 @@ app.put('/quiz/updateUser/:_id', (req, res) => {
 
 
 // *****************KENNEL************************
-fg
+
 app.get('/kennel/:userId', (req, res) => {
   const { userId } = req.params;
   Dog.find().where({ owner: userId })

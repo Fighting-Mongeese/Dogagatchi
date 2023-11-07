@@ -3,17 +3,18 @@ import axios from 'axios';
 import { capitalize, uniq } from 'lodash'
 import Button from 'react-bootstrap/Button';
 import Image from 'react-bootstrap/Image';
+import Alert from 'react-bootstrap/Alert';
 
 function Quiz(props) {
   const [dogs, setDogs] = useState([]); // 4 urls of dog images loaded from API
   const [solutionUrl, setSolutionUrl] = useState(''); // default to zero, get set in set state; maybe math 
-  const [alertText, setAlertText] = useState('Start earning coins by correctly selecting the breed pictured!');
+  const [alert, setAlert] = useState({text: 'Start earning coins by correctly selecting the breed pictured!', variant: 'primary'});
 
   const parseUrl = (url) => {
     const noDomain = url.slice(url.indexOf('breeds/') + 7);
     let breed = capitalize(noDomain.slice(0, noDomain.indexOf('/')));
     if (breed.includes('-')) {
-      breed = breed.split('-').map((word)=> capitalize(word)).reverse().join(' ');
+      breed = breed.split('-').map((word) => capitalize(word)).reverse().join(' ');
     }
     return breed;
   };
@@ -23,11 +24,11 @@ function Quiz(props) {
 
     const breedArray = urlArray.map((url) => parseUrl(url));
     const uniqBreedArray = uniq(breedArray);
-    
+
     if (uniqBreedArray.length < 4) {
       hasDuplicates = true;
     }
-   
+
     return hasDuplicates;
   };
 
@@ -71,7 +72,7 @@ function Quiz(props) {
         },
       })
         .then((user) => { // put request returns updated user object
-          setAlertText(`Correct! Keep up the good work! You now have ${user.data.coinCount} coins`);
+          setAlert({text: `Correct! Keep up the good work! You now have ${user.data.coinCount} coins`, variant: 'success'});
           getDogs()
             .then((dogArray) => {
               setSolutionDog(dogArray);
@@ -81,7 +82,7 @@ function Quiz(props) {
           console.error('CLIENT ERROR: failed to start new round after correct answer', err);
         });
     } else { // if the answer is wrong
-      setAlertText('Nice try! Have another go!');
+      setAlert({text: 'Nice try! Have another go!', variant: 'danger'});
       getDogs()
         .then((dogArray) => {
           setSolutionDog(dogArray);
@@ -99,7 +100,7 @@ function Quiz(props) {
   const dogButtons = dogs.map((url, index) => {
     const breed = parseUrl(url);
     return (
-      <Button value={url} key={index} onClick={handleAnswerSubmission} type="button">{breed}</Button>
+      <Button style={{width: '200px'}} value={url} key={index} onClick={handleAnswerSubmission} type="button">{breed}</Button>
     );
   });
 
@@ -110,12 +111,12 @@ function Quiz(props) {
       alignItems: 'center',
       justifyContent: 'center',
     }}>
-
-      
       <h1>Pooch Picker</h1>
-      <Image alt="Sorry, someone let the dog out! Click 'Refresh Dog' to fetch a new pup." className='img-trivia' src={solutionUrl} rounded />
-      <h4>{alertText}</h4>
-      <div style={{ display: 'flex' }}>
+      <div style={{ height: '550px', width: '550px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Image style={{ margin: 'auto', }}alt="Sorry, someone let the dog out! Click 'Refresh Dog' to fetch a new pup." className='img-trivia' src={solutionUrl} rounded />
+      </div>
+      <Alert style= {{fontSize: '24px', margin: '20px', }} variant={alert.variant}>{alert.text}</Alert>
+      <div style={{ display: 'grid' }}>
         {dogButtons}
         <Button variant='secondary' onClick={getNewRound}>Refresh Dog</Button>
       </div>

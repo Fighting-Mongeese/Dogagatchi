@@ -317,7 +317,6 @@ app.get('/searchUser/:username', (req, res) => {
     res.sendStatus(500);
   })
 })
-
 // SERVER CONNECTION
 app.listen(port, () => {
   console.log(`

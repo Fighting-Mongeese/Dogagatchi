@@ -119,7 +119,7 @@ function Quiz(props) {
         alignItems: 'center',
         justifyContent: 'center',
       }}>
-          <h1 style={{fontSize:'96px', color: 'white'}}>Pooch Picker</h1>
+          <h1 style={{fontSize:'96px', color: 'black'}}>Pooch Picker</h1>
           <div style={{ height: '550px', width: '550px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <Image style={{ margin: 'auto', }} alt="Sorry, someone let the dog out! Click 'Refresh Dog' to fetch a new pup." className='img-trivia' src={solutionUrl} rounded />
           </div>

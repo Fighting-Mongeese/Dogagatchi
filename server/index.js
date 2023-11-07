@@ -172,9 +172,10 @@ console.log('SERVER PUT',req.body.achievements, newAchieve)
 // GET dog picture and 4 other random dogs from dogs api
 app.get('/quiz/getDogs', (req, res) => {
   axios.get('https://dog.ceo/api/breeds/image/random/4')
-    .then((response) => {
+  .then((response) => {
       res.status(200).send(response.data.message);
-    });
+    })
+    .catch((err) => {console.log(err)})
 });
 
 app.put('/quiz/updateUser/:_id', (req, res) => {

@@ -22,7 +22,7 @@ const distPath = path.resolve(__dirname, '..', 'dist');
 // (functions that all requests go through)
 app.use(express.static(distPath)); // Statically serve up client directory
 app.use(express.json());
-app.use(session({secret:'secret', resave: true, saveUninitialized: true}))
+app.use(session({ secret: 'secret', resave: true, saveUninitialized: true }))
 app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session())
@@ -30,22 +30,22 @@ app.use(passport.session())
 passport.use(new LocalStrategy({
   passReqToCallback: true
 }, (req, username, password, done) => {
-  User.findOne({username: username})
-  .then((user) => {
-    if(!user){
-      return done(null, false, {message: "Incorrect username/password"})
-    }
-
-    bcrypt.compare(password, user.password)
-    .then((cryptPassword) => {
-      console.log('crypt', cryptPassword)
-  
-      if(!cryptPassword){
-        return done(null, false, {message: "Incorrect username/password"})
+  User.findOne({ username: username })
+    .then((user) => {
+      if (!user) {
+        return done(null, false, { message: "Incorrect username/password" })
       }
-    return done(null, user)
+
+      bcrypt.compare(password, user.password)
+        .then((cryptPassword) => {
+          console.log('crypt', cryptPassword)
+
+          if (!cryptPassword) {
+            return done(null, false, { message: "Incorrect username/password" })
+          }
+          return done(null, user)
+        })
     })
-  })
 }))
 
 passport.serializeUser((user, done) => {
@@ -54,9 +54,9 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await User.findById({_id: id})
+    const user = await User.findById({ _id: id })
     done(null, user)
-  }catch(err){
+  } catch (err) {
     done(err)
   }
 })
@@ -82,41 +82,41 @@ const testFunc = () => {
 // testFunc();
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-app.post('/auth/login', passport.authenticate('local', {failureRedirect: '/fail', failureFlash: true}), (req, res) => {
+app.post('/auth/login', passport.authenticate('local', { failureRedirect: '/fail', failureFlash: true }), (req, res) => {
   const user = req.user
-  res.json({message: "success", user})
+  res.json({ message: "success", user })
 })
 
 app.post('/auth/register', (req, res) => {
-  const {username, password} = req.body
+  const { username, password } = req.body
 
 
-  if(!username || !password){
+  if (!username || !password) {
     console.log('none')
-    return res.status(400).json({message: "Must enter a usernme and password"})
+    return res.status(400).json({ message: "Must enter a usernme and password" })
   }
 
-  
 
-  User.findOne({username: username})
-  .then((user) => {
-    if(user){
-      console.log('user', user)
-      return res.status(400).json({message: "User already exists"})
-    }
-    bcrypt.hash(password, 10)
-    .then((pass) => {
-      User.create({username: username, password: pass})
-      .then((user) => {
-        console.log('final', user)
-        return res.status(201).json({message: 'success', user})
-      })
-    })
+
+  User.findOne({ username: username })
+    .then((user) => {
+      if (user) {
+        console.log('user', user)
+        return res.status(400).json({ message: "User already exists" })
+      }
+      bcrypt.hash(password, 10)
+        .then((pass) => {
+          User.create({ username: username, password: pass })
+            .then((user) => {
+              console.log('final', user)
+              return res.status(201).json({ message: 'success', user })
+            })
+        })
     })
 })
 
 app.get('/fail', (req, res) => {
- res.json({message: req.flash('error')[0]})
+  res.json({ message: req.flash('error')[0] })
 })
 
 // *****************ACHIEVEMENTS************************
@@ -124,11 +124,11 @@ app.get('/fail', (req, res) => {
 app.get('/achievements', (req, res) => {
   User.find() // empty filter object to TEST IN POSTMAN
     .then((user) => { // now we have a collection to send back
-    // success case send the data in the response
+      // success case send the data in the response
       res.status(200).send(user);
     })
     .catch((err) => {
-    // handle errors
+      // handle errors
       console.error('FAILED to find all users', err);
       res.sendStatus(500);
     });
@@ -140,26 +140,26 @@ app.get('/achievements', (req, res) => {
 app.put('/achievements/:userId', (req, res) => {
   //destructure params from req obj
   const { userId } = req.params;
-  const newAchieve  = req.body.achievements;
-console.log('SERVER PUT',req.body.achievements, newAchieve)
-//return the updated user
+  const newAchieve = req.body.achievements;
+  console.log('SERVER PUT', req.body.achievements, newAchieve)
+  //return the updated user
   User.findByIdAndUpdate(
     userId,
-    { $push: { achievements: newAchieve }},
-    {new: true},//sends back the updated user with new
+    { $push: { achievements: newAchieve } },
+    { new: true },//sends back the updated user with new
   )
-  .then((user) => {
-    if (user) {
-      console.log('Updated user', user)
-      res.status(200).send(user);
-    } else { //else get back null
-      res.sendStatus(404);
-    }
-  })
-  .catch((err) => {
-    console.error('SERVER ERROR: failed to PUT user achievements', err);
-    res.sendStatus(500);
-  })
+    .then((user) => {
+      if (user) {
+        console.log('Updated user', user)
+        res.status(200).send(user);
+      } else { //else get back null
+        res.sendStatus(404);
+      }
+    })
+    .catch((err) => {
+      console.error('SERVER ERROR: failed to PUT user achievements', err);
+      res.sendStatus(500);
+    })
 })
 // ****************END OF ACHIEVEMENTS********************
 
@@ -201,20 +201,6 @@ app.put('/quiz/updateUser/:_id', (req, res) => {
 
 
 // *****************KENNEL************************
-app.get('/user/:userId', (req, res) => {
-  const { userId } = req.params;
-
-  User.findById(userId)
-  .then((user) => {
-    res.status(200).send(user);
-  })
-  .catch((err) =>{
-    console.error('FAILED to GET dog list from user by id', err);
-    res.sendStatus(500);
-  })
-
-})
-
 
 app.get('/kennel/:userId', (req, res) => {
   const { userId } = req.params;
@@ -229,13 +215,31 @@ app.get('/kennel/:userId', (req, res) => {
     });
 });
 
+app.post('/kennel', (req, res) => {
+  const { name, img, owner } = req.body;
+  const status = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+
+  Dog.create({
+    name,
+    img,
+    owner,
+    feedDeadline: status,
+    walkDeadline: status
+  })
+    .then(() => res.sendStatus(201))
+    .catch((err) => {
+      console.error('SERVER ERROR: failed to CREATE dog', err);
+      res.sendStatus(500);
+    });
+})
+
 app.put('/kennel/:dogId', (req, res) => {
   const { dogId } = req.params;
   const { status } = req.body;
 
   Dog.findByIdAndUpdate(dogId, status, { returnDocument: 'after' })
     .then((updatedDog) => {
-      if(updatedDog){
+      if (updatedDog) {
         res.status(200).send(updatedDog);
       } else {
         res.sendStatus(404);
@@ -252,7 +256,7 @@ app.delete('/kennel/:dogId', (req, res) => {
 
   Dog.findByIdAndDelete(dogId)
     .then((deletedDog) => {
-      if(deletedDog){
+      if (deletedDog) {
         return res.status(200).send(deletedDog);
       } else {
         res.sendStatus(404);
@@ -306,13 +310,13 @@ app.get('/*', (req, res) => {
 app.get('/searchUser/:username', (req, res) => {
   const { username } = req.params
   User.findOne({ username })
-  .then((user) => {
-    user ? res.status(200).send(user) : res.sendStatus(404);
-  })
-  .catch((err) => {
-    console.error('search user (server) error:', err)
-    res.sendStatus(500);
-  })
+    .then((user) => {
+      user ? res.status(200).send(user) : res.sendStatus(404);
+    })
+    .catch((err) => {
+      console.error('search user (server) error:', err)
+      res.sendStatus(500);
+    })
 })
 
 app.get('/*', (req, res) => {

@@ -23,13 +23,13 @@ function Achievements() {
     axios.get('/achievements')
       .then((userArray) => {
         //console.log('On load', userArray.data);
-        setActiveUser(userArray.data[1]);
-        setUserCoins(userArray.data[1].coinCount)
-        setAchievementsEarned(userArray.data[1].achievements)
+        setActiveUser(userArray.data[3]);
+        setUserCoins(userArray.data[3].coinCount)
+        setAchievementsEarned(userArray.data[3].achievements)
         resolve(userArray.data);
       })
       .then (() => {
-        //console.log('active user, coins, achievements', activeUser, userCoins, achievementsEarned)
+        console.log('active user, coins, achievements', activeUser, userCoins, achievementsEarned)
       })
       .catch((err) => {
         console.error('CLIENT ERROR: failed to get user', err);
@@ -69,7 +69,7 @@ const addAchievementMoneybags = () => {
     .then((user) => {
       //use promise to set state of achievements earned
       setAchievementsEarned(user.data)
-      console.log('Post put achievements', achievementsEarned);
+      console.log('Post put achievements', achievementsEarned, userCoins);
     })
     //error handling
     .catch((err) => {
@@ -117,6 +117,8 @@ const addAchievementMoneybags = () => {
         ))}
         {' '}
       </div>
+      <button onClick={() => {getUserData()}}>Update user</button>
+      <button onClick={() => {addAchievementMoneybags()}}>Update achievements</button>
     </div>
   );
 }

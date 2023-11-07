@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { capitalize, uniq } from 'lodash'
-//import Button from 'react-bootstrap/Button';
-//import Image from 'react-bootstrap/Image';
-//import Alert from 'react-bootstrap/Alert';
-//import Container from 'react-bootstrap/Container';
+
 import { Row, Col, Container, Alert, Image, Button } from 'react-bootstrap';
-//import Col from 'react-bootstrap';
+
 
 
 function Quiz(props) {

@@ -37,7 +37,6 @@ function Quiz(props) {
     axios.get('/api/quiz')
       .then((dogArray) => {
         // if there are duplicates
-        console.log('arr', dogArray)
         if (checkForDuplicateDogs(dogArray.data)) {
           // run getDogs again (until no duplicates)
           getDogs();

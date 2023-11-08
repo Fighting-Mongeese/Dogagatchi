@@ -12,7 +12,6 @@ function LeaderBoard(props) {
   function getLeaders() {
     axios.get(`/user/leaderboard/${board}`)
       .then(({ data }) => {
-        console.log('gata', data)
         setLeaders(data); // sets leaders to data property from User query obj
       })
       .catch((err) => console.error('getLeaders ERROR (client):', err));
@@ -21,9 +20,7 @@ function LeaderBoard(props) {
   function changeBoard(type){
     if (type === 'smartest') {
       setBoard('smartest');
-      //console.log('smartest');
     } else if (type === 'richest') {
-      //console.log('richest');
       setBoard('richest');
     }
   }

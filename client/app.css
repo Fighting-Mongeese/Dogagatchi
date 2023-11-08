@@ -93,6 +93,11 @@ body {
 .achievement-header {
   font-family: "Arial Black", Gadget, sans-serif;
   text-decoration: underline solid rgb(68, 68, 68);
+  text-align: center;
+}
+
+.achievement-icon {
+  padding-top: 10px;
 }
 
 .achievement-element {
@@ -100,10 +105,37 @@ body {
 }
 
 .dogs {
-  display: inline;
-  width: 400px;
-  height: 400px;
-  overflow-x: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 700px;
+  height: 700px;
+  overflow: auto;
+  align-items: center;
+  justify-content: center;
+}
+.dogs::-webkit-scrollbar {
+  display: none;
+}
+
+/* .item {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+} */
+
+
+.col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  justify-content: center;
+}
+
+.col div {
+  padding: 10px;
+  /* display: grid;
+  grid-template-columns: repeat(3, 1fr); */
+  align-items: center;
+  justify-content: center;
 }
 
 .dog .user-kennel, .dogs {
@@ -176,12 +208,22 @@ body {
   display: flex;
   flex-direction: column;
   align-content: space-between;
+  flex-wrap: wrap;
 }
 
 .meals-container {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+#pantry {
+  min-height: 500px;
+  overflow: auto;
+}
+.pantry{
+  padding-bottom: 50px;
 }
 
 .meal-image {

@@ -15,7 +15,10 @@ function Meal(props){
       //setPurchaseStatus(false)
       setPurchaseText('Sorry! You do not have enough tokens. Head over to Pooch Picker to get more!')
     } else {
-      axios.put(`/meals/${props.user._id}`, {
+      axios.put(`/user/meals/${props.user._id}`, {
+        update: {
+          type: 'buyMeal'
+        },
         meals: {
           meal: props.meal
         },
@@ -24,11 +27,11 @@ function Meal(props){
         }
       })
       .then(({ data }) => {
-        console.log(data)
-        setUser(data)
+        setUser(data._id)
         //setPurchaseStatus(true)
         setPurchaseText(`Awesome! You bought your pup some delicious ${meal.name} and now have ${data.coinCount} tokens!`)
       })
+      .then(() => setTimeout(() => setPurchaseText(''), 3000))
       .catch((err) => console.log('buyMeal client ERROR:', err))
 
     }

@@ -119,16 +119,16 @@ app.get('/fail', (req, res) => {
   res.json({ message: req.flash('error')[0] })
 })
 
-  //get request to /meals/:id should get one user and send back all user data to client
+//get request to /meals/:id should get one user and send back all user data to client
 
-  app.get('/getUserById/:userId', (req, res) => {
-    const { userId } = req.params;
-    User.findById(userId)
+app.get('/getUserById/:userId', (req, res) => {
+  const { userId } = req.params;
+  User.findById(userId)
     .then((foundUser) => res.status(200).send(foundUser))
     .catch((err) => {
       console.error('get User by id server ERROR', err);
     })
-  })
+})
 // *****************ACHIEVEMENTS************************
 // set up a net to catch requests (server side request handling for achievements)
 app.get('/achievements', (req, res) => {
@@ -175,12 +175,12 @@ app.put('/achievements/:userId', (req, res) => {
 
 app.get('/user/:userId', (req, res) => {
   const id = req.params.userId
-  User.find({_id: id})
-  .then((user) => {
-    if(user){
-      res.status(200).send(user)
-    }
-  })
+  User.find({ _id: id })
+    .then((user) => {
+      if (user) {
+        res.status(200).send(user)
+      }
+    })
 })
 
 
@@ -189,10 +189,10 @@ app.get('/user/:userId', (req, res) => {
 // GET dog picture and 4 other random dogs from dogs api
 app.get('/quiz/getDogs', (req, res) => {
   axios.get('https://dog.ceo/api/breeds/image/random/4')
-  .then((response) => {
+    .then((response) => {
       res.status(200).send(response.data.message);
     })
-    .catch((err) => {console.log(err)})
+    .catch((err) => { console.log(err) })
 });
 
 app.put('/quiz/updateUser/:_id', (req, res) => {
@@ -225,14 +225,14 @@ app.get('/dog/:dogId', (req, res) => {
   const { dogId } = req.params;
 
   Dog.findById(dogId)
-  .then((dog) => {
-    console.log('get', dog)
-    res.status(200).send(dog)
-  })
-  .catch((err) => {
-    console.error('SERVER ERROR: failed to GET dog by id', err);
-    res.sendStatus(500);
-  });
+    .then((dog) => {
+      console.log('get', dog)
+      res.status(200).send(dog)
+    })
+    .catch((err) => {
+      console.error('SERVER ERROR: failed to GET dog by id', err);
+      res.sendStatus(500);
+    });
 })
 
 app.get('/kennel/:userId', (req, res) => {
@@ -268,13 +268,13 @@ app.post('/kennel', (req, res) => {
     walkDeadline: status
   })
     .then(() => {
-      User.findByIdAndUpdate(owner, { $inc: { coinCount: -15, dogCount: -1 }, $pull: { breeds: img } }, { new: true })
+      return User.findByIdAndUpdate(owner, { $inc: { coinCount: -15, dogCount: -1 }, $pull: { breeds: img } }, { new: true })
         .catch((err) => {
           console.error('SERVER ERROR: failed to UPDATE user', err);
           res.sendStatus(500);
         })
     })
-    .then(() => res.sendStatus(201))
+    .then((updatedUser) => res.status(201).send(updatedUser))
     .catch((err) => {
       console.error('SERVER ERROR: failed to CREATE dog', err);
       res.sendStatus(500);
@@ -283,15 +283,25 @@ app.post('/kennel', (req, res) => {
 
 app.put('/kennel/:dogId', (req, res) => {
   const { dogId } = req.params;
-  const { status } = req.body;
+  const { status, cost } = req.body;
 
   Dog.findByIdAndUpdate(dogId, status, { returnDocument: 'after' })
     .then((updatedDog) => {
       if (updatedDog) {
-        res.status(200).send(updatedDog);
+        return updatedDog
       } else {
         res.sendStatus(404);
       }
+    })
+    .then(({ owner }) => {
+      User.findByIdAndUpdate(owner, { $inc: { coinCount: cost } }, { new: true })
+        .then((user) => {
+          res.status(200).send(user);
+        })
+        .catch((err) => {
+          console.error('SERVER ERROR: failed to CREATE dog', err);
+          res.sendStatus(500);
+        })
     })
     .catch((err) => {
       console.error('SERVER ERROR: failed to UPDATE dog status by id', err);
@@ -314,8 +324,8 @@ app.delete('/kennel/:dogId', (req, res) => {
       console.error('SERVER ERROR: failed to DELETE dog by id', err);
       res.sendStatus(500);
     });
-  })
-  // ****************END OF KENNEL********************
+})
+// ****************END OF KENNEL********************
 
 /// //////////////LEADER BOARD ROUTES///////////////////////////
 const filterUsers = (filterProp) => User.find({}, null).sort({ [filterProp]: -1 });
@@ -352,20 +362,19 @@ app.get('/leaderboard/:type', (req, res) => {
 });
 
 //put request to add meal to user's meal array and subtract coins from user's coinCount
-app.put('/meals/:userId', (req, res) =>{
-  console.log(req.params)
+app.put('/meals/:userId', (req, res) => {
   const { coinCount, meals } = req.body
   const { userId } = req.params;
 
   User.findByIdAndUpdate(userId, {
-    $set: {coinCount: coinCount.newCount},
-    $push: {meals: meals.meal}
-  }, {returnDocument: 'after'} )
-  .then((updatedUser) => {
-    updatedUser ? res.status(200).send(updatedUser) : res.sendStatus(404)
-  })
-  .catch((err) => console.error('meals put req server ERROR:', err))
-  })
+    $set: { coinCount: coinCount.newCount },
+    $push: { meals: meals.meal }
+  }, { returnDocument: 'after' })
+    .then((updatedUser) => {
+      updatedUser ? res.status(200).send(updatedUser) : res.sendStatus(404)
+    })
+    .catch((err) => console.error('meals put req server ERROR:', err))
+})
 
 
 

@@ -125,7 +125,7 @@ const getDogs = () => {
               .map((dog) => {
                 return (
                   <Container key={dog._id}>
-                    <Dog dogObj={dog}/>
+                    <Dog dogObj={dog} getDogs={getDogs} setDogs={setDogs}/>
                   </Container>
                 );
               })

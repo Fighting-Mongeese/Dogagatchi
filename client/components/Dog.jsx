@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Button, ProgressBar } from "react-bootstrap";
 import axios from "axios";
 import barkSound from "../../server/barking-123909.mp3";
@@ -6,7 +6,7 @@ import barkSound from "../../server/barking-123909.mp3";
 const bark = new Audio(barkSound);
 
 function Dog(props) {
-  const { dogObj } = props;
+  const { dogObj, getDogs, setDogs } = props;
   const [dog, setDog] = useState(dogObj);
   const [hungry, setHunger] = useState(true);
   const [happy, setHappy] = useState(false);
@@ -14,24 +14,28 @@ function Dog(props) {
   const [walkStatus, setWalkStatus] = useState("");
   const [feedTimer, setFeedTimer] = useState(0);
   const [walkTimer, setWalkTimer] = useState(0);
-  
-    const getDog = () => {
-      const { _id } = dog;
-      axios.get("/dog", { _id })
-      .then(dog => setDog(dog))
+  const hungryRef = useRef(null);
+  const happyRef = useRef(null);
+
+  const getDog = () => {
+    axios
+      .get(`/dog/${dog._id}`)
+      .then(({ data }) => setDog(data))
       .catch((err) => {
         console.error(err);
       });
-    };
+  };
 
   const handleClick = (e) => {
     const status = {};
     if (e === "feed") {
       setHunger(false);
+      hungryRef.current = hungry;
       const feedDeadline = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
       status.feedDeadline = feedDeadline;
     } else if (e === "walk") {
       setHappy(true);
+      happyRef.current = happy;
       const walkDeadline = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
       status.walkDeadline = walkDeadline;
     } else {
@@ -41,6 +45,12 @@ function Dog(props) {
       console.error(err);
     });
   };
+
+  useEffect(() => {
+    getDog();
+    setDog(dog);
+    console.log("BARK", `${dog.name}`);
+  }, [happy, hungry]);
 
   useEffect(() => {
     const x = setInterval(() => {
@@ -54,28 +64,46 @@ function Dog(props) {
 
       if (feedTimer < 25) {
         setFeedStatus("danger");
-        setHunger(true);
+        if (hungryRef.current !== true) {
+          setHunger(true);
+          hungryRef.current = hungry;
+        }
       } else if (feedTimer < 50) {
         setFeedStatus("warning");
-        setHunger(true);
+        if (hungryRef.current !== true) {
+          setHunger(true);
+          hungryRef.current = hungry;
+        }
       } else {
         setFeedStatus("success");
-        setHunger(false);
+        if (hungryRef.current !== false) {
+          setHunger(false);
+          hungryRef.current = hungry;
+        }
       }
 
       if (walkTimer < 25) {
         setWalkStatus("danger");
-        setHappy(false);
+        if (happyRef.current !== false) {
+          setHappy(false);
+          happyRef.current = happy;
+        }
       } else if (walkTimer < 50) {
         setWalkStatus("warning");
-        setHappy(false);
+        if (happyRef.current !== false) {
+          setHappy(false);
+          happyRef.current = happy;
+        }
       } else {
         setWalkStatus("success");
-        setHappy(true);
+        if (happyRef.current !== true) {
+          setHappy(true);
+          happyRef.current = happy;
+        }
       }
-
     }, 1000);
-  }, []);
+    return () => clearInterval(x);
+  }, [happy, hungry, dog]);
 
   return (
     <div className="dog">

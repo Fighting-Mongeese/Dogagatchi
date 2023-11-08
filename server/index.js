@@ -210,16 +210,19 @@ app.put('/quiz/updateUser/:_id', (req, res) => {
 
 // *****************KENNEL************************
 
-// app.get('/dog', (req, res) => {
-//   const { _id } = req.body;
+app.get('/dog/:dogId', (req, res) => {
+  const { dogId } = req.params;
 
-//   Dog.findById(_id)
-//   .then((dog) => res.status(200).send(dog))
-//   .catch((err) => {
-//     console.error('SERVER ERROR: failed to GET dog by id', err);
-//     res.sendStatus(500);
-//   });
-// })
+  Dog.findById(dogId)
+  .then((dog) => {
+    console.log('get', dog)
+    res.status(200).send(dog)
+  })
+  .catch((err) => {
+    console.error('SERVER ERROR: failed to GET dog by id', err);
+    res.sendStatus(500);
+  });
+})
 
 app.get('/kennel/:userId', (req, res) => {
   const { userId } = req.params;

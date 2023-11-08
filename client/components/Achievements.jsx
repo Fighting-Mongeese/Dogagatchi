@@ -83,58 +83,58 @@ function Achievements(props) { //access props.user to get id for subsequent get 
   //other achievements: Top Dawg for the Smartest Leaderboard
   //An achievement for Each dog owned
   //An achievement for number of times dog fed or played with
-  const addAchievementMoneybags = () => {
-  console.log('thrifty', coinsEarned, achievementsEarned)
-  //console.log('coinsEarned', coinsEarned)
-  // (if (user.coins > 5)) then add achievement to user info through put request also an and statement to prevent same achievement from being earned more than once
-  if (coinsEarned > 10 && !achievementsEarned.includes('Thrifty')) {
-    //axios put request with activeUser hook
-    axios.put(`/achievements/${activeUser._id}`, {
-      name: 'Thrifty',
-      image: "https://www.trueachievements.com/imagestore/0007101900/7101902.jpg"
-    })
-    .then((user) => {
-      //use promise to set state of achievements earned
-      setAchievementsEarned(user.data)
-      console.log('Post put achievements', achievementsEarned);
-    })
-    //error handling
-    .catch((err) => {
-      console.error('CLIENT ACHIEVEMENT ERROR', err)
-    })
-  }
-  // } else if (coinsEarned > 50 && !achievementsEarned.includes('Super Saver')) {
-  //   //axios put request with activeUser hook
-  //   axios.put(`/achievements/${activeUser}`, {
-  //     name: 'Super Saver',
-  //     image: 'https://www.trueachievements.com/imagestore/0006900900/6900915.jpg'
-  //   })
-  //   .then((user) => {
-  //     //use promise to set state of achievements earned
-  //     setAchievementsEarned(user.data)
-  //     console.log('Post put achievements', achievementsEarned, coinsEarned);
-  //   })
-  //   //error handling
-  //   .catch((err) => {
-  //     console.error('CLIENT ACHIEVEMENT ERROR', err)
-  //   })
-  // } else if (coinsEarned > 100 && !achievementsEarned.includes('Money Bags')) {
-  //   //axios put request with activeUser hook
-  //   axios.put(`/achievements/${activeUser}`, {
-  //     name: 'Money Bags',
-  //     image: 'https://www.trueachievements.com/imagestore/0006900800/6900859.jpg'
-  //   })
-  //   .then((user) => {
-  //     //use promise to set state of achievements earned
-  //     setAchievementsEarned(user.data)
-  //     console.log('Post put achievements', achievementsEarned);
-  //   })
-  //   //error handling
-  //   .catch((err) => {
-  //     console.error('CLIENT ACHIEVEMENT ERROR', err)
-  //   })
-  // }
-}
+//   const addAchievementMoneybags = () => {
+//   console.log('thrifty', coinsEarned, achievementsEarned)
+//   //console.log('coinsEarned', coinsEarned)
+//   // (if (user.coins > 5)) then add achievement to user info through put request also an and statement to prevent same achievement from being earned more than once
+//   if (coinsEarned > 10 && !achievementsEarned.includes('Thrifty')) {
+//     //axios put request with activeUser hook
+//     axios.put(`/achievements/${activeUser._id}`, {
+//       name: 'Thrifty',
+//       image: "https://www.trueachievements.com/imagestore/0007101900/7101902.jpg"
+//     })
+//     .then((user) => {
+//       //use promise to set state of achievements earned
+//       setAchievementsEarned(user.data)
+//       console.log('Post put achievements', achievementsEarned);
+//     })
+//     //error handling
+//     .catch((err) => {
+//       console.error('CLIENT ACHIEVEMENT ERROR', err)
+//     })
+//   }
+//   // } else if (coinsEarned > 50 && !achievementsEarned.includes('Super Saver')) {
+//   //   //axios put request with activeUser hook
+//   //   axios.put(`/achievements/${activeUser}`, {
+//   //     name: 'Super Saver',
+//   //     image: 'https://www.trueachievements.com/imagestore/0006900900/6900915.jpg'
+//   //   })
+//   //   .then((user) => {
+//   //     //use promise to set state of achievements earned
+//   //     setAchievementsEarned(user.data)
+//   //     console.log('Post put achievements', achievementsEarned, coinsEarned);
+//   //   })
+//   //   //error handling
+//   //   .catch((err) => {
+//   //     console.error('CLIENT ACHIEVEMENT ERROR', err)
+//   //   })
+//   // } else if (coinsEarned > 100 && !achievementsEarned.includes('Money Bags')) {
+//   //   //axios put request with activeUser hook
+//   //   axios.put(`/achievements/${activeUser}`, {
+//   //     name: 'Money Bags',
+//   //     image: 'https://www.trueachievements.com/imagestore/0006900800/6900859.jpg'
+//   //   })
+//   //   .then((user) => {
+//   //     //use promise to set state of achievements earned
+//   //     setAchievementsEarned(user.data)
+//   //     console.log('Post put achievements', achievementsEarned);
+//   //   })
+//   //   //error handling
+//   //   .catch((err) => {
+//   //     console.error('CLIENT ACHIEVEMENT ERROR', err)
+//   //   })
+//   // }
+// }
 
 
 
@@ -149,7 +149,7 @@ function Achievements(props) { //access props.user to get id for subsequent get 
     <div className="user-achievements">
       <p>Current achievements:{coinsEarned}</p>
       <div>
-        {/* {achievementsEarned.map((achievement) => (
+        {achievementsEarned.map((achievement) => (
           <Achieve 
           achieve={achievement.name}
           key={achievement._id}
@@ -157,7 +157,7 @@ function Achievements(props) { //access props.user to get id for subsequent get 
           // possibly update with a unique key  instead of achievement
           // view={achievementsEarned}
           />
-        ))} */}
+        ))}
         {' '}
       </div>
 

@@ -6,7 +6,7 @@ import barkSound from "../../server/barking-123909.mp3";
 const bark = new Audio(barkSound);
 
 function Dog(props) {
-  const { dogObj, getDogs, setDogs } = props;
+  const { dogObj } = props;
   const [dog, setDog] = useState(dogObj);
   const [hungry, setHunger] = useState(true);
   const [happy, setHappy] = useState(false);
@@ -106,11 +106,15 @@ function Dog(props) {
   }, [happy, hungry, dog]);
 
   return (
-    <Card>
+    <Card
+    style={{
+      border: '13px'
+    }}
+    >
       <Card.Img
         src={dog.img}
         alt="Sorry, your dog is in another kennel."
-        style={{ maxWidth: 300 }}
+        style={{ maxWidth: 300, maxHeight: 'auto'}}
       />
       <Card.Header
         style={{

@@ -4,7 +4,6 @@ import {
   Container,
   Form,
   Image,
-  Card,
   Row,
   Col,
 } from "react-bootstrap";
@@ -115,7 +114,7 @@ function Kennel() {
         <Col
           style={{
             display: "flex",
-            flexDirection: "column",
+            flexDirection: "row",
             alignItems: "center",
           }}
         >

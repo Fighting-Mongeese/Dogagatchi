@@ -112,7 +112,13 @@ function Kennel() {
         </Col>
       </Row>
       <Row>
-        <Col>
+        <Col
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
           {Array.isArray(dogs) && dogs.length > 0
             ? dogs
                 .filter((dog) => {

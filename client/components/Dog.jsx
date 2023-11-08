@@ -110,20 +110,37 @@ function Dog(props) {
       <Card.Img
         src={dog.img}
         alt="Sorry, your dog is in another kennel."
+        style={{ maxWidth: 300 }}
       />
-      <Card.Title>{dog.name}</Card.Title>
+      <Card.Header
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          fontWeight: "bold",
+          fontSize: "Large",
+        }}
+      >
+        {dog.name}
+      </Card.Header>
       <Card.Body>
         <div className="dog-status">
-          <div>
-            <div className="hunger-bar">
-              <ProgressBar
-                animated={true}
-                striped
-                variant={feedStatus}
-                now={feedTimer}
-                label="HUNGER"
-              />
-            </div>
+          <div className="hunger-bar">
+            <ProgressBar
+              animated={true}
+              striped
+              variant={feedStatus}
+              now={feedTimer}
+              label="HUNGER"
+              style={{height: '35px'}}
+            />
+          </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
             {hungry ? (
               <Button
                 variant="info"
@@ -140,16 +157,22 @@ function Dog(props) {
               </Button>
             )}
           </div>
-          <div>
-            <div className="happy-bar">
-              <ProgressBar
-                animated={true}
-                striped
-                variant={walkStatus}
-                now={walkTimer}
-                label="HAPPINESS"
-              />
-            </div>
+          <div className="happy-bar">
+            <ProgressBar
+              animated={true}
+              striped
+              variant={walkStatus}
+              now={walkTimer}
+              label="HAPPINESS"
+              style={{height: '35px'}}
+            />
+          </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
             {happy ? (
               <Button
                 variant="info"

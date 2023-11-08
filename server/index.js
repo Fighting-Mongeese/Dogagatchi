@@ -150,8 +150,8 @@ app.get('/achievements', (req, res) => {
 app.put('/achievements/:userId', (req, res) => {
   //destructure params from req obj
   const { userId } = req.params;
-  const newAchieve = req.body.achievements;
-  console.log('SERVER PUT', req.body.achievements, newAchieve)
+  const newAchieve = req.body;
+  console.log('SERVER PUT', req.body, newAchieve)
   //return the updated user
   User.findByIdAndUpdate(
     userId,

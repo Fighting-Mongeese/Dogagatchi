@@ -32,13 +32,26 @@ function Achievements(props) { //access props.user to get id for subsequent get 
     })
     setActiveUser(filteredArray[0]);
     setCoinsEarned(filteredArray[0].coinCount)
-    console.log('after put', filteredArray[0].achievements)
+    //console.log('after put', filteredArray[0], 'user', userArray)
     setAchievementsEarned(filteredArray[0].achievements)
-    const varCheck = filteredArray[0].achievements.findIndex((item) => {
-      if (item.name === 'Thrifty')
+    const thriftyCheck =  filteredArray[0].achievements.findIndex((item) => {
+      if (item.name === 'Thrifty') {
       return true
+      }
     })
-    if (filteredArray[0].coinCount > 10 && varCheck === -1) {
+    const superSaverCheck =  filteredArray[0].achievements.findIndex((item) => {
+      if (item.name === 'Super Saver') {
+      return true
+      }
+    })
+    const moneyBagsCheck =  filteredArray[0].achievements.findIndex((item) => {
+      if (item.name === 'Money Bags') {
+      return true
+      }
+    })
+    //Object.values(filteredArray[0].achievements).includes('Thrifty')
+    console.log('thriftyCheck', thriftyCheck, filteredArray[0])
+    if (filteredArray[0].coinCount > 10 && thriftyCheck === -1) {
       //axios put request with activeUser hook
       axios.put(`/achievements/${filteredArray[0]._id}`, {
         name: 'Thrifty',
@@ -46,10 +59,33 @@ function Achievements(props) { //access props.user to get id for subsequent get 
       })
       .then((userData) => {
         console.log('axios put user', userData)
+
       })
-    } else {
-      console.log('Limit reached')
     }
+    if (filteredArray[0].coinCount > 30 && superSaverCheck === -1) {
+          //axios put request with activeUser hook
+          axios.put(`/achievements/${filteredArray[0]._id}`, {
+            name: 'Super Saver',
+            image: 'https://www.trueachievements.com/imagestore/0006900900/6900915.jpg'
+          })
+        }
+    if (filteredArray[0].coinCount > 40 && moneyBagsCheck === -1) {
+      //axios put request with activeUser hook
+      axios.put(`/achievements/${filteredArray[0]._id}`, {
+        name: 'Money Bags',
+        image: 'https://www.trueachievements.com/imagestore/0006900800/6900859.jpg'
+      })
+    }
+    
+})
+.then((userData) => {
+  //use promise to set state of achievements earned
+  //setAchievementsEarned(user.data)
+  console.log('Post put achievements', userData);
+})
+//error handling
+.catch((err) => {
+  console.error('CLIENT ACHIEVEMENT ERROR', err)
 })
 }, [])
 
@@ -124,17 +160,8 @@ function Achievements(props) { //access props.user to get id for subsequent get 
 //   //     name: 'Money Bags',
 //   //     image: 'https://www.trueachievements.com/imagestore/0006900800/6900859.jpg'
 //   //   })
-//   //   .then((user) => {
-//   //     //use promise to set state of achievements earned
-//   //     setAchievementsEarned(user.data)
-//   //     console.log('Post put achievements', achievementsEarned);
-//   //   })
-//   //   //error handling
-//   //   .catch((err) => {
-//   //     console.error('CLIENT ACHIEVEMENT ERROR', err)
-//   //   })
-//   // }
-// }
+  
+
 
 
 

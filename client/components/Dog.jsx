@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Button, ProgressBar } from "react-bootstrap";
+import { Button, ProgressBar, Card } from "react-bootstrap";
 import axios from "axios";
 import barkSound from "../../server/barking-123909.mp3";
 
@@ -106,76 +106,69 @@ function Dog(props) {
   }, [happy, hungry, dog]);
 
   return (
-    <div className="dog">
-      <div className="dog-name">
-        <h3>{dog.name}</h3>
-      </div>
-      <img
+    <Card>
+      <Card.Img
         src={dog.img}
         alt="Sorry, your dog is in another kennel."
-        style={{ width: 200 }}
       />
-      <div className="dog-status">
-        <div>
-          <div
-            className="hunger-bar"
-            style={{ width: "25%" }}
-          >
-            <ProgressBar
-              animated={true}
-              striped
-              variant={feedStatus}
-              now={feedTimer}
-              label="HUNGER"
-            />
+      <Card.Title>{dog.name}</Card.Title>
+      <Card.Body>
+        <div className="dog-status">
+          <div>
+            <div className="hunger-bar">
+              <ProgressBar
+                animated={true}
+                striped
+                variant={feedStatus}
+                now={feedTimer}
+                label="HUNGER"
+              />
+            </div>
+            {hungry ? (
+              <Button
+                variant="info"
+                onClick={() => handleClick("feed")}
+              >
+                🍖
+              </Button>
+            ) : (
+              <Button
+                variant="info"
+                onClick={() => handleClick("bark")}
+              >
+                🐶
+              </Button>
+            )}
           </div>
-          {hungry ? (
-            <Button
-              variant="info"
-              onClick={() => handleClick("feed")}
-            >
-              🍖
-            </Button>
-          ) : (
-            <Button
-              variant="info"
-              onClick={() => handleClick("bark")}
-            >
-              🐶
-            </Button>
-          )}
-        </div>
-        <div>
-          <div
-            className="happy-bar"
-            style={{ width: "25%" }}
-          >
-            <ProgressBar
-              animated={true}
-              striped
-              variant={walkStatus}
-              now={walkTimer}
-              label="HAPPINESS"
-            />
+          <div>
+            <div className="happy-bar">
+              <ProgressBar
+                animated={true}
+                striped
+                variant={walkStatus}
+                now={walkTimer}
+                label="HAPPINESS"
+              />
+            </div>
+            {happy ? (
+              <Button
+                variant="info"
+                onClick={() => handleClick("bark")}
+              >
+                🐾
+              </Button>
+            ) : (
+              <Button
+                variant="info"
+                onClick={() => handleClick("walk")}
+              >
+                🐕‍🦺
+              </Button>
+            )}
           </div>
-          {happy ? (
-            <Button
-              variant="info"
-              onClick={() => handleClick("bark")}
-            >
-              🐾
-            </Button>
-          ) : (
-            <Button
-              variant="info"
-              onClick={() => handleClick("walk")}
-            >
-              🐕‍🦺
-            </Button>
-          )}
         </div>
-      </div>
-    </div>
+      </Card.Body>
+    </Card>
   );
 }
 

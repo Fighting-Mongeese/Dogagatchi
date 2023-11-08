@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Card } from "react-bootstrap";
 import NavBar from './Navbar.jsx';
 import Achievements from './Achievements.jsx';
 import Kennel from './Kennel.jsx';
@@ -23,6 +24,7 @@ function User(props) {
 
       axios.get(`/user/${userObj._id}`)
       .then((user) => {
+        setUser(user.data[0])
         setCorrectQuestionCount(user.data[0].questionCount)
         setDogCount(user.data[0].dogCount)
         setCoins(user.data[0].coinCount)
@@ -35,6 +37,23 @@ return(
     <div className="user-stats-container">
       <div className="user-stats">
 
+
+      <Card
+      style={{ overflow: "hidden" , alignItems: "center"}}>
+      <Card.Header
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          fontWeight: "bold",
+          fontSize: "extra-large",
+        }}
+      >
+        <h3>
+        {user.username}
+        </h3>
+      </Card.Header>
+      <Card.Body>
         <h3>Stats</h3>
         <div>
           Coins: {coins}
@@ -51,6 +70,9 @@ return(
         <div>
       # of Dogs: {dogCount}
         </div>
+      </Card.Body>
+      </Card>
+
 
       </div>
     </div>

@@ -70,7 +70,7 @@ body {
   margin-right: auto;
 }
 
-.user-stats, .user-achievements {
+ .user-achievements {
   border: 13px outset rgba(213,177,16,0.76);
   flex: 1;
   min-width: 100px;

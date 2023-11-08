@@ -210,18 +210,40 @@ app.put('/quiz/updateUser/:_id', (req, res) => {
 
 // *****************KENNEL************************
 
+app.get('/dog/:dogId', (req, res) => {
+  const { dogId } = req.params;
+
+  Dog.findById(dogId)
+  .then((dog) => {
+    console.log('get', dog)
+    res.status(200).send(dog)
+  })
+  .catch((err) => {
+    console.error('SERVER ERROR: failed to GET dog by id', err);
+    res.sendStatus(500);
+  });
+})
+
 app.get('/kennel/:userId', (req, res) => {
   const { userId } = req.params;
   Dog.find().where({ owner: userId })
-    .then((dogArr) => {
-      res.status(200)
-        .send(dogArr);
+    .then((dogsArr) => {
+      User.findById(userId)
+        .then(({ breeds }) => {
+          res.status(200)
+            .send({ dogsArr, breeds })
+        })
+        .catch((err) => {
+          console.error('SERVER ERROR: failed to GET user breeds list by id', err);
+          res.sendStatus(500);
+        });
     })
     .catch((err) => {
       console.error('SERVER ERROR: failed to GET dog by userId', err);
       res.sendStatus(500);
     });
 });
+
 
 app.post('/kennel', (req, res) => {
   const { name, img, owner } = req.body;
@@ -234,11 +256,18 @@ app.post('/kennel', (req, res) => {
     feedDeadline: status,
     walkDeadline: status
   })
+    .then(() => {
+      User.findByIdAndUpdate(owner, { $inc: { coinCount: -15, dogCount: -1 }, $pull: { breeds: img } }, { new: true })
+        .catch((err) => {
+          console.error('SERVER ERROR: failed to UPDATE user', err);
+          res.sendStatus(500);
+        })
+    })
     .then(() => res.sendStatus(201))
     .catch((err) => {
       console.error('SERVER ERROR: failed to CREATE dog', err);
       res.sendStatus(500);
-    });
+    })
 })
 
 app.put('/kennel/:dogId', (req, res) => {

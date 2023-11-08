@@ -33,7 +33,7 @@ function Pantry(props) {
   return(
     <div>
       <h2>My Meals</h2>
-        <div className='meals-container'>
+        <div id="pantry" className='meals-container'>
           {meals ? meals.map((mealObj) => (
             <PantryItem
             meal={mealObj}

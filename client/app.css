@@ -173,10 +173,12 @@ body {
   flex-direction: row;
   justify-content: space-evenly;
   flex-wrap: wrap;
+}
+
+#pantry {
   max-height: 250px;
   overflow: auto;
 }
-
 .meal-image {
   width: 150px;
   height: 150px

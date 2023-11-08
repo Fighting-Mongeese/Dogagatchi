@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Button,
-  Container,
-  Form,
-  Image,
-  Row,
-  Col,
-} from "react-bootstrap";
+import { Button, Container, Form, Image, Row, Col } from "react-bootstrap";
 import axios from "axios";
 import Dog from "./Dog.jsx";
 import Pantry from './Pantry.jsx';
@@ -111,9 +104,10 @@ function Kennel() {
         </Col>
       </Row>
       <Row>
-        <Col
+        <div
           style={{
-            display: "flex",
+            display: "grid",
+            gridTemplateColumns: "auto auto",
             flexDirection: "row",
             alignItems: "center",
           }}
@@ -153,7 +147,7 @@ function Kennel() {
                   );
                 })
             : ""}
-        </Col>
+        </div>
       </Row>
     </Container>
   );

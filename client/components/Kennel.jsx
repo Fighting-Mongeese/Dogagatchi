@@ -77,7 +77,8 @@ function Kennel() {
               style={{
                 display: "grid",
                 gridTemplateColumns: "auto auto",
-                marginTop: '50px'
+                marginTop: '70px',
+                paddingTop: '50px'
               }}
             >
               <Image

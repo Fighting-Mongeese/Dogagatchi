@@ -15,17 +15,24 @@ const Home = () => {
 
     return (
         <div className='home'>
+            <h1>DOGAGATCHI</h1>
+            <img src='https://i.ibb.co/B6bJ359/1699386580-trimmy-sweeticon-removebg-preview-1.png' />
             <h1>{`Welcome, ${user}!`}</h1>
-            <img src='https://i.ibb.co/rQGfGH5/sweeticon-removebg-preview.png' />
       <span>
             <Link to='/quiz'>
-            <Button>Quiz</Button>
+            <Button className='boot-button'>Quiz</Button>
             </Link>
             <Link to='/user'>
-            <Button>User</Button>
+            <Button className='boot-button'>User Profile</Button>
             </Link>
-            <Link to='/kennel'>
-            <Button>Kennel</Button>
+            <Link to='/restaurant'>
+            <Button className='boot-button'>Restaurant</Button>
+            </Link>
+            <Link to='/leaderboard'>
+            <Button className='boot-button'>Leaderboard</Button>
+            </Link>
+            <Link to='/about'>
+            <Button className='boot-button'>How To Play</Button>
             </Link>
         </span>
         </div>

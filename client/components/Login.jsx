@@ -60,9 +60,11 @@ const Login = () => {
  
 
     return (
-        <div>
+        <div className='login'>
             <h2>Login</h2>
+            <div className='login-form'>
             <form onSubmit={submit}>
+                <div className='group-form'>
                 <input 
                 type='text'
                 name='username'
@@ -75,12 +77,14 @@ const Login = () => {
                 placeholder='Password'
                 onChange={(e) => setPassword(e.target.value)}
                 />
+                </div>
                 <button name='Login' type='submit'>Login</button>
                 <button name='Register' type='submit'>Register</button>
             </form>
+            </div>
             
 
-           {error && <p>{error}</p>}
+           {error && <p style={{color: 'red'}}>{error}</p>}
         </div>
     )
 }

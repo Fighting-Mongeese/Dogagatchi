@@ -11,6 +11,7 @@ import Kennel from './Kennel.jsx'
 import User from './User.jsx';
 import NavBar from './Navbar.jsx';
 import Restaurant from './Restaurant.jsx';
+import About from './About.jsx';
 function App() {
   return (
     <Context>
@@ -23,6 +24,7 @@ function App() {
             <Route path='/user' element={<div><NavBar/><User/></div>}/>
             <Route path='/kennel' element={<div><NavBar/><Kennel/></div>}/>
             <Route path='/restaurant' element={<div><NavBar/><Restaurant/></div>}/>
+            <Route path='/about' element={<div><NavBar/><About/></div>}/>
             </Route>
             <Route path='/' element={<Login/>}/>
         </Routes>

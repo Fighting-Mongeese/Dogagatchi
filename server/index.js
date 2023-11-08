@@ -173,15 +173,26 @@ app.put('/achievements/:userId', (req, res) => {
 })
 // ****************END OF ACHIEVEMENTS********************
 
+app.get('/user/:userId', (req, res) => {
+  const id = req.params.userId
+  User.find({_id: id})
+  .then((user) => {
+    if(user){
+      res.status(200).send(user)
+    }
+  })
+})
+
 
 // **************** START OF QUIZ ********************
 
 // GET dog picture and 4 other random dogs from dogs api
 app.get('/quiz/getDogs', (req, res) => {
   axios.get('https://dog.ceo/api/breeds/image/random/4')
-    .then((response) => {
+  .then((response) => {
       res.status(200).send(response.data.message);
-    });
+    })
+    .catch((err) => {console.log(err)})
 });
 
 app.put('/quiz/updateUser/:_id', (req, res) => {
@@ -307,7 +318,7 @@ app.delete('/kennel/:dogId', (req, res) => {
   // ****************END OF KENNEL********************
 
 /// //////////////LEADER BOARD ROUTES///////////////////////////
-const filterUsers = (filterProp) => User.find({}, null, { limit: 5 }).sort({ [filterProp]: -1 });
+const filterUsers = (filterProp) => User.find({}, null).sort({ [filterProp]: -1 });
 
 app.get('/leaderboard/:type', (req, res) => {
   const { type } = req.params;
@@ -341,7 +352,8 @@ app.get('/leaderboard/:type', (req, res) => {
 });
 
 //put request to add meal to user's meal array and subtract coins from user's coinCount
-app.put('/meals/:userId', (req, res) =>{
+app.get('/meals/:userId', (req, res) =>{
+  console.log(req.params)
   const { coinCount, meals } = req.body
   const { userId } = req.params;
 

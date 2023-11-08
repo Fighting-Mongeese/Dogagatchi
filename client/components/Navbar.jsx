@@ -23,6 +23,8 @@ function NavBar(props) {
             <Nav.Link className="ms-auto" as={Link} to="/quiz" >Quiz 🤔</Nav.Link>
             <Nav.Link className="ms-auto" as={Link} to="/user">My Info ℹ️</Nav.Link>
             <Nav.Link className="ms-auto" as={Link} to="/leaderboard">Top Dogs 🏆</Nav.Link>
+            <Nav.Link className="ms-auto" as={Link} to="/restaurant">Restaurant</Nav.Link>
+            <Nav.Link className="ms-auto" as={Link} to="/about">About</Nav.Link>
             <Nav.Link className="ms-auto" onClick={logout}>Log Out 👋</Nav.Link>
           </Nav>
         </Navbar.Collapse>

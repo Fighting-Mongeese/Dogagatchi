@@ -10,8 +10,9 @@ function LeaderBoard(props) {
   const [board, setBoard] = useState('smartest');
 
   function getLeaders() {
-    axios.get(`/leaderboard/${board}`)
+    axios.get(`/user/leaderboard/${board}`)
       .then(({ data }) => {
+        console.log('gata', data)
         setLeaders(data); // sets leaders to data property from User query obj
       })
       .catch((err) => console.error('getLeaders ERROR (client):', err));
@@ -29,7 +30,7 @@ function LeaderBoard(props) {
   // leader board defaults to smartest parents on rendering
   useEffect(() => {
     getLeaders()
-  }, [leaders]);
+  }, []);
 
   return (
     <div>

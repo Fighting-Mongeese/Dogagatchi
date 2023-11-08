@@ -99,6 +99,17 @@ body {
  font-style: italic
 }
 
+.dogs {
+  display: inline;
+  width: 400px;
+  height: 400px;
+  overflow-x: auto;
+}
+
+.dog .user-kennel, .dogs {
+  display: inline-block;
+}
+
 .shimmer {
   text-align: center;
   color: rgba(255, 255, 255, 0.1);

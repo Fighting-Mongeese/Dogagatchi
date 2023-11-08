@@ -12,8 +12,9 @@ function User(props) {
 
   useEffect( () => {
     const userObj = JSON.parse(sessionStorage.getItem('user'))
-    axios.get('/leaderboard/smartest')
+    axios.get('/user/leaderboard/smartest')
       .then(({ data }) => {
+        console.log('kkk', data)
         const index = data.findIndex(userData => userData._id === userObj._id)
         setGlobalRank(index + 1)
       })
@@ -48,7 +49,10 @@ return(
 
       </div>
     </div>
+    <div className='dogs'>
+
     <Kennel className="user-kennel"/>
+    </div>
     <Achievements user={user} className="user-achievements"/>
   </div>
  </div>

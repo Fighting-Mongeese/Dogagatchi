@@ -19,61 +19,65 @@ function Achievements(props) { //access props.user to get id for subsequent get 
   const user = _id._id
   
   useEffect(() => {
-    axios.get(`/achievements`) //slash users slash achievements refactor
+    axios.get(`/user/${user}`) //slash users slash achievements refactor
     .then((userArray) => {
-    const filteredArray = userArray.data.filter((item) => {
-      return item._id === user
-    })
-    setActiveUser(filteredArray[0]);
-    setCoinsEarned(filteredArray[0].coinCount)
-    //console.log('first put', filteredArray[0].achievements, 'user', userArray)
-    const thriftyCheck =  filteredArray[0].achievements.findIndex((item) => {
+      console.log('ha!',  userArray.data)
+    // const userArray = userArray.data.filter((item) => {
+    //   return item._id === user
+    // })
+    setActiveUser(userArray[0]);
+    setCoinsEarned(userArray.data[0].coinCount)
+    //console.log('first put', userArray[0].achievements, 'user', userArray)
+    const thriftyCheck =  userArray.data[0].achievements.findIndex((item) => {
       if (item.name === 'Thrifty') {
       return true
       }
     })
-    const superSaverCheck =  filteredArray[0].achievements.findIndex((item) => {
+    const superSaverCheck =  userArray.data[0].achievements.findIndex((item) => {
       if (item.name === 'Super Saver') {
       return true
       }
     })
-    const moneyBagsCheck =  filteredArray[0].achievements.findIndex((item) => {
+    const moneyBagsCheck =  userArray.data[0].achievements.findIndex((item) => {
       if (item.name === 'Money Bags') {
       return true
       }
     })
-    //Object.values(filteredArray[0].achievements).includes('Thrifty')
-    //console.log('thriftyCheck', thriftyCheck, filteredArray[0])
-    if (filteredArray[0].coinCount > 10 && thriftyCheck === -1) {
+    //Object.values(userArray[0].achievements).includes('Thrifty')
+    //console.log('thriftyCheck', thriftyCheck, userArray[0])
+    if (userArray.data[0].coinCount > 10 && thriftyCheck === -1) {
       //axios put request with activeUser hook
-      axios.put(`/achievements/${filteredArray[0]._id}`, {
+      axios.put(`/user/achievements/${userArray[0]._id}`, {
         name: 'Thrifty',
         image: "https://www.trueachievements.com/imagestore/0007101900/7101902.jpg"
       })
+      .then(() => console.log('bbbb'))
     }
-    if (filteredArray[0].coinCount > 30 && superSaverCheck === -1) {
+    if (userArray.data[0].coinCount > 30 && superSaverCheck === -1) {
           //axios put request with activeUser hook
-          axios.put(`/achievements/${filteredArray[0]._id}`, {
+          axios.put(`/achievements/${userArray[0]._id}`, {
             name: 'Super Saver',
             image: 'https://www.trueachievements.com/imagestore/0006900900/6900915.jpg'
           })
         }
-        //console.log('moneybags check', filteredArray[0].coinCount, moneyBagsCheck )
-    if (filteredArray[0].coinCount > 35 && moneyBagsCheck === -1) {
+        //console.log('moneybags check', userArray[0].coinCount, moneyBagsCheck )
+    if (userArray.data[0].coinCount > 35 && moneyBagsCheck === -1) {
       //axios put request with activeUser hook
-      axios.put(`/achievements/${filteredArray[0]._id}`, {
+      axios.put(`/achievements/${userArray.data[0]._id}`, {
         name: 'Money Bags',
         image: 'https://www.trueachievements.com/imagestore/0006900800/6900859.jpg'
       })
     }
-    axios.get(`/achievements`) //slash users slash achievements refactor
-    .then((userArray) => {
-    const newFilter = userArray.data.filter((item) => {
-      return item._id === user
-    })
+    axios.get(`/user/${userArray.data[0]._id}`) //slash users slash achievements refactor
+    .then((newUser) => {
+      console.log('diss', newUser)
+    // const newFilter = userArray.data.filter((item) => {
+    //   return item._id === user
+    // })
     //console.log('2nd get', newFilter[0].achievements)
-    setAchievementsEarned(newFilter[0].achievements)
+    setAchievementsEarned(newUser.data[0].achievements)
   })
+  .catch((err) => console.log('log', err))
 
 })
 }, [])

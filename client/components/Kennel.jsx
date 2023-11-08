@@ -18,14 +18,15 @@ function Kennel() {
 
 const getDogs = () => {
   axios
-  .get(`/kennel/${userId}`)
+  .get(`/dog/user/${userId}`)
   .then(({ data }) => {
+    console.log('daf', data)
     console.log(data.dogsArr)
     setDogs(data.dogsArr);
     setList(data.breeds);
   })
   .catch((err) => {
-    console.error(err);
+    console.error('fail!', err);
   });
 }
 
@@ -35,14 +36,15 @@ const getDogs = () => {
 
   const handleSubmit = () => {
     axios
-      .post("/kennel", {
+      .post("/dog", {
         name: dogName,
         img: dogView,
         owner: userId,
-      });
+      })
+      .then(() => {console.log('ooooooo')})
       getDogs();
       setDogs([])
-      setBreeds([])
+      setList([])
       setShop(false);
   };
 
@@ -111,7 +113,7 @@ const getDogs = () => {
                 if (walk < 0 || feed < 0) {
                   alert(`${dog.name} ran away!`);
                   axios
-                    .delete(`/kennel/${dog._id}`)
+                    .delete(`/dog/${dog._id}`)
                     .then(getDogs)
                     .catch((err) => {
                       console.error(err);
@@ -124,9 +126,12 @@ const getDogs = () => {
               })
               .map((dog) => {
                 return (
-                  <Container key={dog._id}>
+                  <div>
+                    <Container key={dog._id}>
                     <Dog dogObj={dog} getDogs={getDogs} setDogs={setDogs}/>
                   </Container>
+                  </div>
+                  
                 );
               })
           : ""}

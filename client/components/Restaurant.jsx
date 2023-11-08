@@ -9,7 +9,7 @@ function Restaurant(){
   const [user, setUser] = useState('');
   const signedInUser= JSON.parse(sessionStorage.user)
   useEffect( () => {
-    setUser(userObj)
+    setUser(signedInUser)
     //use storage to get user from db the set user state as db user obj
   }, [])
 

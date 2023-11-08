@@ -34,10 +34,10 @@ function Quiz(props) {
   };
 
   const getDogs = () => new Promise((resolve, reject) => {
-    axios.get('/quiz/getDogs')
+    axios.get('/api/quiz')
       .then((dogArray) => {
-
         // if there are duplicates
+        console.log('arr', dogArray)
         if (checkForDuplicateDogs(dogArray.data)) {
           // run getDogs again (until no duplicates)
           getDogs();
@@ -67,7 +67,7 @@ function Quiz(props) {
     const { value } = e.target; // unpack event
     // value is a url assigned to the button's value
     if (value === solutionUrl) {
-      axios.put(`/quiz/updateUser/${_id}`, {
+      axios.put(`/user/${_id}`, {
         dog: {
           url: solutionUrl,
         },
@@ -113,13 +113,13 @@ function Quiz(props) {
   return (
     <Container >
       <Row>
-        <Col style= {{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}>
-          <h1 style={{fontSize:'80px', color: 'black'}}>Pooch Picker</h1>
+        <Col style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+          <h1 style={{ fontSize: '80px', color: 'black' }}>Pooch Picker</h1>
           <div style={{ height: '480px', width: '480px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <Image style={{ margin: 'auto', }} alt="Sorry, someone let the dog out! Click 'Refresh Dog' to fetch a new pup." className='img-trivia' src={solutionUrl} rounded />
           </div>

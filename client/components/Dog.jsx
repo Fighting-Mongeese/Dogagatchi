@@ -17,14 +17,6 @@ function Dog(props) {
   const hungryRef = useRef(null);
   const happyRef = useRef(null);
 
-  const getDog = () => {
-    axios
-      .get(`/dog/${dog._id}`)
-      .then(({ data }) => setDog(data))
-      .catch((err) => {
-        console.error(err);
-      });
-  };
 
   const handleClick = (e) => {
     const status = {};
@@ -41,13 +33,12 @@ function Dog(props) {
     } else {
       bark.play();
     }
-    axios.put(`/kennel/${dog._id}`, { status }).catch((err) => {
+    axios.put(`/dog/${dog._id}`, { status }).catch((err) => {
       console.error(err);
     });
   };
 
   useEffect(() => {
-    getDog();
     setDog(dog);
     console.log("BARK", `${dog.name}`);
   }, [happy, hungry]);

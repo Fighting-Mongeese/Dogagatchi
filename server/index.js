@@ -119,6 +119,16 @@ app.get('/fail', (req, res) => {
   res.json({ message: req.flash('error')[0] })
 })
 
+  //get request to /meals/:id should get one user and send back all user data to client
+
+  app.get('/getUserById/:userId', (req, res) => {
+    const { userId } = req.params;
+    User.findById(userId)
+    .then((foundUser) => res.status(200).send(foundUser))
+    .catch((err) => {
+      console.error('get User by id server ERROR', err);
+    })
+  })
 // *****************ACHIEVEMENTS************************
 // set up a net to catch requests (server side request handling for achievements)
 app.get('/achievements', (req, res) => {
@@ -140,8 +150,8 @@ app.get('/achievements', (req, res) => {
 app.put('/achievements/:userId', (req, res) => {
   //destructure params from req obj
   const { userId } = req.params;
-  const newAchieve = req.body.achievements;
-  console.log('SERVER PUT', req.body.achievements, newAchieve)
+  const newAchieve = req.body;
+  console.log('SERVER PUT', req.body, newAchieve)
   //return the updated user
   User.findByIdAndUpdate(
     userId,
@@ -211,18 +221,40 @@ app.put('/quiz/updateUser/:_id', (req, res) => {
 
 // *****************KENNEL************************
 
+app.get('/dog/:dogId', (req, res) => {
+  const { dogId } = req.params;
+
+  Dog.findById(dogId)
+  .then((dog) => {
+    console.log('get', dog)
+    res.status(200).send(dog)
+  })
+  .catch((err) => {
+    console.error('SERVER ERROR: failed to GET dog by id', err);
+    res.sendStatus(500);
+  });
+})
+
 app.get('/kennel/:userId', (req, res) => {
   const { userId } = req.params;
   Dog.find().where({ owner: userId })
-    .then((dogArr) => {
-      res.status(200)
-        .send(dogArr);
+    .then((dogsArr) => {
+      User.findById(userId)
+        .then(({ breeds }) => {
+          res.status(200)
+            .send({ dogsArr, breeds })
+        })
+        .catch((err) => {
+          console.error('SERVER ERROR: failed to GET user breeds list by id', err);
+          res.sendStatus(500);
+        });
     })
     .catch((err) => {
       console.error('SERVER ERROR: failed to GET dog by userId', err);
       res.sendStatus(500);
     });
 });
+
 
 app.post('/kennel', (req, res) => {
   const { name, img, owner } = req.body;
@@ -235,11 +267,18 @@ app.post('/kennel', (req, res) => {
     feedDeadline: status,
     walkDeadline: status
   })
+    .then(() => {
+      User.findByIdAndUpdate(owner, { $inc: { coinCount: -15, dogCount: -1 }, $pull: { breeds: img } }, { new: true })
+        .catch((err) => {
+          console.error('SERVER ERROR: failed to UPDATE user', err);
+          res.sendStatus(500);
+        })
+    })
     .then(() => res.sendStatus(201))
     .catch((err) => {
       console.error('SERVER ERROR: failed to CREATE dog', err);
       res.sendStatus(500);
-    });
+    })
 })
 
 app.put('/kennel/:dogId', (req, res) => {
@@ -326,8 +365,9 @@ app.get('/meals/:userId', (req, res) =>{
     updatedUser ? res.status(200).send(updatedUser) : res.sendStatus(404)
   })
   .catch((err) => console.error('meals put req server ERROR:', err))
-  
   })
+
+
 
 
 //GET request to '/search/:username' should query the database for the user and send back user data

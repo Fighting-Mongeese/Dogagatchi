@@ -7,9 +7,10 @@ import Meal from './Meal.jsx';
 function Restaurant(){
   //const [meals, setMeals] = useState([])
   const [user, setUser] = useState('');
+  const signedInUser= JSON.parse(sessionStorage.user)
   useEffect( () => {
-    const userObj= JSON.parse(sessionStorage.user)
     setUser(userObj)
+    //use storage to get user from db the set user state as db user obj
   }, [])
 
   return(

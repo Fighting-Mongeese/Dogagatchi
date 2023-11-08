@@ -94,16 +94,16 @@ function Achievements(props) { //access props.user to get id for subsequent get 
 }, [])
 
 useEffect(() => {
-  console.log('Hello')
+
 }, [activeUser])
 
 useEffect(() => {
   axios.get(`/kennel/${user}`) //slash users slash achievements refactor
   .then((dogArray) => {
   //bypasses error on first render
-  console.log(dogArray.data.dogsArr)
+  //console.log(dogArray.data.dogsArr)
   if (activeUser._id) {
-  console.log('dog array', dogArray.data.dogsArr[0].owner, activeUser._id)
+  //console.log('dog array', dogArray.data.dogsArr[0].owner, activeUser._id)
   const hasOneDog = activeUser.achievements.findIndex((item) => {
     if (item.name === 'Good Puppy') {
     return true
@@ -144,8 +144,8 @@ useEffect(() => {
 })
 }, [activeUser])
 
-  console.log('top of achievements user:', user, 'id:', _id)
-  console.log('state check', activeUser, coinsEarned, achievementsEarned)
+  //console.log('top of achievements user:', user, 'id:', _id)
+  //console.log('state check', activeUser, coinsEarned, achievementsEarned)
   return (
   <div className="achievement-container">
     <div className="user-achievements">

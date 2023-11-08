@@ -6,7 +6,7 @@ import barkSound from "../../server/barking-123909.mp3";
 const bark = new Audio(barkSound);
 
 function Dog(props) {
-  const { dogObj } = props;
+  const { dogObj, setCoin } = props;
   const [dog, setDog] = useState(dogObj);
   const [hungry, setHunger] = useState(true);
   const [happy, setHappy] = useState(false);
@@ -31,7 +31,7 @@ function Dog(props) {
     if (e === "feed") {
       setHunger(false);
       hungryRef.current = hungry;
-      const feedDeadline = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+      const feedDeadline = new Date(new Date().getTime() + 12 * 60 * 60 * 1000);
       status.feedDeadline = feedDeadline;
     } else if (e === "walk") {
       setHappy(true);
@@ -41,7 +41,9 @@ function Dog(props) {
     } else {
       bark.play();
     }
-    axios.put(`/kennel/${dog._id}`, { status }).catch((err) => {
+    axios.put(`/kennel/${dog._id}`, { status, cost: -5 })
+    .then(({data}) => setCoin(data.coinCount))
+    .catch((err) => {
       console.error(err);
     });
   };
@@ -114,7 +116,7 @@ function Dog(props) {
       <Card.Img
         src={dog.img}
         alt="Sorry, your dog is in another kennel."
-        style={{ maxWidth: 300, maxHeight: 'auto'}}
+        style={{ maxWidth: 300, maxHeight: 'auto', overflow: 'hidden'}}
       />
       <Card.Header
         style={{

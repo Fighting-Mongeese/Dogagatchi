@@ -7,6 +7,7 @@ import Pantry from './Pantry.jsx';
 function Kennel() {
   const [dogs, setDogs] = useState([]);
   const [userId, setUserId] = useState("");
+  const [coinCount, setCoin] = useState(0);
   const [breeds, setList] = useState([]);
   const [dogView, setDogView] = useState("");
   const [dogName, setDogName] = useState("");
@@ -15,6 +16,7 @@ function Kennel() {
   useEffect(() => {
     const user = JSON.parse(sessionStorage.getItem("user"));
     setUserId(user._id);
+    setCoin(user.coinCount);
   }, []);
 
   const getDogs = () => {
@@ -33,16 +35,25 @@ function Kennel() {
   useEffect(getDogs, [userId]);
 
   const handleSubmit = () => {
-    axios
-      .post("/kennel", {
-        name: dogName,
-        img: dogView,
-        owner: userId,
-      });
+    if (dogView === "" || dogName === "") {
+      alert("Fill all fields");
+    } else if (coinCount > 15) {
+      axios
+        .post("/kennel", {
+          name: dogName,
+          img: dogView,
+          owner: userId,
+        })
+        .then(({ data }) => {
+          setCoin(data.coinCount);
+        });
       getDogs();
-      setDogs([])
-      setList([])
-      setShop(false);
+      setDogs([]);
+      setList([]);
+    } else {
+      alert("Not enough coins!");
+    }
+    setShop(false);
   };
 
   return (
@@ -56,58 +67,76 @@ function Kennel() {
             justifyContent: "center",
           }}
         >
-          <Button onClick={() => setShop(true)}>add dog</Button>
           {dogShop ? (
-            <>
+            ""
+          ) : (
+            <Button onClick={() => setShop(true)}>add dog</Button>
+          )}
+          {dogShop ? (
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "auto auto",
+                padding: "10px",
+              }}
+            >
               <Image
                 src={dogView}
                 alt=""
                 rounded
                 style={{ width: 200 }}
               />
-              <Form.Group>
-                <Form.Label>Name</Form.Label>
-                <Form.Control
-                  placeholder="Dog name"
-                  onChange={(e) => setDogName(e.target.value)}
-                />
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>Dog</Form.Label>
-                <Form.Select onChange={(e) => setDogView(e.target.value)}>
-                  <option>Open this select menu</option>
-                  {breeds.map((dog, index) => {
-                    return (
-                      <option
-                        key={index}
-                        value={dog}
-                      >
-                        {dog}
-                      </option>
-                    );
-                  })}
-                </Form.Select>
-              </Form.Group>
-              <Form.Group>
-                <Button
-                  variant="primary"
-                  type="submit"
-                  onClick={() => handleSubmit()}
-                >
-                  Buy Dog
-                </Button>
-              </Form.Group>
-            </>
+              <Form>
+                <Form.Group>
+                  <Form.Label>Name</Form.Label>
+                  <Form.Control
+                    placeholder="Dog name"
+                    onChange={(e) => setDogName(e.target.value)}
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Dog</Form.Label>
+                  <Form.Select onChange={(e) => setDogView(e.target.value)}>
+                    <option>Choose Dog</option>
+                    {breeds.map((dog, index) => {
+                      return (
+                        <option
+                          key={index}
+                          value={dog}
+                        >
+                          {dog}
+                        </option>
+                      );
+                    })}
+                  </Form.Select>
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>15 coins:</Form.Label>
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    onClick={() => handleSubmit()}
+                  >
+                    Buy Dog
+                  </Button>
+                </Form.Group>
+              </Form>
+            </div>
           ) : (
             ""
           )}
         </Col>
       </Row>
-      <Row>
-        <div
+      <Row
+        style={{
+          height: 800,
+          overflow: "auto-hidden",
+        }}
+      >
+        <Col
           style={{
             display: "grid",
-            gridTemplateColumns: "auto auto",
+            gridTemplateColumns: "auto auto auto auto",
             flexDirection: "row",
             alignItems: "center",
           }}
@@ -141,13 +170,12 @@ function Kennel() {
                     <Dog
                       key={dog._id}
                       dogObj={dog}
-                      getDogs={getDogs}
-                      setDogs={setDogs}
+                      setCoin={setCoin}
                     />
                   );
                 })
             : ""}
-        </div>
+        </Col>
       </Row>
     </Container>
   );

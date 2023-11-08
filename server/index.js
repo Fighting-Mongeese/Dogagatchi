@@ -175,12 +175,12 @@ app.put('/achievements/:userId', (req, res) => {
 
 app.get('/user/:userId', (req, res) => {
   const id = req.params.userId
-  User.find({_id: id})
-  .then((user) => {
-    if(user){
-      res.status(200).send(user)
-    }
-  })
+  User.find({ _id: id })
+    .then((user) => {
+      if (user) {
+        res.status(200).send(user)
+      }
+    })
 })
 
 
@@ -189,10 +189,10 @@ app.get('/user/:userId', (req, res) => {
 // GET dog picture and 4 other random dogs from dogs api
 app.get('/quiz/getDogs', (req, res) => {
   axios.get('https://dog.ceo/api/breeds/image/random/4')
-  .then((response) => {
+    .then((response) => {
       res.status(200).send(response.data.message);
     })
-    .catch((err) => {console.log(err)})
+    .catch((err) => { console.log(err) })
 });
 
 app.put('/quiz/updateUser/:_id', (req, res) => {
@@ -268,13 +268,13 @@ app.post('/kennel', (req, res) => {
     walkDeadline: status
   })
     .then(() => {
-      User.findByIdAndUpdate(owner, { $inc: { coinCount: -15, dogCount: -1 }, $pull: { breeds: img } }, { new: true })
+      return User.findByIdAndUpdate(owner, { $inc: { coinCount: -15, dogCount: -1 }, $pull: { breeds: img } }, { new: true })
         .catch((err) => {
           console.error('SERVER ERROR: failed to UPDATE user', err);
           res.sendStatus(500);
         })
     })
-    .then(() => res.sendStatus(201))
+    .then((updatedUser) => res.status(201).send(updatedUser))
     .catch((err) => {
       console.error('SERVER ERROR: failed to CREATE dog', err);
       res.sendStatus(500);
@@ -283,15 +283,25 @@ app.post('/kennel', (req, res) => {
 
 app.put('/kennel/:dogId', (req, res) => {
   const { dogId } = req.params;
-  const { status } = req.body;
+  const { status, cost } = req.body;
 
   Dog.findByIdAndUpdate(dogId, status, { returnDocument: 'after' })
     .then((updatedDog) => {
       if (updatedDog) {
-        res.status(200).send(updatedDog);
+        return updatedDog
       } else {
         res.sendStatus(404);
       }
+    })
+    .then(({ owner }) => {
+      User.findByIdAndUpdate(owner, { $inc: { coinCount: cost } }, { new: true })
+        .then((user) => {
+          res.status(200).send(user);
+        })
+        .catch((err) => {
+          console.error('SERVER ERROR: failed to CREATE dog', err);
+          res.sendStatus(500);
+        })
     })
     .catch((err) => {
       console.error('SERVER ERROR: failed to UPDATE dog status by id', err);

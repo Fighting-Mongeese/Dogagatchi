@@ -6,25 +6,46 @@ import axios from 'axios'
 
 function User(props) {
   const [user, setUser] = useState('');
+  const [globalRank, setGlobalRank] = useState(0)
+  const [dogCount, setDogCount] = useState(0)
+  const [correctQuestionCount, setCorrectQuestionCount] = useState(0)
+
   useEffect( () => {
-    const userObj = JSON.parse(sessionStorage.user)
-    setUser(userObj)
+    const userObj = JSON.parse(sessionStorage.getItem('user'))
     axios.get('/leaderboard/smartest')
       .then(({ data }) => {
-        const index = data.findIndex(userData => userData._id === user._id)
-        console.log("jjj", data, user, index); // sets leaders to data property from User query obj
+        const index = data.findIndex(userData => userData._id === userObj._id)
+        setGlobalRank(index + 1)
       })
       .catch((err) => console.error('getLeaders ERROR (client):', err));
+
+      axios.get(`/user/${userObj._id}`)
+      .then((user) => {
+        console.log('uusseerr', user.data[0])
+        setCorrectQuestionCount(user.data[0].questionCount)
+        setDogCount(user.data[0].dogCount)
+      })
   }, [])
 
 return(
 <div>
-
-
   <div className="user-main-div">
     <div className="user-stats-container">
       <div className="user-stats">
-      
+
+        <h3>Stats</h3>
+        <div>
+      Global Rank: #{globalRank}
+        </div>
+
+        <div>
+          Correct Answers: {correctQuestionCount}
+        </div>
+
+        <div>
+      # of Dogs: {dogCount}
+        </div>
+
       </div>
     </div>
     <Kennel className="user-kennel"/>

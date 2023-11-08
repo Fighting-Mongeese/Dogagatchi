@@ -25,8 +25,14 @@ const Home = () => {
             <Link to='/user'>
             <Button className='boot-button'>User Profile</Button>
             </Link>
+            <Link to='/restaurant'>
+            <Button className='boot-button'>Restaurant</Button>
+            </Link>
             <Link to='/leaderboard'>
             <Button className='boot-button'>Leaderboard</Button>
+            </Link>
+            <Link to='/about'>
+            <Button className='boot-button'>How To Play</Button>
             </Link>
         </span>
         </div>

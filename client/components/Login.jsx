@@ -84,7 +84,7 @@ const Login = () => {
             </div>
             
 
-           {error && <p>{error}</p>}
+           {error && <p style={{color: 'red'}}>{error}</p>}
         </div>
     )
 }

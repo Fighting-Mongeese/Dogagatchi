@@ -63,6 +63,28 @@ body {
 }
 .user-stats-container, .achievement-container {
   display: flex;
-  justify-content: space-between; 
-  
+  justify-content: space-between;
+}
+
+.meal-container {
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+}
+
+.meals-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.meal-image {
+  width: 150px;
+  height: 150px
+}
+#meal-item {
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 5px;
+  margin-bottom: 2px
 }

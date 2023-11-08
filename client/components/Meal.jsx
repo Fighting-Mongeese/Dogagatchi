@@ -11,7 +11,7 @@ function Meal(props){
 
   const buyMeal = () => {
     const newCoinCount = user.coinCount - meal.cost
-    if(newCoinCount <= 0){
+    if(newCoinCount < 0){
       //setPurchaseStatus(false)
       setPurchaseText('Sorry! You do not have enough tokens. Head over to Pooch Picker to get more!')
     } else {

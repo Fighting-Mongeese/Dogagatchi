@@ -119,6 +119,16 @@ app.get('/fail', (req, res) => {
   res.json({ message: req.flash('error')[0] })
 })
 
+  //get request to /meals/:id should get one user and send back all user data to client
+
+  app.get('/getUserById/:userId', (req, res) => {
+    const { userId } = req.params;
+    User.findById(userId)
+    .then((foundUser) => res.status(200).send(foundUser))
+    .catch((err) => {
+      console.error('get User by id server ERROR', err);
+    })
+  })
 // *****************ACHIEVEMENTS************************
 // set up a net to catch requests (server side request handling for achievements)
 app.get('/achievements', (req, res) => {
@@ -314,8 +324,9 @@ app.put('/meals/:userId', (req, res) =>{
     updatedUser ? res.status(200).send(updatedUser) : res.sendStatus(404)
   })
   .catch((err) => console.error('meals put req server ERROR:', err))
-  
   })
+
+
 
 
 //GET request to '/search/:username' should query the database for the user and send back user data

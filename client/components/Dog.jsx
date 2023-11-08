@@ -159,7 +159,7 @@ function Dog(props) {
                 variant="info"
                 onClick={() => handleClick("bark")}
               >
-                🐶
+                🦴
               </Button>
             )}
           </div>
@@ -184,7 +184,7 @@ function Dog(props) {
                 variant="info"
                 onClick={() => handleClick("bark")}
               >
-                🐾
+                🐶
               </Button>
             ) : (
               <Button

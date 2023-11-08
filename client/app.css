@@ -165,14 +165,20 @@ body {
   display: flex;
   flex-direction: column;
   align-content: space-between;
+  flex-wrap: wrap;
 }
 
 .meals-container {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
 }
 
+#pantry {
+  max-height: 250px;
+  overflow: auto;
+}
 .meal-image {
   width: 150px;
   height: 150px

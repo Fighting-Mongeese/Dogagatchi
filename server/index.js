@@ -352,7 +352,7 @@ app.get('/leaderboard/:type', (req, res) => {
 });
 
 //put request to add meal to user's meal array and subtract coins from user's coinCount
-app.get('/meals/:userId', (req, res) =>{
+app.put('/meals/:userId', (req, res) =>{
   console.log(req.params)
   const { coinCount, meals } = req.body
   const { userId } = req.params;

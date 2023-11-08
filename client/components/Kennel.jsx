@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, Container, Form, Image } from "react-bootstrap";
 import axios from "axios";
 import Dog from "./Dog.jsx";
+import Pantry from './Pantry.jsx';
 
 function Kennel() {
   const [dogs, setDogs] = useState([]);
@@ -10,7 +11,7 @@ function Kennel() {
   const [dogView, setDogView] = useState("");
   const [dogName, setDogName] = useState("");
   const [dogShop, setShop] = useState(false);
-
+  
   useEffect(() => {
     const user = JSON.parse(sessionStorage.getItem("user"));
     setUserId(user._id);
@@ -42,7 +43,7 @@ const getDogs = () => {
       });
       getDogs();
       setDogs([])
-      setBreeds([])
+      setList([])
       setShop(false);
   };
 
@@ -131,6 +132,7 @@ const getDogs = () => {
               })
           : ""}
       </div>
+      <Pantry />
     </div>
   );
 }

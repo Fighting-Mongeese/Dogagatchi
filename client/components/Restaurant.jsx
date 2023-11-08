@@ -6,10 +6,16 @@ import Meal from './Meal.jsx';
 
 function Restaurant(){
   //const [meals, setMeals] = useState([])
-  const [user, setUser] = useState('');
+  const [user, setUser] = useState({});
   const signedInUser= JSON.parse(sessionStorage.user)
+
+  const getSignedInUserData = (userId) => {
+    axios.get(`/getUserById/${userId}`)
+    .then(({ data }) => setUser(data))
+    .catch((err) => console.error('get signed in user ERROR', err))
+  }
   useEffect( () => {
-    setUser(userObj)
+   getSignedInUserData(signedInUser._id)
     //use storage to get user from db the set user state as db user obj
   }, [])
 
@@ -22,7 +28,7 @@ function Restaurant(){
           key={mealObj.idMeal}
           meal={mealObj}
           user={user}
-          setUser={setUser}
+          setUser={getSignedInUserData}
           />
         ))}
       </div>

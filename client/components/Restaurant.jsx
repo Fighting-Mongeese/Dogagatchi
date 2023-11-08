@@ -21,6 +21,7 @@ function Restaurant(){
           key={mealObj.idMeal}
           meal={mealObj}
           user={user}
+          setUser={setUser}
           />
         ))}
       </div>

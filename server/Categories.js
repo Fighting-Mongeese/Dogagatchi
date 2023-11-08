@@ -9,7 +9,7 @@ module.exports = [
   {
     name: "Bananas Pancakes",
     image: "https://www.themealdb.com/images/media/meals/sywswr1511383814.jpg",
-    cost: 10,
+    cost: 0,
     fullTime: "placeholder",
     idMeal: 52855
   },

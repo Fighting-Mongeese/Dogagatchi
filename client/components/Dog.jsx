@@ -6,14 +6,23 @@ import barkSound from "../../server/barking-123909.mp3";
 const bark = new Audio(barkSound);
 
 function Dog(props) {
+  const { dogObj } = props;
+  const [dog, setDog] = useState(dogObj);
   const [hungry, setHunger] = useState(true);
   const [happy, setHappy] = useState(false);
   const [feedStatus, setFeedStatus] = useState("");
   const [walkStatus, setWalkStatus] = useState("");
   const [feedTimer, setFeedTimer] = useState(0);
   const [walkTimer, setWalkTimer] = useState(0);
-
-  const { dog } = props;
+  
+    const getDog = () => {
+      const { _id } = dog;
+      axios.get("/dog", { _id })
+      .then(dog => setDog(dog))
+      .catch((err) => {
+        console.error(err);
+      });
+    };
 
   const handleClick = (e) => {
     const status = {};
@@ -64,6 +73,7 @@ function Dog(props) {
         setWalkStatus("success");
         setHappy(true);
       }
+
     }, 1000);
   }, []);
 

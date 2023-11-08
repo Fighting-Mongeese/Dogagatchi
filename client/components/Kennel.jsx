@@ -6,7 +6,6 @@ import Dog from "./Dog.jsx";
 function Kennel() {
   const [dogs, setDogs] = useState([]);
   const [userId, setUserId] = useState("");
-  const [coins, setUserCoins] = useState(0);
   const [breeds, setList] = useState([]);
   const [dogView, setDogView] = useState("");
   const [dogName, setDogName] = useState("");
@@ -15,7 +14,6 @@ function Kennel() {
   useEffect(() => {
     const user = JSON.parse(sessionStorage.getItem("user"));
     setUserId(user._id);
-    setUserCoins(user.coinCount);
   }, []);
 
 const getDogs = () => {
@@ -42,7 +40,6 @@ const getDogs = () => {
         img: dogView,
         owner: userId,
       });
-
       getDogs();
       setDogs([])
       setBreeds([])
@@ -115,14 +112,7 @@ const getDogs = () => {
                   alert(`${dog.name} ran away!`);
                   axios
                     .delete(`/kennel/${dog._id}`)
-                    .then(({ data }) => {
-                      axios
-                        .get(`/kennel/${data.owner}`)
-                        .then(({ data }) => setDogs(data))
-                        .catch((err) => {
-                          console.error(err);
-                        });
-                    })
+                    .then(getDogs)
                     .catch((err) => {
                       console.error(err);
                     });
@@ -135,7 +125,7 @@ const getDogs = () => {
               .map((dog) => {
                 return (
                   <Container key={dog._id}>
-                    <Dog dog={dog} />
+                    <Dog dogObj={dog}/>
                   </Container>
                 );
               })

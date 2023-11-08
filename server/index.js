@@ -210,6 +210,17 @@ app.put('/quiz/updateUser/:_id', (req, res) => {
 
 // *****************KENNEL************************
 
+// app.get('/dog', (req, res) => {
+//   const { _id } = req.body;
+
+//   Dog.findById(_id)
+//   .then((dog) => res.status(200).send(dog))
+//   .catch((err) => {
+//     console.error('SERVER ERROR: failed to GET dog by id', err);
+//     res.sendStatus(500);
+//   });
+// })
+
 app.get('/kennel/:userId', (req, res) => {
   const { userId } = req.params;
   Dog.find().where({ owner: userId })
@@ -229,6 +240,7 @@ app.get('/kennel/:userId', (req, res) => {
       res.sendStatus(500);
     });
 });
+
 
 app.post('/kennel', (req, res) => {
   const { name, img, owner } = req.body;

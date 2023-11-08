@@ -6,7 +6,7 @@ function Achieve(props) {
   //console.log('props', props)
   return (
     
-    <div class="shimmer">
+    <div className="shimmer">
       <img src={props.img}></img><div className='achievement-element'>{props.achieve}</div>
     </div>
   )

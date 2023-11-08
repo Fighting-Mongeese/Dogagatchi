@@ -26,7 +26,7 @@ function Achievements(props) { //access props.user to get id for subsequent get 
     })
     setActiveUser(filteredArray[0]);
     setCoinsEarned(filteredArray[0].coinCount)
-    console.log('first put', filteredArray[0].achievements, 'user', userArray)
+    //console.log('first put', filteredArray[0].achievements, 'user', userArray)
     const thriftyCheck =  filteredArray[0].achievements.findIndex((item) => {
       if (item.name === 'Thrifty') {
       return true
@@ -43,7 +43,7 @@ function Achievements(props) { //access props.user to get id for subsequent get 
       }
     })
     //Object.values(filteredArray[0].achievements).includes('Thrifty')
-    console.log('thriftyCheck', thriftyCheck, filteredArray[0])
+    //console.log('thriftyCheck', thriftyCheck, filteredArray[0])
     if (filteredArray[0].coinCount > 10 && thriftyCheck === -1) {
       //axios put request with activeUser hook
       axios.put(`/achievements/${filteredArray[0]._id}`, {
@@ -58,7 +58,7 @@ function Achievements(props) { //access props.user to get id for subsequent get 
             image: 'https://www.trueachievements.com/imagestore/0006900900/6900915.jpg'
           })
         }
-        console.log('moneybags check', filteredArray[0].coinCount, moneyBagsCheck )
+        //console.log('moneybags check', filteredArray[0].coinCount, moneyBagsCheck )
     if (filteredArray[0].coinCount > 35 && moneyBagsCheck === -1) {
       //axios put request with activeUser hook
       axios.put(`/achievements/${filteredArray[0]._id}`, {
@@ -71,24 +71,15 @@ function Achievements(props) { //access props.user to get id for subsequent get 
     const newFilter = userArray.data.filter((item) => {
       return item._id === user
     })
-    console.log('2nd get', newFilter[0].achievements)
+    //console.log('2nd get', newFilter[0].achievements)
     setAchievementsEarned(newFilter[0].achievements)
   })
 
 })
-.then((userData) => {
-  //use promise to set state of achievements earned
-  //setAchievementsEarned(user.data)
-  console.log('Post put achievements', userData);
-})
-//error handling
-.catch((err) => {
-  console.error('CLIENT ACHIEVEMENT ERROR', err)
-})
 }, [])
 
-  console.log('top of achievements user:', user, 'id:', _id)
-  console.log('state check', activeUser, coinsEarned, achievementsEarned)
+  //console.log('top of achievements user:', user, 'id:', _id)
+  //console.log('state check', activeUser, coinsEarned, achievementsEarned)
   return (
   <div className="achievement-container">
     <div className="user-achievements">

@@ -103,7 +103,7 @@ useEffect(() => {
   //bypasses error on first render
   //console.log(dogArray.data.dogsArr)
   if (activeUser._id) {
-  //console.log('dog array', dogArray.data.dogsArr[0].owner, activeUser._id)
+  //console.log('dog array', dogArray.data.dogsArr, activeUser._id)
   const hasOneDog = activeUser.achievements.findIndex((item) => {
     if (item.name === 'Good Puppy') {
     return true
@@ -125,13 +125,13 @@ useEffect(() => {
       image: 'https://www.trueachievements.com/imagestore/0006879400/6879454.jpg'
     })
   }
-  if (dogArray.data.dogsArr.length === 2 && hasTwoDogs === -1) {
+  if (dogArray.data.dogsArr.length >= 2 && hasTwoDogs === -1) {
     axios.put(`/achievements/${activeUser._id}`, {
       name: 'Pair of Pups',
       image: 'https://www.trueachievements.com/imagestore/0006917800/6917875.jpg'
     })
   }
-  if (dogArray.data.dogsArr.length === 3 && hasThreeDogs === -1) {
+  if (dogArray.data.dogsArr.length >= 3 && hasThreeDogs === -1) {
     axios.put(`/achievements/${activeUser._id}`, {
       name: 'Dog Pile!',
       image: 'https://www.trueachievements.com/imagestore/0006917800/6917800.jpg'

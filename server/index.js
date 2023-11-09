@@ -362,19 +362,30 @@ app.get('/leaderboard/:type', (req, res) => {
 });
 
 //put request to add meal to user's meal array and subtract coins from user's coinCount
-app.put('/meals/:userId', (req, res) => {
-  const { coinCount, meals } = req.body
+app.put('/meals/:userId', (req, res) =>{
+  //console.log(req.params)
   const { userId } = req.params;
+  const { coinCount, meals, update, mealToDelete } = req.body
 
-  User.findByIdAndUpdate(userId, {
-    $set: { coinCount: coinCount.newCount },
-    $push: { meals: meals.meal }
-  }, { returnDocument: 'after' })
+  if(update.type === 'buyMeal'){
+    User.findByIdAndUpdate(userId, {
+      $set: {coinCount: coinCount.newCount},
+      $push: {meals: meals.meal}
+    }, {returnDocument: 'after'} )
     .then((updatedUser) => {
       updatedUser ? res.status(200).send(updatedUser) : res.sendStatus(404)
     })
     .catch((err) => console.error('meals put req server ERROR:', err))
-})
+  } else if(update.type === 'deleteMeal'){
+    console.log('meal to delete', req.body)
+    User.findByIdAndUpdate(userId, {
+      $pull: {meals: mealToDelete}
+    })
+    .then((updatedDoc) => res.status(200).send(updatedDoc))
+    .catch((err) => console.error('could not delete meal', err) )
+  }
+
+  })
 
 
 

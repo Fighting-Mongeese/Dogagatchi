@@ -12,8 +12,8 @@ function Pantry(props) {
     //console.log('userId param', userIdParam)
     axios.get(`/getUserById/${userIdParam}`)
     .then(({ data }) => {
-      //console.log('user data', data)
       const sortedMeals = data.meals.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))
+      console.log('user data', sortedMeals)
       setMeals(sortedMeals)
     })
     .catch((err) => console.error('get signed in user ERROR', err))
@@ -33,11 +33,14 @@ function Pantry(props) {
   return(
     <div>
       <h2>My Meals</h2>
+      {console.log(meals)}
         <div id="pantry" className='meals-container'>
           {meals ? meals.map((mealObj) => (
             <PantryItem
             meal={mealObj}
             dogsArr={dogs}
+            signedInUserId={signedInUser._id}
+            getSignedInUserMeals={getSignedInUserMeals}
             key={mealObj._id}
             />
           )) : 'You do not have any meals yet! Check out our restaurant to get something extra yummy for your pup!'}

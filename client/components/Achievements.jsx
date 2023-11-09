@@ -46,31 +46,31 @@ function Achievements(props) { //access props.user to get id for subsequent get 
       return true
       }
     })
-    if (userArray.data[0].coinCount >= 10 && thriftyCheck === -1) {
+    if (userArray.data[0].coinCount >= 50 && thriftyCheck === -1) {
       axios.put(`/user/achievements/${userArray.data[0]._id}`, {
         name: 'Thrifty',
         image: "https://www.trueachievements.com/imagestore/0007101900/7101902.jpg"
       })
     }
-    if (userArray.data[0].coinCount >= 30 && superSaverCheck === -1) {
+    if (userArray.data[0].coinCount >= 100 && superSaverCheck === -1) {
           axios.put(`/user/achievements/${userArray.data[0]._id}`, {
             name: 'Super Saver',
             image: 'https://www.trueachievements.com/imagestore/0006900900/6900915.jpg'
           })
         }
-    if (userArray.data[0].coinCount >= 50 && moneyBagsCheck === -1) {
+    if (userArray.data[0].coinCount >= 150 && moneyBagsCheck === -1) {
       axios.put(`/user/achievements/${userArray.data[0]._id}`, {
         name: 'Money Bags',
         image: 'https://www.trueachievements.com/imagestore/0006900800/6900859.jpg'
       })
     }
-    if (userArray.data[0].questionCount >= 20 && quizzicalCheck === -1) {
+    if (userArray.data[0].questionCount >= 50 && quizzicalCheck === -1) {
       axios.put(`/user/achievements/${userArray.data[0]._id}`, {
         name: 'Quizzical',
         image: 'https://www.trueachievements.com/imagestore/0007044300/7044323.jpg'
       })
     }
-    if (userArray.data[0].questionCount >= 50 && quizGod === -1) {
+    if (userArray.data[0].questionCount >= 150 && quizGod === -1) {
       axios.put(`/user/achievements/${userArray.data[0]._id}`, {
         name: 'Quiz God',
         image: 'https://www.trueachievements.com/imagestore/0007044300/7044303.jpg'
@@ -107,7 +107,7 @@ function Achievements(props) { //access props.user to get id for subsequent get 
       image: 'https://www.trueachievements.com/imagestore/0006917800/6917875.jpg'
     })
   }
-  if (dogArray.data.dogsArr.length >= 3 && hasThreeDogs === -1) {
+  if (dogArray.data.dogsArr.length >= 5 && hasThreeDogs === -1) {
     axios.put(`/user/achievements/${use._id}`, {
       name: 'Dog Pile!',
       image: 'https://www.trueachievements.com/imagestore/0006917800/6917800.jpg'

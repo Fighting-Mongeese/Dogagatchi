@@ -77,7 +77,8 @@ function Kennel() {
               style={{
                 display: "grid",
                 gridTemplateColumns: "auto auto",
-                padding: "10px",
+                marginTop: '70px',
+                paddingTop: '50px'
               }}
             >
               <Image
@@ -170,7 +171,6 @@ function Kennel() {
                     <Dog
                       key={dog._id}
                       dogObj={dog}
-                      setCoin={setCoin}
                     />
                   );
                 })

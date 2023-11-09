@@ -37,17 +37,16 @@ function User(props) {
         setDogCount(user.data[0].dogCount)
         setCoins(user.data[0].coinCount)
       })
-      axios.get(`/dog/users/${userObj._id}`)
+    axios.get(`/dog/users/${userObj._id}`)
       .then((dogArr) => {
         console.log('goo', dogArr.data.dogsArr)
         setOwnDogs(dogArr.data.dogsArr.length)
 
       })
 
-      getKennel();
+    getKennel();
   }, [])
-
- const getKennel = () => {
+  const getKennel = () => {
     axios
       .get(`/dog/users/${userObj._id}`)
       .then(({ data }) => {
@@ -97,7 +96,7 @@ function User(props) {
                    )
                }
             <Card
-            style={{backgroundColor:"#4c5f63"}}
+              style={{ backgroundColor: "#4c5f63" }}
             >
       <Card.Header
         style={{
@@ -125,31 +124,31 @@ function User(props) {
         Global Rank: #{globalRank}
       </Card.Header>
 
-      <Card.Header
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          fontWeight: "bold",
-          fontSize: "large",
-          backgroundColor: color
-        }}
-      >
-        Correct Answers: {correctQuestionCount}
-      </Card.Header>
+              <Card.Header
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  fontWeight: "bold",
+                  fontSize: "large",
+                  backgroundColor: color
+                }}
+              >
+                Correct Answers: {correctQuestionCount}
+              </Card.Header>
 
-      <Card.Header
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          fontWeight: "bold",
-          fontSize: "large",
-          backgroundColor: color
-        }}
-      >
-        Purchasable Dogs: {dogCount}
-      </Card.Header>
+              <Card.Header
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  fontWeight: "bold",
+                  fontSize: "large",
+                  backgroundColor: color
+                }}
+              >
+                Purchasable Dogs: {dogCount}
+              </Card.Header>
 
       <Card.Header
         style={{
@@ -164,7 +163,7 @@ function User(props) {
         <p>Owned Dogs: {ownDogs}</p>
       </Card.Header>
             </Card>
-            
+
           </div>
 
 

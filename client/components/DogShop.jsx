@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Form, Image, div, Col } from "react-bootstrap";
+import { Button, Form, Image } from "react-bootstrap";
 import axios from "axios";
 
 function DogShop() {
@@ -12,7 +12,6 @@ function DogShop() {
   const [userId, setUserId] = useState(user._id);
 
   useEffect(() => {
-    console.log('hi')
     setUserId(user._id);
     getDogs()
     axios.get(`/user/${user._id}`).then((userData) => {
@@ -23,10 +22,7 @@ function DogShop() {
   const getDogs = () => {
     axios
       .get(`/dog/users/${userId}`)
-      .then(({ data }) => {
-        console.log('dogs', data)
-        setList(data.breeds);
-      })
+      .then(({ data }) => setList(data.breeds))
       .catch((err) => {
         console.error(err);
       });

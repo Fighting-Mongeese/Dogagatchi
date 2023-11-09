@@ -106,22 +106,18 @@ body {
 }
 
 .dogs {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  width: 900px;
-  height: 700px;
+  width: 100%;
   overflow: auto;
   align-items: center;
-  justify-content: center;
 }
 .dogs::-webkit-scrollbar {
   display: none;
-}
+} 
 
 /* .item {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-} */
+}*/
 
 
 .col {

@@ -11,6 +11,7 @@ function User(props) {
   const [user, setUser] = useState("");
   const [globalRank, setGlobalRank] = useState(0);
   const [dogCount, setDogCount] = useState(0);
+  const [ownDogs, setOwnDogs] = useState(0);
   const [coins, setCoins] = useState(0);
   const [correctQuestionCount, setCorrectQuestionCount] = useState(0);
 
@@ -33,6 +34,12 @@ function User(props) {
         setDogCount(user.data[0].dogCount)
         setCoins(user.data[0].coinCount)
       })
+      axios.get(`/dog/users/${userObj._id}`)
+      .then((dogArr) => {
+        console.log('goo', dogArr.data.dogsArr)
+        setOwnDogs(dogArr.data.dogsArr.length)
+
+      })
   }, [])
 
 
@@ -53,14 +60,31 @@ function User(props) {
       <Row >
         <Col xs={4}>
           <div className="user-stats">
-            <h3>Stats</h3>
+            <Card>
+
+            <Card.Header
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          fontWeight: "bold",
+          fontSize: "large",
+        }}
+      >
+        {user.username}
+      </Card.Header>
+              <h3>Stats</h3>
             <p>Coins: {coins}</p>
 
             <p>Global Rank: #{globalRank}</p>
 
             <p>Correct Answers: {correctQuestionCount}</p>
 
-            <p># of Dogs: {dogCount}</p>
+            <p>Purchasable Dogs: {dogCount}</p>
+
+            <p>Owned Dogs: {ownDogs}</p>
+            </Card>
+            
           </div>
           <Achievements
             user={user}

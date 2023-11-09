@@ -22,16 +22,16 @@ const Home = () => {
             <Button className='boot-button'>Quiz</Button>
             </Link>
             <Link to='/user'>
-            <Button className='boot-button'>User Profile</Button>
+            <Button className='boot-button'>My Kennel</Button>
             </Link>
             <Link to='/restaurant'>
-            <Button className='boot-button'>Restaurant</Button>
+            <Button className='boot-button'>Bow Wow's Chow</Button>
             </Link>
             <Link to='/leaderboard'>
-            <Button className='boot-button'>Leaderboard</Button>
+            <Button className='boot-button'>Top Dogs</Button>
             </Link>
             <Link to='/about'>
-            <Button className='boot-button'>How To Play</Button>
+            <Button className='boot-button'>About</Button>
             </Link>
         </span>
         </div>

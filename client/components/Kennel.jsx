@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Container, Form, Image, Row, Col } from "react-bootstrap";
+import { Button, Form, Image} from "react-bootstrap";
 import axios from "axios";
 import Dog from "./Dog.jsx";
 
@@ -23,14 +23,14 @@ function Kennel() {
   useEffect(getDogs, [userId, click]);
 
   return (
-    <Container>
-      <Row
+    <div>
+      <div
         style={{
           height: 800,
           overflow: "auto-hidden",
         }}
       >
-        <Col
+        <div
           className="mb-3"
           style={{
             display: "flex",
@@ -77,9 +77,9 @@ function Kennel() {
                   );
                 })
             : ""}
-        </Col>
-      </Row>
-    </Container>
+        </div>
+      </div>
+    </div>
   );
 }
 

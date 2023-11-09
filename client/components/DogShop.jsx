@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Form, Image, Row, Col } from "react-bootstrap";
+import { Button, Form, Image, div, Col } from "react-bootstrap";
 import axios from "axios";
 
 function DogShop() {
@@ -12,7 +12,9 @@ function DogShop() {
   const [userId, setUserId] = useState(user._id);
 
   useEffect(() => {
+    console.log('hi')
     setUserId(user._id);
+    getDogs()
     axios.get(`/user/${user._id}`).then((userData) => {
       setCoin(userData.data[0].coinCount);
     });
@@ -22,6 +24,7 @@ function DogShop() {
     axios
       .get(`/dog/users/${userId}`)
       .then(({ data }) => {
+        console.log('dogs', data)
         setList(data.breeds);
       })
       .catch((err) => {
@@ -52,23 +55,14 @@ function DogShop() {
   };
 
   return (
-    <Row>
-      <Col
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
+    <div>
+        
         {dogShop ? "" : <Button onClick={() => setShop(true)}>add dog</Button>}
         {dogShop ? (
           <div
             style={{
               display: "grid",
               gridTemplateColumns: "auto auto",
-              marginTop: "70px",
-              paddingTop: "50px",
             }}
           >
             <Image
@@ -116,8 +110,7 @@ function DogShop() {
         ) : (
           ""
         )}
-      </Col>
-    </Row>
+    </div>
   );
 }
 

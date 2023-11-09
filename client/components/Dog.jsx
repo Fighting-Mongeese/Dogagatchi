@@ -118,7 +118,7 @@ function Dog(props) {
       }
     }, 1000);
     return () => clearInterval(x);
-  }, [happy, hungry, dog, walkTimer, feedTimer]);
+  }, [happy, hungry, dog]);
 
   return (
     <Card>

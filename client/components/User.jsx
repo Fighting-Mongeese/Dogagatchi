@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
-import NavBar from "./Navbar.jsx";
-import Achievements from "./Achievements.jsx";
-import Kennel from "./Kennel.jsx";
-import Pantry from "./Pantry.jsx";
-import DogShop from "./DogShop.jsx";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import { Card, Col, Container, Row } from "react-bootstrap";
+import NavBar from './Navbar.jsx';
+import DogShop from './DogShop.jsx'
+import Achievements from './Achievements.jsx';
+import Kennel from './Kennel.jsx';
+import Pantry from './Pantry.jsx'
+import axios from 'axios'
 
 function User(props) {
   const [user, setUser] = useState("");
@@ -25,41 +26,73 @@ function User(props) {
       })
       .catch((err) => console.error("getLeaders ERROR (client):", err));
 
-    axios.get(`/user/${userObj._id}`).then((user) => {
-      setCorrectQuestionCount(user.data[0].questionCount);
-      setDogCount(user.data[0].dogCount);
-      setCoins(user.data[0].coinCount);
-    });
-  }, []);
+    axios.get(`/user/${userObj._id}`)
+      .then((user) => {
+        setUser(user.data[0])
+        setCorrectQuestionCount(user.data[0].questionCount)
+        setDogCount(user.data[0].dogCount)
+        setCoins(user.data[0].coinCount)
+      })
+  }, [])
+
+
 
   return (
-    <div>
-      <div className="user-main-div">
-        <div className="user-stats-container">
+    <Container>
+
+      <Row  >
+        <Col style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }} >
+          <DogShop />
+        </Col>
+      </Row>
+      <Row >
+        <Col xs={4}>
           <div className="user-stats">
             <h3>Stats</h3>
-            <div>Coins: {coins}</div>
+            <p>Coins: {coins}</p>
 
-            <div>Global Rank: #{globalRank}</div>
+            <p>Global Rank: #{globalRank}</p>
 
-            <div>Correct Answers: {correctQuestionCount}</div>
+            <p>Correct Answers: {correctQuestionCount}</p>
 
-            <div># of Dogs: {dogCount}</div>
+            <p># of Dogs: {dogCount}</p>
           </div>
-        </div>
+          <Achievements
+            user={user}
+            className="user-achievements"
+          />
+        </Col>
+
+        <Col xs={8}>
         <div className="dogs">
-          <DogShop />
           <Kennel className="user-kennel" />
         </div>
-        <Achievements
-          user={user}
-          className="user-achievements"
-        />
-      </div>
-      <div className="pantry">
+        <div className="pantry">
         <Pantry />
-      </div>
-    </div>
+      </div> 
+        </Col>
+
+
+
+      </Row>
+
+
+
+
+
+       {/* <div className="user-main-div">
+        <div className="user-stats-container">
+        </div>
+        
+        
+      </div> */}
+      
+    </Container>
   );
 }
 

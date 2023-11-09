@@ -15,7 +15,7 @@ function NavBar(props) {
   return (
     <Navbar expand="lg" bg="primary" data-bs-theme="dark">
       <Container>
-        <Navbar.Brand as={Link} to="/home">🐶 Dogagatchi+</Navbar.Brand>
+        <Navbar.Brand as={Link} to="/home" className='dogagotchi-header'>🐶 Dogagatchi+</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" className="my-1" />
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
           <Nav>

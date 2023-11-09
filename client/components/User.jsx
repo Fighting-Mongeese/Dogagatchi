@@ -143,70 +143,10 @@ function User(props) {
       >
         <p>Owned Dogs: {ownDogs}</p>
       </Card.Header>
-              {/* <h3>Stats</h3>
-            {{coins} > 1 ? <p>Coin: {coins}</p> : <p>Coins: {coins}</p>}
-
-            <p>Global Rank: #{globalRank}</p>
-
-            <p>Correct Answers: {correctQuestionCount}</p>
-
-            <p>Purchasable Dogs: {dogCount}</p>
-
-            <p>Owned Dogs: {ownDogs}</p> */}
             </Card>
             
           </div>
 
-          {/* <Card>
-
-            <Card.Header
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          fontWeight: "bold",
-          fontSize: "large",
-          backgroundColor:"skyblue"
-        }}
-      >
-        {user.username}'s page
-      </Card.Header>
-     
-              <h3>Stats</h3>
-            {{coins} > 1 ? <p>Coin: {coins}</p> : <p>Coins: {coins}</p>}
-
-            <p>Global Rank: #{globalRank}</p>
-
-            <p>Correct Answers: {correctQuestionCount}</p>
-
-            <p>Purchasable Dogs: {dogCount}</p>
-
-            <p>Owned Dogs: {ownDogs}</p>
-            </Card> */}
-
-          {/* <ListGroup>
-            <ListGroup.Item>
-              Name: {user.username}
-            </ListGroup.Item>
-            <ListGroup.Item>
-            Global Rank: #{globalRank}
-            </ListGroup.Item>
-          </ListGroup>
-            <div> */}
-
-          {/* <Table>
-            <tbody>
-              <tr>
-                <td>Name</td>
-                <td>{user.username}</td>
-              </tr>
-              <tr>
-                <td>Global Rank</td>
-                <td>#{globalRank}</td>
-              </tr>
-            </tbody>
-          </Table>
-            </div> */}
 
           <Achievements
             user={user}
@@ -218,25 +158,9 @@ function User(props) {
         <div className="dogs">
           <Kennel className="user-kennel" />
         </div>
-        <div className="pantry">
-        <Pantry />
-      </div> 
+       
         </Col>
-
-
-
       </Row>
-
-
-
-
-
-       {/* <div className="user-main-div">
-        <div className="user-stats-container">
-        </div>
-        
-        
-      </div> */}
       
     </Container>
   );

@@ -12,6 +12,7 @@ function Kennel() {
   const [dogView, setDogView] = useState("");
   const [dogName, setDogName] = useState("");
   const [dogShop, setShop] = useState(false);
+  const [click, setClick] = useState(0);
   
   useEffect(() => {
     const user = JSON.parse(sessionStorage.getItem("user"));
@@ -31,7 +32,7 @@ function Kennel() {
       });
   };
 
-  useEffect(getDogs, [userId]);
+  useEffect(getDogs, [userId, click]);
 
   const handleSubmit = () => {
     if (dogView === "" || dogName === "") {
@@ -170,6 +171,8 @@ function Kennel() {
                     <Dog
                       key={dog._id}
                       dogObj={dog}
+                      click={click}
+                      setClick={setClick}
                     />
                   );
                 })

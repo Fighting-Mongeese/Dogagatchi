@@ -25,7 +25,7 @@ const Home = () => {
             <Button className='boot-button'>My Kennel</Button>
             </Link>
             <Link to='/restaurant'>
-            <Button className='boot-button'>Bow Wow Chow</Button>
+            <Button className='boot-button'>Bow Wow's Chow</Button>
             </Link>
             <Link to='/leaderboard'>
             <Button className='boot-button'>Top Dogs</Button>

@@ -205,9 +205,10 @@ body {
 }
 
 .meal-container {
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  align-content: space-between;
+  flex-direction: row;
+  justify-content: space-between;
   flex-wrap: wrap;
 }
 

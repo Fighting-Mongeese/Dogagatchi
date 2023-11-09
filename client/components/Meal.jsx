@@ -39,15 +39,15 @@ function Meal(props) {
 
   return (
     <Card className="meal-container my-2 p-2">
-      <div className='d-flex flex-row'>
+      <div className='d-flex flex-row w-75'>
         <Image id="meal-item" className="meal-image p-2" src={`${props.meal.image}`} roundedCircle />
-          <Card.Body className='d-flex flex-column'>
-            <Card.Title id="meal-item">{props.meal.name}</Card.Title>
-            <Card.Text id="meal-item">{`${props.meal.cost} tokens`}</Card.Text>
-            <Card.Text>{purchaseText}</Card.Text>
-          </Card.Body>
+        <Card.Body className='d-flex flex-column'>
+          <Card.Title id="meal-item">{props.meal.name}</Card.Title>
+          <Card.Text id="meal-item">{`${props.meal.cost} tokens`}</Card.Text>
+          <Card.Text id="meal-item">{purchaseText}</Card.Text>
+        </Card.Body>
       </div>
-      <div className='d-flex flex-column align-items-center justify-content-middle mx-4'>
+      <div className='d-flex align-items-center justify-content-middle mx-4'>
         <Button
           variant="primary"
           onClick={() => buyMeal()}

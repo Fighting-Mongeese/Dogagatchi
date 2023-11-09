@@ -32,8 +32,6 @@ router.get('/users/:userId', (req, res) => {
 router.get('/id/:dogId', (req, res) => {
     const { dogId } = req.params;
 
-    console.log('yee', dogId)
-
     Dog.findById(dogId)
         .then((dog) => {
             res.status(200).send(dog)

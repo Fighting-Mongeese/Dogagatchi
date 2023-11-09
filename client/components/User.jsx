@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ListGroup, Table, Card, Col, Container, Row } from "react-bootstrap";
 import NavBar from './Navbar.jsx';
 import DogShop from './DogShop.jsx'
@@ -15,9 +15,11 @@ function User(props) {
   const [coins, setCoins] = useState(0);
   const [color, setColor] = useState("#ade3e3")
   const [correctQuestionCount, setCorrectQuestionCount] = useState(0);
+  const [dogs, setDogs] = useState([]);
+  const dogsRef = useRef(dogs);
 
+  const userObj = JSON.parse(sessionStorage.getItem("user"));
   useEffect(() => {
-    const userObj = JSON.parse(sessionStorage.getItem("user"));
     axios
       .get("/user/leaderboard/smartest")
       .then(({ data }) => {
@@ -41,8 +43,20 @@ function User(props) {
         setOwnDogs(dogArr.data.dogsArr.length)
 
       })
+
+      getKennel();
   }, [])
 
+ const getKennel = () => {
+    axios
+      .get(`/dog/users/${userObj._id}`)
+      .then(({ data }) => {
+        setDogs(data.dogsArr);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
 
 
   return (
@@ -61,24 +75,30 @@ function User(props) {
       <Row >
         <Col xs={4}>
           <div className="user-stats">
+
+            {
+
+              globalRank > 3 ? (<h2>{user.username}'s kennel</h2>) :
+            globalRank === 3 ?(
+              <div>
+                <h2 id="heady">🥉</h2>
+               <h2 id="heady" className='shimmer'>{user.username}'s kennel</h2>
+              </div>
+               ): globalRank === 2 ?(
+                <div>
+                  <h2 id="heady">🥈</h2>
+                 <h2 id="heady" className='shimmer'>{user.username}'s kennel</h2>
+                </div>
+                 ): (
+                  <div>
+                    <h2 id="heady">🥇</h2>
+                   <h2 id="heady" className='shimmer'>{user.username}'s kennel</h2>
+                  </div>
+                   )
+               }
             <Card
             style={{backgroundColor:"#4c5f63"}}
             >
-
-            <Card.Header
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          fontWeight: "bold",
-          fontSize: "large",
-          backgroundColor:"skyblue"
-        }}
-      >
-        {user.username}'s page
-      </Card.Header>
-    
-
       <Card.Header
         style={{
           display: "flex",
@@ -156,7 +176,10 @@ function User(props) {
 
         <Col xs={8}>
         <div className="dogs">
-          <Kennel className="user-kennel" />
+          <Kennel className="user-kennel" 
+          dogs={dogs}
+          getKennel={getKennel}
+          />
         </div>
        
         </Col>

@@ -3,11 +3,12 @@ import { Row , Col} from "react-bootstrap";
 import axios from "axios";
 import Dog from "./Dog.jsx";
 
-function Kennel() {
-  const [dogs, setDogs] = useState([]);
+function Kennel(props) {
   const [click, setClick] = useState(0);
   const user = JSON.parse(sessionStorage.getItem("user"));
   const [userId, setUserId] = useState(user._id);
+
+  const { dogs, getKennel } = props
 
   const getDogs = () => {
     axios
@@ -20,7 +21,7 @@ function Kennel() {
       });
   };
 
-  useEffect(getDogs, [userId, click]);
+  //useEffect(getKennel, [userId, dogs]);
 
   return (
     <div>
@@ -70,8 +71,8 @@ function Kennel() {
                       >
                         <Dog
                           dogObj={dog}
-                          click={click}
-                          setClick={setClick}
+                          dogs={dogs}
+                          // setDogs={setDogs}
                         />
                       </div>
                     );

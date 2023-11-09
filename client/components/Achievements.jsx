@@ -49,31 +49,36 @@ function Achievements(props) { //access props.user to get id for subsequent get 
     if (userArray.data[0].coinCount >= 50 && thriftyCheck === -1) {
       axios.put(`/user/achievements/${userArray.data[0]._id}`, {
         name: 'Thrifty',
-        image: "https://www.trueachievements.com/imagestore/0007101900/7101902.jpg"
+        image: "https://www.trueachievements.com/imagestore/0007101900/7101902.jpg",
+        description: 'Awarded for obtaining 50 Coins'
       })
     }
     if (userArray.data[0].coinCount >= 100 && superSaverCheck === -1) {
           axios.put(`/user/achievements/${userArray.data[0]._id}`, {
             name: 'Super Saver',
-            image: 'https://www.trueachievements.com/imagestore/0006900900/6900915.jpg'
+            image: 'https://www.trueachievements.com/imagestore/0006900900/6900915.jpg',
+            description: 'Awarded for obtaining 100 Coins'
           })
         }
     if (userArray.data[0].coinCount >= 150 && moneyBagsCheck === -1) {
       axios.put(`/user/achievements/${userArray.data[0]._id}`, {
         name: 'Money Bags',
-        image: 'https://www.trueachievements.com/imagestore/0006900800/6900859.jpg'
+        image: 'https://www.trueachievements.com/imagestore/0006900800/6900859.jpg',
+        description: 'Awarded for obtaining 150 Coins'
       })
     }
     if (userArray.data[0].questionCount >= 50 && quizzicalCheck === -1) {
       axios.put(`/user/achievements/${userArray.data[0]._id}`, {
         name: 'Quizzical',
-        image: 'https://www.trueachievements.com/imagestore/0007044300/7044323.jpg'
+        image: 'https://www.trueachievements.com/imagestore/0007044300/7044323.jpg',
+        description: 'Awarded for answering 50 Questions correctly'
       })
     }
     if (userArray.data[0].questionCount >= 150 && quizGod === -1) {
       axios.put(`/user/achievements/${userArray.data[0]._id}`, {
         name: 'Quiz God',
-        image: 'https://www.trueachievements.com/imagestore/0007044300/7044303.jpg'
+        image: 'https://www.trueachievements.com/imagestore/0007044300/7044303.jpg',
+        description: 'Awarded for answering 150 Questions correctly'
       })
     }
     axios.get(`/dog/users/${user}`) //slash users slash achievements refactor
@@ -98,19 +103,22 @@ function Achievements(props) { //access props.user to get id for subsequent get 
   if (dogArray.data.dogsArr[0].owner === use._id && hasOneDog === -1) {
     axios.put(`/user/achievements/${use._id}`, {
       name: 'Good Puppy',
-      image: 'https://www.trueachievements.com/imagestore/0006879400/6879454.jpg'
+      image: 'https://www.trueachievements.com/imagestore/0006879400/6879454.jpg',
+      description: 'Awarded for adopting your first dog'
     })
   }
   if (dogArray.data.dogsArr.length >= 2 && hasTwoDogs === -1) {
     axios.put(`/user/achievements/${use._id}`, {
       name: 'Pair of Pups',
-      image: 'https://www.trueachievements.com/imagestore/0006917800/6917875.jpg'
+      image: 'https://www.trueachievements.com/imagestore/0006917800/6917875.jpg',
+      description: 'Awarded for adopting 2 dogs'
     })
   }
   if (dogArray.data.dogsArr.length >= 5 && hasThreeDogs === -1) {
     axios.put(`/user/achievements/${use._id}`, {
       name: 'Dog Pile!',
-      image: 'https://www.trueachievements.com/imagestore/0006917800/6917800.jpg'
+      image: 'https://www.trueachievements.com/imagestore/0006917800/6917800.jpg',
+      description: 'Awarded for adopting 5 dogs'
     })
   }
   axios.get(`/user/${user}`) //slash users slash achievements refactor
@@ -137,6 +145,7 @@ function Achievements(props) { //access props.user to get id for subsequent get 
           achieve={achievement.name}
           key={achievement._id}
           img={achievement.image}
+          desc={achievement.description}
           // possibly update with a unique key  instead of achievement
           // view={achievementsEarned}
           />

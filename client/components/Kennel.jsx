@@ -5,29 +5,15 @@ import Dog from "./Dog.jsx";
 
 function Kennel() {
   const [dogs, setDogs] = useState([]);
-  const [coinCount, setCoin] = useState(0);
-  const [breeds, setList] = useState([]);
-  const [dogView, setDogView] = useState("");
-  const [dogName, setDogName] = useState("");
-  const [dogShop, setShop] = useState(false);
   const [click, setClick] = useState(0);
   const user = JSON.parse(sessionStorage.getItem("user"));
   const [userId, setUserId] = useState(user._id);
-  
-  useEffect(() => {
-    setUserId(user._id);
-    axios.get(`/user/${user._id}`)
-    .then((userData) => {
-      setCoin(userData.data[0].coinCount);
-    })
-  }, []);
 
   const getDogs = () => {
     axios
       .get(`/dog/users/${userId}`)
       .then(({ data }) => {
         setDogs(data.dogsArr);
-        setList(data.breeds);
       })
       .catch((err) => {
         console.error(err);
@@ -36,101 +22,8 @@ function Kennel() {
 
   useEffect(getDogs, [userId, click]);
 
-  const handleSubmit = () => {
-    if (dogView === "" || dogName === "") {
-      alert("Fill all fields");
-    } else if (coinCount >= 15) {
-      axios
-        .post("/dog", {
-          name: dogName,
-          img: dogView,
-          owner: userId,
-        })
-        .then(({ data }) => {
-          setCoin(data.coinCount);
-        });
-      getDogs();
-      setDogs([]);
-      setList([]);
-    } else {
-      alert("Not enough coins!");
-    }
-    setShop(false);
-  };
-
   return (
     <Container>
-      <Row>
-        <Col
-          style={{
-
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          {dogShop ? (
-            ""
-          ) : (
-            <Button onClick={() => setShop(true)}>add dog</Button>
-          )}
-          {dogShop ? (
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "auto auto",
-                marginTop: '70px',
-                paddingTop: '50px'
-              }}
-            >
-              <Image
-                src={dogView}
-                alt=""
-                rounded
-                style={{ width: 200 }}
-              />
-              <Form>
-                <Form.Group>
-                  <Form.Label>Name</Form.Label>
-                  <Form.Control
-                    placeholder="Dog name"
-                    onChange={(e) => setDogName(e.target.value)}
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Dog</Form.Label>
-                  <Form.Select onChange={(e) => setDogView(e.target.value)}>
-                    <option>Choose Dog</option>
-                    {breeds.map((dog, index) => {
-                      return (
-                        <option
-                          key={index}
-                          value={dog}
-                        >
-                          {dog}
-                        </option>
-                      );
-                    })}
-                  </Form.Select>
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>15 coins:</Form.Label>
-                  <Button
-                    variant="primary"
-                    type="submit"
-                    onClick={() => handleSubmit()}
-                  >
-                    Buy Dog
-                  </Button>
-                </Form.Group>
-              </Form>
-            </div>
-          ) : (
-            ""
-          )}
-        </Col>
-      </Row>
       <Row
         style={{
           height: 800,
@@ -138,7 +31,7 @@ function Kennel() {
         }}
       >
         <Col
-        className="mb-3"
+          className="mb-3"
           style={{
             display: "flex",
             flexDirection: "column",
@@ -171,17 +64,16 @@ function Kennel() {
                 })
                 .map((dog) => {
                   return (
-                    <div className="item" key={dog._id}>
-                       <Dog
-                      
-                      dogObj={dog}
-                      click={click}
-                      setClick={setClick}
-                    />
+                    <div
+                      className="item"
+                      key={dog._id}
+                    >
+                      <Dog
+                        dogObj={dog}
+                        click={click}
+                        setClick={setClick}
+                      />
                     </div>
-                     
-                    
-                    
                   );
                 })
             : ""}

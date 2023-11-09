@@ -46,6 +46,7 @@ function Achievements(props) { //access props.user to get id for subsequent get 
       return true
       }
     })
+    console.log('coin count', userArray.data[0].coinCount)
     if (userArray.data[0].coinCount >= 50 && thriftyCheck === -1) {
       axios.put(`/user/achievements/${userArray.data[0]._id}`, {
         name: 'Thrifty',
@@ -84,7 +85,8 @@ function Achievements(props) { //access props.user to get id for subsequent get 
     axios.get(`/dog/users/${user}`) //slash users slash achievements refactor
   .then((dogArray) => {
   //bypasses error on first render
-  if (use._id) {
+  //console.log('dog get', dogArray.data.dogsArr.length)
+  if (dogArray.data.dogsArr.length) {
   const hasOneDog = userArray.data[0].achievements.findIndex((item) => {
     if (item.name === 'Good Puppy') {
     return true
@@ -121,16 +123,15 @@ function Achievements(props) { //access props.user to get id for subsequent get 
       description: 'Awarded for adopting 5 dogs'
     })
   }
-  axios.get(`/user/${user}`) //slash users slash achievements refactor
-    .then((userArray) => {
-    setAchievementsEarned(userArray.data[0].achievements)
-  })
 }
 })
 .catch((err) => {
   console.error( err)
 })
-
+axios.get(`/user/${user}`) //slash users slash achievements refactor
+  .then((userArray) => {
+  setAchievementsEarned(userArray.data[0].achievements)
+})
 })
 }, [activeUser])
 

@@ -171,7 +171,6 @@ function Kennel() {
                     <Dog
                       key={dog._id}
                       dogObj={dog}
-                      setCoin={setCoin}
                     />
                   );
                 })

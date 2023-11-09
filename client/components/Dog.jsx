@@ -6,8 +6,10 @@ import barkSound from "../../server/barking-123909.mp3";
 const bark = new Audio(barkSound);
 
 function Dog(props) {
-  const { dogObj, setCoin } = props;
+  const { dogObj } = props;
   const [dog, setDog] = useState(dogObj);
+  const [userId, setUserId] = useState("");
+  const [coinCount, setCoin] = useState(0);
   const [hungry, setHunger] = useState(true);
   const [happy, setHappy] = useState(false);
   const [feedStatus, setFeedStatus] = useState("");
@@ -16,6 +18,12 @@ function Dog(props) {
   const [walkTimer, setWalkTimer] = useState(0);
   const hungryRef = useRef(null);
   const happyRef = useRef(null);
+
+  useEffect(() => {
+    const user = JSON.parse(sessionStorage.getItem("user"));
+    setUserId(user._id);
+    setCoin(user.coinCount);
+  }, []);
 
   const getDog = () => {
     axios
@@ -28,10 +36,12 @@ function Dog(props) {
 
   const handleClick = (e) => {
     const status = {};
-    if (e === "feed") {
+    if (coinCount < 5) {
+      alert("Not enough coins!");
+    } else if (e === "feed") {
       setHunger(false);
       hungryRef.current = hungry;
-      const feedDeadline = new Date(new Date().getTime() + 12 * 60 * 60 * 1000);
+      const feedDeadline = Date.parse(dog.feedDeadline) + 12 * 60 * 60 * 1000;
       status.feedDeadline = feedDeadline;
     } else if (e === "walk") {
       setHappy(true);
@@ -41,11 +51,12 @@ function Dog(props) {
     } else {
       bark.play();
     }
-    axios.put(`/kennel/${dog._id}`, { status, cost: -5 })
-    .then(({data}) => setCoin(data.coinCount))
-    .catch((err) => {
-      console.error(err);
-    });
+    axios
+      .put(`/kennel/${dog._id}`, { status, cost: -5 })
+      .then(({ data }) => setCoin(data.coinCount))
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   useEffect(() => {
@@ -109,14 +120,14 @@ function Dog(props) {
 
   return (
     <Card
-    style={{
-      border: '13px'
-    }}
+      style={{
+        border: "13px",
+      }}
     >
       <Card.Img
         src={dog.img}
         alt="Sorry, your dog is in another kennel."
-        style={{ maxWidth: 300, maxHeight: 'auto', overflow: 'hidden'}}
+        style={{ maxWidth: 300, maxHeight: "auto", overflow: "hidden" }}
       />
       <Card.Header
         style={{
@@ -138,7 +149,7 @@ function Dog(props) {
               variant={feedStatus}
               now={feedTimer}
               label="HUNGER"
-              style={{height: '35px'}}
+              style={{ height: "35px" }}
             />
           </div>
           <div
@@ -170,7 +181,7 @@ function Dog(props) {
               variant={walkStatus}
               now={walkTimer}
               label="HAPPINESS"
-              style={{height: '35px'}}
+              style={{ height: "35px" }}
             />
           </div>
           <div

@@ -62,7 +62,6 @@ function Dog(props) {
   useEffect(() => {
     getDog();
     setDog(dog);
-    console.log("BARK", `${dog.name}`);
   }, [happy, hungry]);
 
   useEffect(() => {
@@ -119,11 +118,7 @@ function Dog(props) {
   }, [happy, hungry, dog]);
 
   return (
-    <Card
-      style={{
-        border: "13px",
-      }}
-    >
+    <Card>
       <Card.Img
         src={dog.img}
         alt="Sorry, your dog is in another kennel."
@@ -135,7 +130,7 @@ function Dog(props) {
           flexDirection: "column",
           alignItems: "center",
           fontWeight: "bold",
-          fontSize: "Large",
+          fontSize: "large",
         }}
       >
         {dog.name}

@@ -177,6 +177,7 @@ function Kennel() {
             : ""}
         </Col>
       </Row>
+      <Pantry />
     </Container>
   );
 }

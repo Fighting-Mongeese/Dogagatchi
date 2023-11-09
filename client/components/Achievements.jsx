@@ -84,7 +84,8 @@ function Achievements(props) { //access props.user to get id for subsequent get 
     axios.get(`/dog/users/${user}`) //slash users slash achievements refactor
   .then((dogArray) => {
   //bypasses error on first render
-  if (use._id) {
+  //console.log('dog get', dogArray.data.dogsArr.length)
+  if (dogArray.data.dogsArr.length) {
   const hasOneDog = userArray.data[0].achievements.findIndex((item) => {
     if (item.name === 'Good Puppy') {
     return true

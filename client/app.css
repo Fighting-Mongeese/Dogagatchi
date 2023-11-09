@@ -71,7 +71,8 @@ body {
 }
 
  .user-achievements {
-  border: 13px outset rgba(213,177,16,0.76);
+  border: 13px outset rgba(109, 136, 145, 1);
+  background-color: #ade3e3;
   flex: 1;
   min-width: 100px;
   padding: 10px;
@@ -145,7 +146,7 @@ body {
 .shimmer {
   text-align: center;
   color: rgba(255, 255, 255, 0.1);
-  background: -webkit-gradient(linear, left top, right top, from(#222), to(#222), color-stop(0.5, #E2D01E));
+  background: -webkit-gradient(linear, left top, right top, from(#222), to(#222), color-stop(0.5, #cfcfcf));
   background: -moz-gradient(linear, left top, right top, from(#222), to(#222), color-stop(0.5, #E2D01E));
   background: gradient(linear, left top, right top, from(#222), to(#222), color-stop(0.5, #E2D01E));
   -webkit-background-size: 125px 100%;

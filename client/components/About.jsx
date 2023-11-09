@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Row, Col, Container, Image } from "react-bootstrap";
+import { Card, Row, Col, Container, Button } from "react-bootstrap";
 
 
 
@@ -27,7 +27,7 @@ const techStack = [
     {
         name: 'Bcrypt',
         description: 'Encryption',
-        src: 'https://bcrypt.online/images/bcrypt-esse-tools-logo-square.svg'    
+        src: 'https://bcrypt.online/images/bcrypt-esse-tools-logo-square.svg'
     },
     {
         name: 'NodeJS',
@@ -62,22 +62,55 @@ const techStack = [
     {
         name: 'Babel',
         description: 'Javascript Compiler',
-        src: 'https://user-images.githubusercontent.com/3025322/87547253-bf050400-c6a2-11ea-950a-280311bc6cc8.png' 
+        src: 'https://user-images.githubusercontent.com/3025322/87547253-bf050400-c6a2-11ea-950a-280311bc6cc8.png'
     },
     {
         name: 'Webpack',
         description: 'Module Bundler',
         src: 'https://raw.githubusercontent.com/webpack/media/master/logo/icon-square-small.png'
     },
-]
+];
+
+const mongeese = [
+    {
+        name: 'AJ Bell',
+        github: 'https://github.com/abell10101',
+        src: 'https://avatars.githubusercontent.com/u/111496135?v=4',
+        favBreed: '',
+    },
+    {
+        name: 'Evan Perry',
+        github: 'https://github.com/evmaperry',
+        src: 'https://avatars.githubusercontent.com/u/77681429?v=4',
+        favBreed: 'Daschund',
+    },
+    {
+        name: 'Geremy Fisher',
+        github: 'https://github.com/gfish94',
+        src: 'https://avatars.githubusercontent.com/u/130790771?v=4',
+        favBreed: '',
+    },
+    {
+        name: 'James Sheppard',
+        github: 'https://github.com/Jshep23prog',
+        src: 'https://avatars.githubusercontent.com/u/129888293?v=4',
+        favBreed: 'Boxer',
+    },
+    {
+        name: 'Sydney Andre',
+        github: 'https://github.com/saandre0217',
+        src: 'https://avatars.githubusercontent.com/u/133836158?v=4',
+        favBreed: '',
+    },
+];
 
 const mappedTechStack = techStack.map((tech, index) => {
     return (
-        <Card key={index} style={{ margin: '10px',width: '150px',  }}>
-            <div style={{ display: 'flex', width: '150px', height:'150px', alignItems: "center", justifyContent: "center"}}>
+        <Card key={index} style={{ margin: '10px', width: '150px', }}>
+            <div style={{ display: 'flex', width: '150px', height: '150px', alignItems: "center", justifyContent: "center" }}>
                 <Card.Img style={{ maxHeight: '125px', maxWidth: '125px' }} variant="top" src={tech.src} />
             </div>
-            <Card.Body style={{backgroundColor: '#007bff', color:'white'}}>
+            <Card.Body style={{ backgroundColor: '#007bff', color: 'white' }}>
                 <Card.Title>{tech.name}</Card.Title>
                 <Card.Text>{tech.description}</Card.Text>
             </Card.Body>
@@ -85,31 +118,49 @@ const mappedTechStack = techStack.map((tech, index) => {
     )
 })
 
+const mappedMongeese = mongeese.map((mongoose, index) => {
+    return (
+        <Card key={index} style={{ width: '200px', margin: '10px', }}>
+            <Card.Body className="text-center" style={{ backgroundColor: '#007bff', color: 'white', padding: '15px'}}>
+
+                <Card.Img src={mongoose.src}></Card.Img>
+                <Card.Title className="my-3">{mongoose.name}</Card.Title>
+                <Button className="mb-2" variant='light' href={mongoose.github}>Github Profile</Button>
+
+            </Card.Body>
+        </Card >
+    )
+})
 
 const About = () => (
-    <Container style={{color:'white'}}>
-      <Row>
-        <Col style= {{
-        width: '80%',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}>
-        <h1>🎲 How to Play</h1>
-        <h3>Dogagatchi+ features three interdependent game modes</h3>
-        <ul>
-            <li> Pooch Picker: Earn coins by correctly identifying the breeds of pictured pups.</li>
-            <li> Kennel: Be a pack leader! Add dogs to your kennel with the coins earned, and walk and feed them as needed. Find your kennel on your user page.</li>
-            <li> Restaurant: Spend your loot to treat your canine besties to finest snacks on the internet. </li>
-        </ul>
-        <h1>🖥️ Tech Stack</h1>
-        <div style= {{width: '100%', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(12rem, 100%), 1fr))',}}>
-
-            {mappedTechStack}
-        </div>
-    </Col>
-    </Row>
+    <Container style={{ color: 'white' }}>
+        <Row>
+            <Col style={{
+                width: '80%',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+            }}>
+                <h1>🎲 How to Play</h1>
+                <h3>Dogagatchi+ features three interdependent game modes</h3>
+                <ul>
+                    <li> Pooch Picker: Earn coins by correctly identifying the breeds of pictured pups.</li>
+                    <li> Kennel: Be a pack leader! Add dogs to your kennel with the coins earned, and walk, feed and treat them as needed. Find your kennel on your user page.</li>
+                    <li> Restaurant: Spend your loot to treat your canine besties to finest snacks on the internet. </li>
+                </ul>
+                <h1>About the Developers 😎</h1>
+                <h3>The Fighting Mongeese is a quixotic, quotable quintuple featuring the following players: </h3>
+                <div style={{ width: '100%', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(12em, 100%), 1fr))', }}>
+                    {mappedMongeese}
+                </div>
+                <h1>🖥️ Tech Stack</h1>
+                <h3>Dogagatchi+ was built with the following technologies: </h3>
+                <div style={{ width: '100%', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(12rem, 100%), 1fr))', }}>
+                    {mappedTechStack}
+                </div>
+            </Col>
+        </Row>
     </Container>
 )
 

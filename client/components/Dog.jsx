@@ -28,7 +28,7 @@ function Dog(props) {
 
   const getDog = () => {
     axios
-      .get(`/dog/${dog._id}`)
+      .get(`/dog/id/${dog._id}`)
       .then(({ data }) => setDog(data))
       .catch((err) => {
         console.error(err);
@@ -44,16 +44,18 @@ function Dog(props) {
       hungryRef.current = hungry;
       const feedDeadline = Date.parse(dog.feedDeadline) + 12 * 60 * 60 * 1000;
       status.feedDeadline = feedDeadline;
+      setFeedTimer(feedDeadline)
     } else if (e === "walk") {
       setHappy(true);
       happyRef.current = happy;
       const walkDeadline = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
       status.walkDeadline = walkDeadline;
+      setWalkTimer(walkDeadline)
     } else {
       bark.play();
     }
     axios
-      .put(`/kennel/${dog._id}`, { status, cost: -5 })
+      .put(`/dog/${dog._id}`, { status, cost: -5 })
       .then(({ data }) => setCoin(data.coinCount))
       .catch((err) => {
         console.error(err);
@@ -62,7 +64,6 @@ function Dog(props) {
   };
 
   useEffect(() => {
-    getDog();
     setDog(dog);
   }, [happy, hungry]);
 
@@ -117,7 +118,7 @@ function Dog(props) {
       }
     }, 1000);
     return () => clearInterval(x);
-  }, [happy, hungry, dog]);
+  }, [happy, hungry, dog, walkTimer, feedTimer]);
 
   return (
     <Card>
@@ -164,8 +165,8 @@ function Dog(props) {
               </Button>
             ) : (
               <Button
-                variant="info"
-                onClick={() => handleClick("bark")}
+              variant="info"
+              onClick={() => handleClick("bark")}
               >
                 🦴
               </Button>
@@ -179,7 +180,7 @@ function Dog(props) {
               now={walkTimer}
               label="HAPPINESS"
               style={{ height: "35px" }}
-            />
+              />
           </div>
           <div
             style={{
@@ -189,8 +190,8 @@ function Dog(props) {
           >
             {happy ? (
               <Button
-                variant="info"
-                onClick={() => handleClick("bark")}
+              variant="info"
+              onClick={() => handleClick("bark")}
               >
                 🐶
               </Button>

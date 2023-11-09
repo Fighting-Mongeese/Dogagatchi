@@ -3,24 +3,21 @@ import React, { useState, useEffect } from 'react';
 import PantryItem from './PantryItem.jsx';
 
 function Pantry(props) {
-  //const { userId } = props
-  const signedInUser= JSON.parse(sessionStorage.user)
+  const signedInUser= JSON.parse(sessionStorage.getItem('user'))
   const [meals, setMeals] = useState(null)
   const [dogs, setDogs] = useState([])
 
   const getSignedInUserMeals = (userIdParam) => {
-    //console.log('userId param', userIdParam)
-    axios.get(`/getUserById/${userIdParam}`)
+    axios.get(`/user/meals/${userIdParam}`)
     .then(({ data }) => {
       const sortedMeals = data.meals.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))
-      console.log('user data', sortedMeals)
       setMeals(sortedMeals)
     })
     .catch((err) => console.error('get signed in user ERROR', err))
   }
 
   const getSignedInUserDogs = (userIdParam) => {
-    axios.get(`/kennel/${userIdParam}`)
+    axios.get(`/dog/users/${userIdParam}`)
     .then((foundInfo) => setDogs(foundInfo.data.dogsArr))
     .catch((err) => console.error('getSignedInUserDogs client', err))
   }
@@ -31,9 +28,8 @@ function Pantry(props) {
    }, [])
 
   return(
-    <div>
+    <div className='pantry'>
       <h2>My Meals</h2>
-      {console.log(meals)}
         <div id="pantry" className='meals-container'>
           {meals ? meals.map((mealObj) => (
             <PantryItem

@@ -10,8 +10,9 @@ function Restaurant(){
   const signedInUser= JSON.parse(sessionStorage.user)
 
   const getSignedInUserData = (userId) => {
-    axios.get(`/getUserById/${userId}`)
-    .then(({ data }) => setUser(data))
+    axios.get(`/user/${userId}`)
+    .then(({ data }) => {
+      setUser(data[0])})
     .catch((err) => console.error('get signed in user ERROR', err))
   }
   useEffect( () => {
@@ -37,25 +38,3 @@ function Restaurant(){
 }
 export default Restaurant
 
-/**
- * <div>
-        {Categories.map((category) => (
-          <Button
-          key={buttonKey++}
-          onClick={() => {getMeals(category.strCategory)}}
-          >{category.strCategory}</Button>
-        ))}
-      </div>
-
-       function getMeals(category){
-    return axios(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`)
-    .then((mealsArr) => {
-      console.log('success', mealsArr.data.meals)
-      // console.log('param', category)
-      setMeals(mealsArr.data.meals)
-    })
-    .catch((err) => {
-      console.log('get meals error (client)', err);
-    })
-  }
- */

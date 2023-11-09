@@ -2,27 +2,29 @@ import React, { useState, useEffect } from "react";
 import { Button, Container, Form, Image, Row, Col } from "react-bootstrap";
 import axios from "axios";
 import Dog from "./Dog.jsx";
-import Pantry from './Pantry.jsx';
 
 function Kennel() {
   const [dogs, setDogs] = useState([]);
-  const [userId, setUserId] = useState("");
   const [coinCount, setCoin] = useState(0);
   const [breeds, setList] = useState([]);
   const [dogView, setDogView] = useState("");
   const [dogName, setDogName] = useState("");
   const [dogShop, setShop] = useState(false);
   const [click, setClick] = useState(0);
+  const user = JSON.parse(sessionStorage.getItem("user"));
+  const [userId, setUserId] = useState(user._id);
   
   useEffect(() => {
-    const user = JSON.parse(sessionStorage.getItem("user"));
     setUserId(user._id);
-    setCoin(user.coinCount);
+    axios.get(`/user/${user._id}`)
+    .then((userData) => {
+      setCoin(userData.data[0].coinCount);
+    })
   }, []);
 
   const getDogs = () => {
     axios
-      .get(`/kennel/${userId}`)
+      .get(`/dog/users/${userId}`)
       .then(({ data }) => {
         setDogs(data.dogsArr);
         setList(data.breeds);
@@ -39,7 +41,7 @@ function Kennel() {
       alert("Fill all fields");
     } else if (coinCount >= 15) {
       axios
-        .post("/kennel", {
+        .post("/dog", {
           name: dogName,
           img: dogView,
           owner: userId,
@@ -61,6 +63,7 @@ function Kennel() {
       <Row>
         <Col
           style={{
+
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -135,10 +138,10 @@ function Kennel() {
         }}
       >
         <Col
+        className="mb-3"
           style={{
-            display: "grid",
-            gridTemplateColumns: "auto auto auto auto",
-            flexDirection: "row",
+            display: "flex",
+            flexDirection: "column",
             alignItems: "center",
           }}
         >
@@ -155,7 +158,7 @@ function Kennel() {
                   if (walk < 0 || feed < 0) {
                     alert(`${dog.name} ran away!`);
                     axios
-                      .delete(`/kennel/${dog._id}`)
+                      .delete(`/dog/${dog._id}`)
                       .then(getDogs)
                       .catch((err) => {
                         console.error(err);
@@ -168,18 +171,22 @@ function Kennel() {
                 })
                 .map((dog) => {
                   return (
-                    <Dog
-                      key={dog._id}
+                    <div className="item" key={dog._id}>
+                       <Dog
+                      
                       dogObj={dog}
                       click={click}
                       setClick={setClick}
                     />
+                    </div>
+                     
+                    
+                    
                   );
                 })
             : ""}
         </Col>
       </Row>
-      <Pantry />
     </Container>
   );
 }

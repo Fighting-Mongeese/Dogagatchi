@@ -10,7 +10,7 @@ function LeaderBoard(props) {
   const [board, setBoard] = useState('smartest');
 
   function getLeaders() {
-    axios.get(`/leaderboard/${board}`)
+    axios.get(`/user/leaderboard/${board}`)
       .then(({ data }) => {
         setLeaders(data); // sets leaders to data property from User query obj
       })
@@ -20,16 +20,14 @@ function LeaderBoard(props) {
   function changeBoard(type){
     if (type === 'smartest') {
       setBoard('smartest');
-      //console.log('smartest');
     } else if (type === 'richest') {
-      //console.log('richest');
       setBoard('richest');
     }
   }
   // leader board defaults to smartest parents on rendering
   useEffect(() => {
     getLeaders()
-  }, [leaders]);
+  }, []);
 
   return (
     <div>

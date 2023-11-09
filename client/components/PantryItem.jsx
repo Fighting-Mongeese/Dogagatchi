@@ -7,14 +7,13 @@ function PantryItem(props){
   const { meal, dogsArr, signedInUserId, getSignedInUserDogs, getSignedInUserMeals } = props
 
   const feedDog = (dogToFeedObj, mealToFeedObj) => {
-    console.log('dog', mealToFeedObj);
 
     const status = {
       feedDeadline: new Date(new Date(dogToFeedObj.walkDeadline).getTime() + 24 * 60 * 60 * 1000),
       walkDeadline: new Date(new Date(dogToFeedObj.walkDeadline).getTime() + 12 * 60 * 60 * 1000)
     }
 
-    axios.put(`/kennel/${dogToFeedObj._id}`, { status })
+    axios.put(`/dog/id/${dogToFeedObj._id}`, { status })
     .then(() => {
       axios.put(`/meals/${signedInUserId}`, {
         update: {

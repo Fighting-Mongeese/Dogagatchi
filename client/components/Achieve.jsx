@@ -3,7 +3,6 @@ import React from "react";
 //CHILD OF ACHIEVEMENTS
 
 function Achieve(props) {
-  //console.log('props', props)
   return (
     
     <div className="shimmer">

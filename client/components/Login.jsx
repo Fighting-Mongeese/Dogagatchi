@@ -17,11 +17,9 @@ const Login = () => {
 
     const submit = (e) => {
         e.preventDefault()
-        console.log('text', e.nativeEvent.submitter.name)
         if(e.nativeEvent.submitter.name === 'Login'){
             axios.post('/auth/login', {username, password})
             .then((loginResponse) => {
-                console.log('data?', loginResponse)
                 if(loginResponse.data.message === 'success'){
                     setUserContext(loginResponse.data.user)
                     localStorage.setItem('isAuthenticated', JSON.stringify(true))
@@ -39,7 +37,6 @@ const Login = () => {
             axios.post('/auth/register', {username, password})
             .then((loginResponse) => {
                 if(loginResponse.data.message === 'success'){
-                    console.log('log', loginResponse)
                     setUserContext(loginResponse.data.user)
                     localStorage.setItem('isAuthenticated', JSON.stringify(true))
                     navigate('/home')

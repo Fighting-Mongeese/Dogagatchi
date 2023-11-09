@@ -16,6 +16,9 @@ function Meal(props){
       setPurchaseText('Sorry! You do not have enough tokens. Head over to Pooch Picker to get more!')
     } else {
       axios.put(`/meals/${props.user._id}`, {
+        update: {
+          type: 'buyMeal'
+        },
         meals: {
           meal: props.meal
         },

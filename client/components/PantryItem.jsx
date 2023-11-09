@@ -4,10 +4,10 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import axios from 'axios';
 
 function PantryItem(props){
-  const { meal, dogsArr } = props
+  const { meal, dogsArr, signedInUserId, getSignedInUserDogs, getSignedInUserMeals } = props
 
-  const feedDog = (dogToFeedObj) => {
-    //console.log('dog', dogToFeedObj);
+  const feedDog = (dogToFeedObj, mealToFeedObj) => {
+    console.log('dog', mealToFeedObj);
 
     const status = {
       feedDeadline: new Date(new Date(dogToFeedObj.walkDeadline).getTime() + 24 * 60 * 60 * 1000),
@@ -15,7 +15,15 @@ function PantryItem(props){
     }
 
     axios.put(`/kennel/${dogToFeedObj._id}`, { status })
-    .then((updatedDog) => console.log(updatedDog))
+    .then(() => {
+      axios.put(`/meals/${signedInUserId}`, {
+        update: {
+          type: 'deleteMeal'
+        },
+        mealToDelete: mealToFeedObj
+      })
+      .then(() => getSignedInUserMeals(signedInUserId))
+    })
     .catch((err) => console.error('feed dog meal ERROR:', err));
 
   }
@@ -23,19 +31,21 @@ function PantryItem(props){
 return(
   <div className="meal-container">
     <img id="meal-item"className="meal-image"src={`${meal.image}`}/>
-    <p id="meal-item">{meal.name}</p>
+      <p id="meal-item">{meal.name}</p>
 
-    <DropdownButton id="meal-item" title='Feed a Pup!'>
-      {dogsArr.map(dog  => (
-        <Dropdown.Item 
-          key={dog._id}
-          onClick={() => {
-            feedDog(dog)
-          }}
-          >
-            {dog.name}
-        </Dropdown.Item>))}
-    </DropdownButton>
+      <DropdownButton id="meal-item" title='Feed a Pup!'>
+        {dogsArr.map(dog  => (
+          <Dropdown.Item 
+            key={dog._id}
+            onClick={() => {
+              feedDog(dog, meal)
+            }}
+            >
+              {dog.name}
+          </Dropdown.Item>))
+        }
+      </DropdownButton>
+
   </div>
 )
 }

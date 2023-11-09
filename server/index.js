@@ -226,7 +226,6 @@ app.get('/dog/:dogId', (req, res) => {
 
   Dog.findById(dogId)
     .then((dog) => {
-      console.log('get', dog)
       res.status(200).send(dog)
     })
     .catch((err) => {

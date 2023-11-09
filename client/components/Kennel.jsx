@@ -12,6 +12,7 @@ function Kennel() {
   const [dogView, setDogView] = useState("");
   const [dogName, setDogName] = useState("");
   const [dogShop, setShop] = useState(false);
+  const [click, setClick] = useState(0);
   
   useEffect(() => {
     const user = JSON.parse(sessionStorage.getItem("user"));
@@ -23,7 +24,6 @@ function Kennel() {
     axios
       .get(`/kennel/${userId}`)
       .then(({ data }) => {
-        console.log(data.dogsArr);
         setDogs(data.dogsArr);
         setList(data.breeds);
       })
@@ -32,12 +32,12 @@ function Kennel() {
       });
   };
 
-  useEffect(getDogs, [userId]);
+  useEffect(getDogs, [userId, click]);
 
   const handleSubmit = () => {
     if (dogView === "" || dogName === "") {
       alert("Fill all fields");
-    } else if (coinCount > 15) {
+    } else if (coinCount >= 15) {
       axios
         .post("/kennel", {
           name: dogName,
@@ -171,6 +171,8 @@ function Kennel() {
                     <Dog
                       key={dog._id}
                       dogObj={dog}
+                      click={click}
+                      setClick={setClick}
                     />
                   );
                 })

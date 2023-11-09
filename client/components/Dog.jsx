@@ -6,7 +6,7 @@ import barkSound from "../../server/barking-123909.mp3";
 const bark = new Audio(barkSound);
 
 function Dog(props) {
-  const { dogObj } = props;
+  const { dogObj, setClick, click } = props;
   const [dog, setDog] = useState(dogObj);
   const [userId, setUserId] = useState("");
   const [coinCount, setCoin] = useState(0);
@@ -16,6 +16,7 @@ function Dog(props) {
   const [walkStatus, setWalkStatus] = useState("");
   const [feedTimer, setFeedTimer] = useState(0);
   const [walkTimer, setWalkTimer] = useState(0);
+
   const hungryRef = useRef(null);
   const happyRef = useRef(null);
 
@@ -57,12 +58,12 @@ function Dog(props) {
       .catch((err) => {
         console.error(err);
       });
+      setClick(click + 1);
   };
 
   useEffect(() => {
     getDog();
     setDog(dog);
-    console.log("BARK", `${dog.name}`);
   }, [happy, hungry]);
 
   useEffect(() => {
@@ -119,11 +120,7 @@ function Dog(props) {
   }, [happy, hungry, dog]);
 
   return (
-    <Card
-      style={{
-        border: "13px",
-      }}
-    >
+    <Card>
       <Card.Img
         src={dog.img}
         alt="Sorry, your dog is in another kennel."
@@ -135,7 +132,7 @@ function Dog(props) {
           flexDirection: "column",
           alignItems: "center",
           fontWeight: "bold",
-          fontSize: "Large",
+          fontSize: "large",
         }}
       >
         {dog.name}

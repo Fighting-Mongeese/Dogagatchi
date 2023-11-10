@@ -9,11 +9,12 @@ import Leader from './Leader.jsx';
 function LeaderBoard(props) {
   const [leaders, setLeaders] = useState([]);
   const [board, setBoard] = useState('smartest');
-
+  
   function getLeaders(type) {
     axios.get(`/user/leaderboard/${type}`)
       .then(({ data }) => {
-        setLeaders(data); // sets leaders to data property from User query obj
+        const topTen = data.slice(0,10)
+        setLeaders(topTen); // sets leaders to data property from User query obj
       })
       .catch((err) => console.error('getLeaders ERROR (client):', err));
   }

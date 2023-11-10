@@ -248,11 +248,6 @@ body {
   margin-bottom: 2px
 }
 
-.meal {
-  margin: 5px;
-}
-
-
 :root {
   --color-primary: #0D6EFD;
   --color-secondary:#0d5ed9;
@@ -362,7 +357,9 @@ body {
 }
 .leader-button-smartest {
   margin-right: 50px;
+  margin-bottom: 20px;
 }
 .leader-button-richest {
   margin-left: 350px;
+  margin-bottom: 20px;
 }

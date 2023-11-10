@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Achieve from './Achieve.jsx'
-
+//JS
 // CHILD OF USER PARENT OF ACHIEVE
 //POSSIBLY ADD ANIMATION ON TRIGGERING ACHIEVEMENT
 // Access the user who is currently logged in to get information from the database about them

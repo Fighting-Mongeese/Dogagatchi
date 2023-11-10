@@ -53,7 +53,7 @@ function DogShop() {
   return (
     <div>
         
-        {dogShop ? "" : <Button onClick={() => setShop(true)}>add dog</Button>}
+        {dogShop ? "" : <Button onClick={() => setShop(true)}>Purchase a Dog!</Button>}
         {dogShop ? (
           <div
             style={{

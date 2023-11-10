@@ -121,7 +121,7 @@ function Dog(props) {
   }, [happy, hungry, dog]);
 
   return (
-    <Card>
+    <Card style={{margin: 5}}>
       <Card.Img
         src={dog.img}
         alt="Sorry, your dog is in another kennel."

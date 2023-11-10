@@ -175,118 +175,85 @@ function Dog(props) {
 
   return (
     <Card className='d-flex flex-row m-4' >
-      <div className='d-flex flex-column justify-content-center align-items-center align-self-center' style={{width: '150px', height: '150px', }}>
+      <div className='d-flex flex-column justify-content-center align-items-center align-self-center' style={{ width: '250px', height: '250px', }}>
         <Card.Img
           src={dog.img}
           alt="Sorry, your dog is in another kennel."
-          className="p-2"
+          className="p-4"
         />
       </div>
-      <Card.Header
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          fontWeight: "bold",
-          fontSize: "large",
-        }}
-      >
-        {dog.name}
-      </Card.Header>
-      <Card.Body>
-        <div className="dog-status">
-          <div className="hunger-bar">
-            <ProgressBar
-              animated={true}
-              striped
-              variant={feedStatus}
-              now={feedTimer}
-              label="HUNGER"
-              style={{ height: "35px" }}
-            />
-          </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            {hungry ? (
-              <Button
-                variant="info"
-                onClick={() => handleClick("feed")}
-              >
-                🍖
-              </Button>
-            ) : (
-              <Button
-                variant="info"
-                onClick={() => handleClick("bark")}
-              >
-                🦴
-              </Button>
-            )}
-          </div>
-          <div className="happy-bar">
-            <ProgressBar
-              animated={true}
-              striped
-              variant={walkStatus}
-              now={walkTimer}
-              label="HAPPINESS"
-              style={{ height: "35px" }}
-            />
-          </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            {happy ? (
-              <Button
-                variant="info"
-                onClick={() => handleClick("bark")}
-              >
-                🐶
-              </Button>
-            ) : (
-              <Button
-                variant="info"
-                onClick={() => handleClick("walk")}
-              >
-                🐕‍🦺
-              </Button>
-            )}
-          </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            {meals ? (
-              <DropdownButton
-                id="meal-item"
-                title="Feed from Pantry!"
-              >
-                {meals.map((meal) => (
+      <div className = 'd-flex flex-column justify-content-center align-items-center w-100'>
+        <Card.Title className="pt-2">
+          {dog.name}
+        </Card.Title>
+        <Card.Body className="w-100">
+          <div className="dog-status">
+              <ProgressBar
+                animated={true}
+                striped
+                variant={feedStatus}
+                now={feedTimer}
+                label="HUNGER"
+                style={{ height: "35px" }}
+              />
+              {hungry ? (
+                <Button
+                  className='w-100 mx-0'
+                  variant="info"
+                  onClick={() => handleClick("feed")}
+                >
+                  🍖
+                </Button>
+              ) : (
+                <Button
+                  className='w-100 mx-0'
+                  variant="info"
+                  onClick={() => handleClick("bark")}
+                >
+                  🦴
+                </Button>
+              )}
+              <ProgressBar
+                animated={true}
+                striped
+                variant={walkStatus}
+                now={walkTimer}
+                label="HAPPINESS"
+                style={{ height: "35px" }}
+              />
+
+              {happy ? (
+                <Button
+                  className='w-100 mx-0'
+                  variant="info"
+                  onClick={() => handleClick("bark")}
+                >
+                  🐶
+                </Button>
+              ) : (
+                <Button
+                  className='w-100 mx-0'
+                  variant="info"
+                  onClick={() => handleClick("walk")}
+                >
+                  🐕‍🦺
+                </Button>
+              )}
+              {meals ? <DropdownButton title='Feed from Pantry!'>
+                {meals.map(meal => (
                   <Dropdown.Item
                     key={meal._id}
                     onClick={() => {
-                      feedDog(dog, meal);
+                      feedDog(dog, meal)
                     }}
                   >
                     {meal.name}
-                  </Dropdown.Item>
-                ))}
-              </DropdownButton>
-            ) : (
-              ""
-            )}
+                  </Dropdown.Item>))
+                }
+              </DropdownButton> : ''}
           </div>
-        </div>
-      </Card.Body>
+        </Card.Body>
+      </div>
     </Card>
   );
 }

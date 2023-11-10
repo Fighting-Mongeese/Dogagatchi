@@ -10,8 +10,8 @@ function LeaderBoard(props) {
   const [leaders, setLeaders] = useState([]);
   const [board, setBoard] = useState('smartest');
 
-  function getLeaders() {
-    axios.get(`/user/leaderboard/${board}`)
+  function getLeaders(type) {
+    axios.get(`/user/leaderboard/${type}`)
       .then(({ data }) => {
         setLeaders(data); // sets leaders to data property from User query obj
       })
@@ -19,16 +19,23 @@ function LeaderBoard(props) {
   }
 
   function changeBoard(type){
-    if (type === 'smartest') {
-      setBoard('smartest');
-    } else if (type === 'richest') {
-      setBoard('richest');
-    }
+    // console.log('board', board)
+    // console.log('type', type)
+
+    return new Promise((resolve, reject) => {
+      if (type === 'smartest') {
+        setBoard('smartest');
+        resolve('smartest')
+      } else if (type === 'richest') {
+        setBoard('richest');
+        resolve('richest')
+      }
+    })
   }
   // leader board defaults to smartest parents on rendering
   useEffect(() => {
-    getLeaders()
-  }, [board]);
+    getLeaders('smartest')
+  }, []);
 
   return (
     <Container>
@@ -40,14 +47,14 @@ function LeaderBoard(props) {
           <h2>Leader Board</h2>
           <div className='d-flex flex-row my-2'>
             <Button onClick={() => {
-              changeBoard('smartest');
-              getLeaders()
+              changeBoard('smartest')
+              .then((type) => getLeaders(type));
             }
             }
             >Smartest Parents</Button>
             <Button onClick={() => {
-              changeBoard('richest');
-              getLeaders()
+              changeBoard('richest')
+              .then((type) => getLeaders(type))
             }
             }
             >Richest Parents</Button>

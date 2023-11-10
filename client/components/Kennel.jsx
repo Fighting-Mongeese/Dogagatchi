@@ -14,21 +14,13 @@ function Kennel(props) {
         style={{
           height: 800,
           overflow: "auto-hidden",
-          display: "flex",
         }}
       >
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'auto auto auto',
-            alignItems: "center",
-          }}
-        >
+        <div>
             {Array.isArray(dogs) && dogs.length > 0
               ? dogs
                   .filter((dog) => {
                     const now = new Date().getTime();
-
                     const feed =
                       ((Date.parse(dog.feedDeadline) - now) / 86400000) * 100;
                     const walk =

@@ -174,12 +174,14 @@ function Dog(props) {
   }, [happy, hungry, dog]);
 
   return (
-    <Card style={{ margin: 5 }}>
-      <Card.Img
-        src={dog.img}
-        alt="Sorry, your dog is in another kennel."
-        style={{ maxWidth: 300, maxHeight: "auto", overflow: "hidden" }}
-      />
+    <Card className='d-flex flex-row m-4' >
+      <div className='d-flex flex-column justify-content-center align-items-center align-self-center' style={{width: '150px', height: '150px', }}>
+        <Card.Img
+          src={dog.img}
+          alt="Sorry, your dog is in another kennel."
+          className="p-2"
+        />
+      </div>
       <Card.Header
         style={{
           display: "flex",

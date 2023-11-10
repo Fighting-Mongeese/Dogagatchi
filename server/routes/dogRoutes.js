@@ -66,7 +66,10 @@ router.post('/', (req, res) => {
           res.sendStatus(500);
         })
     })
-    .then((updatedUser) => res.status(201).send(updatedUser))
+    .then((updatedUser) => {
+        console.log('user', updatedUser)
+        res.status(201).send(updatedUser)
+    })
     .catch((err) => {
       console.error('SERVER ERROR: failed to CREATE dog', err);
       res.sendStatus(500);
@@ -84,9 +87,8 @@ router.put('/:dogId', (req, res) => {
     Dog.findByIdAndUpdate(dogId, status, { returnDocument: 'after' })
         .then((updatedDog) => {
             if (updatedDog && cost === -3) {
-                User.findByIdAndUpdate(updatedDog.owner, { $inc: { coinCount: cost } })
+                User.findByIdAndUpdate(updatedDog.owner, { $inc: { coinCount: cost } }, {new: true})
                     .then((updatedUser) => {
-                        console.log(updatedUser);
                         res.status(200).send(updatedUser);
                     })
                     .catch((err) => {

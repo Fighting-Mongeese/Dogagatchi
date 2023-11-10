@@ -30,6 +30,17 @@ function User(props) {
       })
       .catch((err) => console.error("getLeaders ERROR (client):", err));
 
+   setPage()
+    axios.get(`/dog/users/${userObj._id}`)
+      .then((dogArr) => {
+        setOwnDogs(dogArr.data.dogsArr.length)
+
+      })
+
+    getKennel();
+  }, [coins])
+
+  const setPage = () => {
     axios.get(`/user/${userObj._id}`)
       .then((user) => {
         setUser(user.data[0])
@@ -37,15 +48,8 @@ function User(props) {
         setDogCount(user.data[0].dogCount)
         setCoins(user.data[0].coinCount)
       })
-    axios.get(`/dog/users/${userObj._id}`)
-      .then((dogArr) => {
-        console.log('goo', dogArr.data.dogsArr)
-        setOwnDogs(dogArr.data.dogsArr.length)
+  }
 
-      })
-
-    getKennel();
-  }, [])
   const getKennel = () => {
     axios
       .get(`/dog/users/${userObj._id}`)
@@ -74,49 +78,55 @@ function User(props) {
       <Row >
         <Col xs={4}>
           <div className="user-stats">
+
+            {
+
+              globalRank > 3 ? (<h2>{user.username}'s kennel</h2>) :
+            globalRank === 3 ?(
+              <div>
+                <h2 id="heady">🥉</h2>
+               <h2 id="heady" className='shimmer'>{user.username}'s kennel</h2>
+              </div>
+               ): globalRank === 2 ?(
+                <div>
+                  <h2 id="heady">🥈</h2>
+                 <h2 id="heady" className='shimmer'>{user.username}'s kennel</h2>
+                </div>
+                 ): (
+                  <div>
+                    <h2 id="heady">🥇</h2>
+                   <h2 id="heady" className='shimmer'>{user.username}'s kennel</h2>
+                  </div>
+                   )
+               }
             <Card
               style={{ backgroundColor: "#4c5f63" }}
             >
-
-              <Card.Header
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  fontWeight: "bold",
-                  fontSize: "large",
-                  backgroundColor: "skyblue"
-                }}
-              >
-                {user.username}'s page
-              </Card.Header>
-
-
-              <Card.Header
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  fontWeight: "bold",
-                  fontSize: "large",
-                  backgroundColor: color
-                }}
-              >
-                {{ coins } > 1 ? <p>Coin: {coins}</p> : <p>Coins: {coins}</p>}
-              </Card.Header>
-
-              <Card.Header
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  fontWeight: "bold",
-                  fontSize: "large",
-                  backgroundColor: color
-                }}
-              >
-                Global Rank: #{globalRank}
-              </Card.Header>
+      <Card.Header
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          fontWeight: "bold",
+          fontSize: "large",
+          backgroundColor: color
+        }}
+      >
+        {{coins} > 1 ? <p>Coin: {coins}</p> : <p>Coins: {coins}</p>}
+      </Card.Header>
+      
+        <Card.Header
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          fontWeight: "bold",
+          fontSize: "large",
+          backgroundColor: color
+        }}
+      >
+        Global Rank: #{globalRank}
+      </Card.Header>
 
               <Card.Header
                 style={{
@@ -144,82 +154,22 @@ function User(props) {
                 Purchasable Dogs: {dogCount}
               </Card.Header>
 
-              <Card.Header
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  fontWeight: "bold",
-                  fontSize: "large",
-                  backgroundColor: color
-                }}
-              >
-                <p>Owned Dogs: {ownDogs}</p>
-              </Card.Header>
-              {/* <h3>Stats</h3>
-            {{coins} > 1 ? <p>Coin: {coins}</p> : <p>Coins: {coins}</p>}
-
-            <p>Global Rank: #{globalRank}</p>
-
-            <p>Correct Answers: {correctQuestionCount}</p>
-
-            <p>Purchasable Dogs: {dogCount}</p>
-
-            <p>Owned Dogs: {ownDogs}</p> */}
-            </Card>
-
-          </div>
-
-          {/* <Card>
-
-            <Card.Header
+      <Card.Header
         style={{
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           fontWeight: "bold",
           fontSize: "large",
-          backgroundColor:"skyblue"
+          backgroundColor: color
         }}
       >
-        {user.username}'s page
+        <p>Owned Dogs: {ownDogs}</p>
       </Card.Header>
-     
-              <h3>Stats</h3>
-            {{coins} > 1 ? <p>Coin: {coins}</p> : <p>Coins: {coins}</p>}
+            </Card>
 
-            <p>Global Rank: #{globalRank}</p>
+          </div>
 
-            <p>Correct Answers: {correctQuestionCount}</p>
-
-            <p>Purchasable Dogs: {dogCount}</p>
-
-            <p>Owned Dogs: {ownDogs}</p>
-            </Card> */}
-
-          {/* <ListGroup>
-            <ListGroup.Item>
-              Name: {user.username}
-            </ListGroup.Item>
-            <ListGroup.Item>
-            Global Rank: #{globalRank}
-            </ListGroup.Item>
-          </ListGroup>
-            <div> */}
-
-          {/* <Table>
-            <tbody>
-              <tr>
-                <td>Name</td>
-                <td>{user.username}</td>
-              </tr>
-              <tr>
-                <td>Global Rank</td>
-                <td>#{globalRank}</td>
-              </tr>
-            </tbody>
-          </Table>
-            </div> */}
 
           <Achievements
             user={user}
@@ -228,31 +178,20 @@ function User(props) {
         </Col>
 
         <Col xs={8}>
-          <div className="dogs">
-            <Kennel className="user-kennel"
-              dogs={dogs}
-              getKennel={getKennel}
-            />
-          </div>
-          <div className="pantry">
-          </div>
+
+          {
+            dogs.length !== 0 ? (
+        <div className="dogs">
+          <Kennel className="user-kennel" 
+          dogs={dogs}
+          getKennel={getKennel}
+          setCoins={setCoins}
+          />
+        </div>): (<h1>Start playing Pooch Picker to earn dogs to adopt!</h1>)
+       }
         </Col>
-
-
-
       </Row>
-
-
-
-
-
-      {/* <div className="user-main-div">
-        <div className="user-stats-container">
-        </div>
-        
-        
-      </div> */}
-
+      
     </Container>
   );
 }

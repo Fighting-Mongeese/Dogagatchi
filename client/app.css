@@ -136,9 +136,16 @@ body {
   display: inline-block;
 }
 
+#heady{
+  display: inline;
+}
+
 .user-kennel{
   width: 500px;
 }
+
+
+
 .shimmer {
   text-align: center;
   color: rgba(255, 255, 255, 0.1);
@@ -353,7 +360,6 @@ body {
 }
 .leader-header, .leader-info{
   text-align: center;
-  width: 50%;
 }
 .leader-button-smartest {
   margin-right: 50px;

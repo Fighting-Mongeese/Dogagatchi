@@ -5,7 +5,7 @@ import Dog from "./Dog.jsx";
 function Kennel(props) {
   const user = JSON.parse(sessionStorage.getItem("user"));
 
-  const { dogs } = props
+  const { dogs, setCoins } = props
 
 
   return (
@@ -42,6 +42,7 @@ function Kennel(props) {
                 key={dog._id}
               >
                 <Dog
+                  setCoins={setCoins}
                   dogObj={dog}
                   dogs={dogs}
                 // setDogs={setDogs}

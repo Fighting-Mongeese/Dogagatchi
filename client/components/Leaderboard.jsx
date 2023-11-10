@@ -63,6 +63,7 @@ function LeaderBoard(props) {
           <Table bordered >
             <thead className="leader-table">
               <tr size="sm">
+                <th scope="col" className="leader-header">Place</th>
                 <th scope="col" className="leader-header">Username</th>
                 <th scope="col" className="leader-header">
                   {
@@ -75,8 +76,9 @@ function LeaderBoard(props) {
               </tr>
             </thead>
 
-            {leaders.map((leaderObj) => (
+            {leaders.map((leaderObj, i) => (
               <Leader
+              place={i + 1}
                 leader={leaderObj}
                 key={leaderObj._id}
                 view={board}

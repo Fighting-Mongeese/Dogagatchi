@@ -6,13 +6,14 @@ import {
   Dropdown,
   DropdownButton,
 } from "react-bootstrap";
+import {Link} from 'react-router-dom'
 import axios from "axios";
 import barkSound from "../../server/barking-123909.mp3";
 
 const bark = new Audio(barkSound);
 
 function Dog(props) {
-  const { dogObj } = props;
+  const { dogObj, setCoins } = props;
   const [dog, setDog] = useState(dogObj);
   const [userId, setUserId] = useState("");
   const [coinCount, setCoin] = useState(0);
@@ -22,7 +23,7 @@ function Dog(props) {
   const [walkStatus, setWalkStatus] = useState("");
   const [feedTimer, setFeedTimer] = useState(0);
   const [walkTimer, setWalkTimer] = useState(0);
-  const [meals, setMeals] = useState(null);
+  const [meals, setMeals] = useState([]);
 
   const hungryRef = useRef(null);
   const happyRef = useRef(null);
@@ -50,6 +51,7 @@ function Dog(props) {
         const sortedMeals = data.meals.sort((a, b) =>
           a.name > b.name ? 1 : b.name > a.name ? -1 : 0
         );
+        console.log('meals', sortedMeals)
         setMeals(sortedMeals);
       })
       .catch((err) => console.error("get signed in user ERROR", err));
@@ -93,7 +95,10 @@ function Dog(props) {
       setFeedTimer(feedDeadline);
       axios
         .put(`/dog/${dog._id}`, { status, cost: -3 })
-        .then(({ data }) => setCoin(data.coinCount))
+        .then(({ data }) => {
+          setCoins(data.coinCount)
+          setCoin(data.coinCount)
+        })
         .then(() => getDog())
         .catch((err) => {
           console.error(err);
@@ -106,7 +111,6 @@ function Dog(props) {
       setWalkTimer(walkDeadline);
       axios
         .put(`/dog/${dog._id}`, { status })
-        .then(({ data }) => setCoin(data.coinCount))
         .then(() => getDog())
         .catch((err) => {
           console.error(err);
@@ -251,12 +255,15 @@ function Dog(props) {
                     }}
                   >
                     {meal.name}
+                  </Dropdown.Item>))
+                }
+              </DropdownButton>) :  
+              (<DropdownButton title='Feed from Pantry!'>
+                  <Dropdown.Item>
+                    Visit Bow Wow's Chow to buy your first meal!
                   </Dropdown.Item>
-                ))}
-              </DropdownButton>
-            ) : (
-              ""
-            )}
+                
+              </DropdownButton>) }
           </div>
         </Card.Body>
       </div>

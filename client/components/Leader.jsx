@@ -14,6 +14,7 @@ function Leader(props) {
   return (
     <tbody >
       <tr >
+        <th className='leader-info' scope="row">{props.place}</th>
         <th scope="row" className="leader-info"
         >{`${props.leader.username} `}</th>
         <th scope="row" className="leader-info">

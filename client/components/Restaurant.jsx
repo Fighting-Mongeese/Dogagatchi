@@ -34,7 +34,7 @@ function Restaurant() {
           alignItems: 'center',
           justifyContent: 'center',
         }}>
-        <h1>Bow Wow's Chow</h1>
+        <h1>Bone Appétit Café</h1>
         <p style={{
           color: '#0D6EfD',
           fontWeight: 'bold'

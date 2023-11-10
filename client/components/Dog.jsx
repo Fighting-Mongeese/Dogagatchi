@@ -260,7 +260,7 @@ function Dog(props) {
               </DropdownButton>) :  
               (<DropdownButton title='Feed from Pantry!'>
                   <Dropdown.Item>
-                    Visit Bow Wow's Chow to buy your first meal!
+                    Visit Bone Appétit Café to buy your first meal!
                   </Dropdown.Item>
                 
               </DropdownButton>) }

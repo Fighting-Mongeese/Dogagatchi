@@ -10,6 +10,10 @@ h5,h4,h3,h2,h1 {
   color: white;
 }
 
+.dogagotchi-header {
+  padding-left: 50px;
+}
+
 .img-trivia {
   max-width: 500px;
   max-height: 500px;
@@ -87,7 +91,7 @@ body {
 .achievement-container,.user-stats-container{
   display: flex;
   flex-direction: row;
-  margin-left: auto; 
+  margin-left: 0; 
   margin-right: 0;
 }
 

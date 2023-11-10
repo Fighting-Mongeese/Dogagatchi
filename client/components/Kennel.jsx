@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { Row, Col } from "react-bootstrap";
+import React from "react";
 import axios from "axios";
 import Dog from "./Dog.jsx";
 
@@ -27,7 +26,6 @@ function Kennel(props) {
               alert(`${dog.name} ran away!`);
               axios
                 .delete(`/dog/${dog._id}`)
-                .then(getDogs)
                 .catch((err) => {
                   console.error(err);
                 });

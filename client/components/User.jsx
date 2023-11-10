@@ -81,23 +81,24 @@ function User(props) {
 
             {
 
-              globalRank > 3 ? (<h2>{user.username}'s kennel</h2>) :
+              globalRank === 1 ? (
+                <div>
+                  <h2 id="heady">🥇</h2>
+                 <h2 id="heady" className='shimmer'>{user.username}'s Kennel</h2>
+                </div>
+                 ) :
             globalRank === 3 ?(
               <div>
                 <h2 id="heady">🥉</h2>
-               <h2 id="heady" className='shimmer'>{user.username}'s kennel</h2>
+               <h2 id="heady" className='shimmer'>{user.username}'s Kennel</h2>
               </div>
                ): globalRank === 2 ?(
                 <div>
                   <h2 id="heady">🥈</h2>
-                 <h2 id="heady" className='shimmer'>{user.username}'s kennel</h2>
+                 <h2 id="heady" className='shimmer'>{user.username}'s Kennel</h2>
                 </div>
-                 ): (
-                  <div>
-                    <h2 id="heady">🥇</h2>
-                   <h2 id="heady" className='shimmer'>{user.username}'s kennel</h2>
-                  </div>
-                   )
+                 ): 
+                 (<h2>{user.username}'s Kennel</h2>)
                }
             <Card
               style={{ backgroundColor: "#4c5f63" }}

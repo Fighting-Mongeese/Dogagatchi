@@ -45,7 +45,7 @@ function LeaderBoard(props) {
 
         </Col>
         <Col xs={10} className='d-flex justify-content-start flex-column align-items-center'>
-          <h3 className="text_shadows" id="top-dogs">🏆Top Dogs🏆</h3>
+          <h3 className="text_shadows" id="top-dogs">🏆Top Dawgs🏆</h3>
           <div className='d-flex flex-row my-2'>
             <Button className='leader-button-smartest' onClick={() => {
               changeBoard('smartest')

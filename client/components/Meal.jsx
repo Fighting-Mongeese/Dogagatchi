@@ -5,7 +5,7 @@ import { Modal, Card, Image } from 'react-bootstrap'
 
 function Meal(props) {
   //put request to add meal to user's meal array and subtract coins from user's coinCount
-  const { user, meal, setUser } = props
+  const { user, meal, setUser, setCoins } = props
   //const [purchaseStatus, setPurchaseStatus] = useState('true')
   const [purchaseText, setPurchaseText] = useState('')
 
@@ -30,8 +30,11 @@ function Meal(props) {
           setUser(data._id)
           //setPurchaseStatus(true)
           setPurchaseText(`Awesome! You bought your pup some delicious ${meal.name} and now have ${data.coinCount} tokens!`)
+          setCoins(data.coinCount)
         })
-        .then(() => setTimeout(() => setPurchaseText(''), 3000))
+        .then(() => {
+          console.log('next')
+          setTimeout(() => setPurchaseText(''), 3000)})
         .catch((err) => console.log('buyMeal client ERROR:', err))
 
     }

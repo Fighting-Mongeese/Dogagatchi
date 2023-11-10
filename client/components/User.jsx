@@ -37,16 +37,16 @@ function User(props) {
         setDogCount(user.data[0].dogCount)
         setCoins(user.data[0].coinCount)
       })
-      axios.get(`/dog/users/${userObj._id}`)
+    axios.get(`/dog/users/${userObj._id}`)
       .then((dogArr) => {
         console.log('goo', dogArr.data.dogsArr)
         setOwnDogs(dogArr.data.dogsArr.length)
 
       })
 
-      getKennel();
+    getKennel();
   }, [])
- const getKennel = () => {
+  const getKennel = () => {
     axios
       .get(`/dog/users/${userObj._id}`)
       .then(({ data }) => {
@@ -75,87 +75,87 @@ function User(props) {
         <Col xs={4}>
           <div className="user-stats">
             <Card
-            style={{backgroundColor:"#4c5f63"}}
+              style={{ backgroundColor: "#4c5f63" }}
             >
 
-            <Card.Header
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          fontWeight: "bold",
-          fontSize: "large",
-          backgroundColor:"skyblue"
-        }}
-      >
-        {user.username}'s page
-      </Card.Header>
-    
+              <Card.Header
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  fontWeight: "bold",
+                  fontSize: "large",
+                  backgroundColor: "skyblue"
+                }}
+              >
+                {user.username}'s page
+              </Card.Header>
 
-      <Card.Header
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          fontWeight: "bold",
-          fontSize: "large",
-          backgroundColor: color
-        }}
-      >
-        {{coins} > 1 ? <p>Coin: {coins}</p> : <p>Coins: {coins}</p>}
-      </Card.Header>
-      
-        <Card.Header
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          fontWeight: "bold",
-          fontSize: "large",
-          backgroundColor: color
-        }}
-      >
-        Global Rank: #{globalRank}
-      </Card.Header>
 
-      <Card.Header
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          fontWeight: "bold",
-          fontSize: "large",
-          backgroundColor: color
-        }}
-      >
-        Correct Answers: {correctQuestionCount}
-      </Card.Header>
+              <Card.Header
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  fontWeight: "bold",
+                  fontSize: "large",
+                  backgroundColor: color
+                }}
+              >
+                {{ coins } > 1 ? <p>Coin: {coins}</p> : <p>Coins: {coins}</p>}
+              </Card.Header>
 
-      <Card.Header
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          fontWeight: "bold",
-          fontSize: "large",
-          backgroundColor: color
-        }}
-      >
-        Purchasable Dogs: {dogCount}
-      </Card.Header>
+              <Card.Header
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  fontWeight: "bold",
+                  fontSize: "large",
+                  backgroundColor: color
+                }}
+              >
+                Global Rank: #{globalRank}
+              </Card.Header>
 
-      <Card.Header
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          fontWeight: "bold",
-          fontSize: "large",
-          backgroundColor: color
-        }}
-      >
-        <p>Owned Dogs: {ownDogs}</p>
-      </Card.Header>
+              <Card.Header
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  fontWeight: "bold",
+                  fontSize: "large",
+                  backgroundColor: color
+                }}
+              >
+                Correct Answers: {correctQuestionCount}
+              </Card.Header>
+
+              <Card.Header
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  fontWeight: "bold",
+                  fontSize: "large",
+                  backgroundColor: color
+                }}
+              >
+                Purchasable Dogs: {dogCount}
+              </Card.Header>
+
+              <Card.Header
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  fontWeight: "bold",
+                  fontSize: "large",
+                  backgroundColor: color
+                }}
+              >
+                <p>Owned Dogs: {ownDogs}</p>
+              </Card.Header>
               {/* <h3>Stats</h3>
             {{coins} > 1 ? <p>Coin: {coins}</p> : <p>Coins: {coins}</p>}
 
@@ -167,7 +167,7 @@ function User(props) {
 
             <p>Owned Dogs: {ownDogs}</p> */}
             </Card>
-            
+
           </div>
 
           {/* <Card>
@@ -228,14 +228,14 @@ function User(props) {
         </Col>
 
         <Col xs={8}>
-        <div className="dogs">
-          <Kennel className="user-kennel" 
-          dogs={dogs}
-          getKennel={getKennel}
-          />
-        </div>
-        <div className="pantry">
-      </div> 
+          <div className="dogs">
+            <Kennel className="user-kennel"
+              dogs={dogs}
+              getKennel={getKennel}
+            />
+          </div>
+          <div className="pantry">
+          </div>
         </Col>
 
 
@@ -246,13 +246,13 @@ function User(props) {
 
 
 
-       {/* <div className="user-main-div">
+      {/* <div className="user-main-div">
         <div className="user-stats-container">
         </div>
         
         
       </div> */}
-      
+
     </Container>
   );
 }

@@ -24,7 +24,7 @@ h5,h4,h3,h2,h1 {
 }
 
 
-.home, .login{
+.home , .login{
   background-color: lightblue;
   display: flex;
   flex-direction: column;

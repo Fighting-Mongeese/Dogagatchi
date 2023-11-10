@@ -66,7 +66,10 @@ router.post('/', (req, res) => {
           res.sendStatus(500);
         })
     })
-    .then((updatedUser) => res.status(201).send(updatedUser))
+    .then((updatedUser) => {
+        console.log('user', updatedUser)
+        res.status(201).send(updatedUser)
+    })
     .catch((err) => {
       console.error('SERVER ERROR: failed to CREATE dog', err);
       res.sendStatus(500);

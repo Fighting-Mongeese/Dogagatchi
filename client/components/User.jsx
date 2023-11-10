@@ -30,6 +30,18 @@ function User(props) {
       })
       .catch((err) => console.error("getLeaders ERROR (client):", err));
 
+   setPage()
+    axios.get(`/dog/users/${userObj._id}`)
+      .then((dogArr) => {
+        setOwnDogs(dogArr.data.dogsArr.length)
+
+      })
+
+    getKennel();
+  }, [coins])
+
+  const setPage = () => {
+    console.log('hit1')
     axios.get(`/user/${userObj._id}`)
       .then((user) => {
         setUser(user.data[0])
@@ -37,15 +49,8 @@ function User(props) {
         setDogCount(user.data[0].dogCount)
         setCoins(user.data[0].coinCount)
       })
-    axios.get(`/dog/users/${userObj._id}`)
-      .then((dogArr) => {
-        console.log('goo', dogArr.data.dogsArr)
-        setOwnDogs(dogArr.data.dogsArr.length)
+  }
 
-      })
-
-    getKennel();
-  }, [])
   const getKennel = () => {
     axios
       .get(`/dog/users/${userObj._id}`)
@@ -178,6 +183,7 @@ function User(props) {
           <Kennel className="user-kennel" 
           dogs={dogs}
           getKennel={getKennel}
+          setCoins={setPage}
           />
         </div>
        

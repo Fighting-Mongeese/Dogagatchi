@@ -6,7 +6,7 @@ import Dog from "./Dog.jsx";
 function Kennel(props) {
   const user = JSON.parse(sessionStorage.getItem("user"));
 
-  const { dogs } = props
+  const { dogs, setCoins } = props
 
 
   return (
@@ -27,7 +27,6 @@ function Kennel(props) {
               alert(`${dog.name} ran away!`);
               axios
                 .delete(`/dog/${dog._id}`)
-                .then(getDogs)
                 .catch((err) => {
                   console.error(err);
                 });
@@ -44,6 +43,7 @@ function Kennel(props) {
                 key={dog._id}
               >
                 <Dog
+                  setCoins={setCoins}
                   dogObj={dog}
                   dogs={dogs}
                 // setDogs={setDogs}

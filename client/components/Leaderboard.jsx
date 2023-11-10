@@ -38,36 +38,36 @@ function LeaderBoard(props) {
   }, []);
 
   return (
-    <Container>
+    <Container >
       <Row>
         <Col xs={1}>
 
         </Col>
-        <Col xs={10} className='d-flex flex-column align-items-center'>
-          <h2>Leader Board</h2>
+        <Col xs={10} className='d-flex justify-content-start flex-column align-items-center'>
+          <h3 className="text_shadows" id="top-dogs">🏆Top Dogs🏆</h3>
           <div className='d-flex flex-row my-2'>
-            <Button onClick={() => {
+            <Button className='leader-button-smartest' onClick={() => {
               changeBoard('smartest')
               .then((type) => getLeaders(type));
             }
             }
-            >Smartest Parents</Button>
-            <Button onClick={() => {
+            >Smartest Dogs</Button>
+            <Button className='leader-button-richest' onClick={() => {
               changeBoard('richest')
               .then((type) => getLeaders(type))
             }
             }
-            >Richest Parents</Button>
+            >Richest Dogs</Button>
           </div>
-          <Table bordered>
+          <Table bordered >
             <thead className="leader-table">
               <tr size="sm">
-                <th scope="col" width="100" className="header-name">Username</th>
-                <th scope="col" width="100" className="header-name">
+                <th scope="col" className="leader-header">Username</th>
+                <th scope="col" className="leader-header">
                   {
                     board === 'smartest'
                       ? 'Correct Questions'
-                      : 'Tokens'
+                      : 'Current Coins'
                   }
 
                 </th>

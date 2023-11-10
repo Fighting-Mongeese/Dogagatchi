@@ -87,9 +87,8 @@ router.put('/:dogId', (req, res) => {
     Dog.findByIdAndUpdate(dogId, status, { returnDocument: 'after' })
         .then((updatedDog) => {
             if (updatedDog && cost === -3) {
-                User.findByIdAndUpdate(updatedDog.owner, { $inc: { coinCount: cost } })
+                User.findByIdAndUpdate(updatedDog.owner, { $inc: { coinCount: cost } }, {new: true})
                     .then((updatedUser) => {
-                        console.log(updatedUser);
                         res.status(200).send(updatedUser);
                     })
                     .catch((err) => {

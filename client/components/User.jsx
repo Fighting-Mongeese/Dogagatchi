@@ -41,7 +41,6 @@ function User(props) {
   }, [coins])
 
   const setPage = () => {
-    console.log('hit1')
     axios.get(`/user/${userObj._id}`)
       .then((user) => {
         setUser(user.data[0])
@@ -179,14 +178,17 @@ function User(props) {
         </Col>
 
         <Col xs={8}>
+
+          {
+            dogs.length !== 0 ? (
         <div className="dogs">
           <Kennel className="user-kennel" 
           dogs={dogs}
           getKennel={getKennel}
-          setCoins={setPage}
+          setCoins={setCoins}
           />
-        </div>
-       
+        </div>): (<h1>Start playing Pooch Picker to earn dogs to adopt!</h1>)
+       }
         </Col>
       </Row>
       

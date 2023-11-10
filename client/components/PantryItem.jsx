@@ -13,9 +13,9 @@ function PantryItem(props){
       walkDeadline: new Date(new Date(dogToFeedObj.walkDeadline).getTime() + 12 * 60 * 60 * 1000)
     }
 
-    axios.put(`/dog/id/${dogToFeedObj._id}`, { status })
+    axios.put(`/dog/${dogToFeedObj._id}`, { status })
     .then(() => {
-      axios.put(`/meals/${signedInUserId}`, {
+      axios.put(`/user/meals/${signedInUserId}`, {
         update: {
           type: 'deleteMeal'
         },
@@ -37,6 +37,7 @@ return(
           <Dropdown.Item 
             key={dog._id}
             onClick={() => {
+              console.log('oo', dog._id)
               feedDog(dog, meal)
             }}
             >

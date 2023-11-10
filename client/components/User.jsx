@@ -43,8 +43,19 @@ function User(props) {
         setOwnDogs(dogArr.data.dogsArr.length)
 
       })
-  }, [])
 
+      getKennel();
+  }, [])
+ const getKennel = () => {
+    axios
+      .get(`/dog/users/${userObj._id}`)
+      .then(({ data }) => {
+        setDogs(data.dogsArr);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
 
 
   return (

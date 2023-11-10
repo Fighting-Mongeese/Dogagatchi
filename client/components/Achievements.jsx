@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Achieve from './Achieve.jsx'
-
+//JS
 // CHILD OF USER PARENT OF ACHIEVE
 //POSSIBLY ADD ANIMATION ON TRIGGERING ACHIEVEMENT
 // Access the user who is currently logged in to get information from the database about them
@@ -139,7 +139,7 @@ axios.get(`/user/${user}`) //slash users slash achievements refactor
   return (
   <div className="achievement-container">
     <div className="user-achievements">
-      <p className="achievement-header">ACHIEVEMENTS EARNED</p>
+      <p className="achievement-header">Achievements Earned</p>
       <div>
         {achievementsEarned.map((achievement) => (
           <Achieve 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ListGroup, Table, Card, Col, Container, Row } from "react-bootstrap";
 import NavBar from './Navbar.jsx';
 import DogShop from './DogShop.jsx'
@@ -15,9 +15,11 @@ function User(props) {
   const [coins, setCoins] = useState(0);
   const [color, setColor] = useState("#ade3e3")
   const [correctQuestionCount, setCorrectQuestionCount] = useState(0);
+  const [dogs, setDogs] = useState([]);
+  const dogsRef = useRef(dogs);
 
+  const userObj = JSON.parse(sessionStorage.getItem("user"));
   useEffect(() => {
-    const userObj = JSON.parse(sessionStorage.getItem("user"));
     axios
       .get("/user/leaderboard/smartest")
       .then(({ data }) => {
@@ -216,10 +218,12 @@ function User(props) {
 
         <Col xs={8}>
         <div className="dogs">
-          <Kennel className="user-kennel" />
+          <Kennel className="user-kennel" 
+          dogs={dogs}
+          getKennel={getKennel}
+          />
         </div>
         <div className="pantry">
-        <Pantry />
       </div> 
         </Col>
 

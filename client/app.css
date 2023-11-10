@@ -143,6 +143,9 @@ body {
   display: inline-block;
 }
 
+.user-kennel{
+  width: 500px;
+}
 .shimmer {
   text-align: center;
   color: rgba(255, 255, 255, 0.1);

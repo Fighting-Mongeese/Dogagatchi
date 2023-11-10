@@ -21,10 +21,10 @@ function NavBar(props) {
           <Nav>
             <Nav.Link className="ms-auto" as={Link} to="/user">My Kennel 🦴</Nav.Link>
             <Nav.Link className="ms-auto" as={Link} to="/quiz" >Pooch Picker 🤔</Nav.Link>
-            <Nav.Link className="ms-auto" as={Link} to="/leaderboard">Top Dogs 🏆</Nav.Link>
-            <Nav.Link className="ms-auto" as={Link} to="/restaurant">Bow Wow's Chow 🍽️</Nav.Link>
+            <Nav.Link className="ms-auto" as={Link} to="/restaurant">Bone Appetite Cafe 🍽️</Nav.Link>
+            <Nav.Link className="ms-auto" as={Link} to="/leaderboard">Top Dawgs 🏆</Nav.Link>
             <Nav.Link className="ms-auto" as={Link} to="/about">About 📖</Nav.Link>
-            <Nav.Link className="ms-auto" onClick={logout}>Log Out 👋</Nav.Link>
+            <Nav.Link className="ms-auto" onClick={logout}>BowWowt 👋</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

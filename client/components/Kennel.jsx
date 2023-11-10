@@ -1,27 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { Row , Col} from "react-bootstrap";
+import React from "react";
 import axios from "axios";
 import Dog from "./Dog.jsx";
 
 function Kennel(props) {
-  const [click, setClick] = useState(0);
   const user = JSON.parse(sessionStorage.getItem("user"));
-  const [userId, setUserId] = useState(user._id);
 
-  const { dogs, getKennel } = props
+  const { dogs } = props
 
-  // const getDogs = () => {
-  //   axios
-  //     .get(`/dog/users/${userId}`)
-  //     .then(({ data }) => {
-  //       setDogs(data.dogsArr);
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //     });
-  // };
-
-  //useEffect(getKennel, [userId, dogs]);
 
   return (
     <div>

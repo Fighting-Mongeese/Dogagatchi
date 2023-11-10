@@ -1,13 +1,18 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Button, ProgressBar, Card, Dropdown, DropdownButton } from "react-bootstrap";
+import {
+  Button,
+  ProgressBar,
+  Card,
+  Dropdown,
+  DropdownButton,
+} from "react-bootstrap";
 import axios from "axios";
 import barkSound from "../../server/barking-123909.mp3";
-
 
 const bark = new Audio(barkSound);
 
 function Dog(props) {
-  const { dogObj, setDogs, dogs } = props;
+  const { dogObj } = props;
   const [dog, setDog] = useState(dogObj);
   const [userId, setUserId] = useState("");
   const [coinCount, setCoin] = useState(0);
@@ -17,17 +22,16 @@ function Dog(props) {
   const [walkStatus, setWalkStatus] = useState("");
   const [feedTimer, setFeedTimer] = useState(0);
   const [walkTimer, setWalkTimer] = useState(0);
-  const [meals, setMeals] = useState(null)
+  const [meals, setMeals] = useState(null);
 
   const hungryRef = useRef(null);
   const happyRef = useRef(null);
-  const dogRef = useRef(dog)
 
   useEffect(() => {
     const user = JSON.parse(sessionStorage.getItem("user"));
     setUserId(user._id);
     setCoin(user.coinCount);
-    getSignedInUserMeals(user._id)
+    getSignedInUserMeals(user._id);
   }, []);
 
   const getDog = () => {
@@ -40,37 +44,42 @@ function Dog(props) {
   };
 
   const getSignedInUserMeals = (userIdParam) => {
-    axios.get(`/user/meals/${userIdParam}`)
-    .then(({ data }) => {
-      const sortedMeals = data.meals.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))
-      setMeals(sortedMeals)
-    })
-    .catch((err) => console.error('get signed in user ERROR', err))
-  }
+    axios
+      .get(`/user/meals/${userIdParam}`)
+      .then(({ data }) => {
+        const sortedMeals = data.meals.sort((a, b) =>
+          a.name > b.name ? 1 : b.name > a.name ? -1 : 0
+        );
+        setMeals(sortedMeals);
+      })
+      .catch((err) => console.error("get signed in user ERROR", err));
+  };
 
   const feedDog = (dogToFeedObj, mealToFeedObj) => {
-
     const status = {
-      feedDeadline: new Date(new Date(dogToFeedObj.feedDeadline).getTime() + 24 * 60 * 60 * 1000),
-      walkDeadline: new Date(new Date(dogToFeedObj.walkDeadline).getTime() + 12 * 60 * 60 * 1000)
-    }
+      feedDeadline: new Date(
+        new Date(dogToFeedObj.feedDeadline).getTime() + 24 * 60 * 60 * 1000
+      ),
+      walkDeadline: new Date(
+        new Date(dogToFeedObj.walkDeadline).getTime() + 12 * 60 * 60 * 1000
+      ),
+    };
 
-    axios.put(`dog/${dogToFeedObj._id}`, { status })
-    .then((() => {
-      //console.log(signedInUserId)
-      getDog()}))
-    .then(() => {
-      axios.put(`user/meals/${userId}`, {
-        update: {
-          type: 'deleteMeal'
-        },
-        mealToDelete: mealToFeedObj
+    axios
+      .put(`dog/${dogToFeedObj._id}`, { status })
+      .then(getDog())
+      .then(() => {
+        axios
+          .put(`user/meals/${userId}`, {
+            update: {
+              type: "deleteMeal",
+            },
+            mealToDelete: mealToFeedObj,
+          })
+          .then(() => getSignedInUserMeals(userId));
       })
-      .then(() => getSignedInUserMeals(userId))
-    })
-    .catch((err) => console.error('feed dog meal ERROR:', err));
-
-  }
+      .catch((err) => console.error("feed dog meal ERROR:", err));
+  };
 
   const handleClick = (e) => {
     const status = {};
@@ -81,31 +90,34 @@ function Dog(props) {
       hungryRef.current = hungry;
       const feedDeadline = Date.parse(dog.feedDeadline) + 12 * 60 * 60 * 1000;
       status.feedDeadline = feedDeadline;
-      setFeedTimer(feedDeadline)
+      setFeedTimer(feedDeadline);
+      axios
+        .put(`/dog/${dog._id}`, { status, cost: -3 })
+        .then(({ data }) => setCoin(data.coinCount))
+        .then(() => getDog())
+        .catch((err) => {
+          console.error(err);
+        });
     } else if (e === "walk") {
       setHappy(true);
       happyRef.current = happy;
       const walkDeadline = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
       status.walkDeadline = walkDeadline;
-      setWalkTimer(walkDeadline)
+      setWalkTimer(walkDeadline);
+      axios
+        .put(`/dog/${dog._id}`, { status })
+        .then(({ data }) => setCoin(data.coinCount))
+        .then(() => getDog())
+        .catch((err) => {
+          console.error(err);
+        });
     } else {
       bark.play();
     }
-    axios
-      .put(`/dog/${dog._id}`, { status, cost: -5 })
-      .then(({ data }) => setCoin(data.coinCount))
-      .then(() => getDog())
-      .catch((err) => {
-        console.error(err);
-      });
-      console.log('testing!')
-      //setClick(click + 1);
   };
 
   useEffect(() => {
-    console.log('inside dog')
-    getDog()
-    //setDog(dog);
+    getDog();
   }, [happy, hungry]);
 
   useEffect(() => {
@@ -162,7 +174,7 @@ function Dog(props) {
   }, [happy, hungry, dog]);
 
   return (
-    <Card style={{margin: 5}}>
+    <Card style={{ margin: 5 }}>
       <Card.Img
         src={dog.img}
         alt="Sorry, your dog is in another kennel."
@@ -206,8 +218,8 @@ function Dog(props) {
               </Button>
             ) : (
               <Button
-              variant="info"
-              onClick={() => handleClick("bark")}
+                variant="info"
+                onClick={() => handleClick("bark")}
               >
                 🦴
               </Button>
@@ -221,7 +233,7 @@ function Dog(props) {
               now={walkTimer}
               label="HAPPINESS"
               style={{ height: "35px" }}
-              />
+            />
           </div>
           <div
             style={{
@@ -231,8 +243,8 @@ function Dog(props) {
           >
             {happy ? (
               <Button
-              variant="info"
-              onClick={() => handleClick("bark")}
+                variant="info"
+                onClick={() => handleClick("bark")}
               >
                 🐶
               </Button>
@@ -246,24 +258,30 @@ function Dog(props) {
             )}
           </div>
           <div
-           style={{
-            display: "flex",
-            flexDirection: "column",
-          }}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+            }}
           >
-            {meals ? <DropdownButton id="meal-item" title='Feed from Pantry!'>
-              {meals.map(meal  => (
-                <Dropdown.Item 
-                  key={meal._id}
-                  onClick={() => {
-                    feedDog(dog, meal)
-                  }}
-                >
-                  {meal.name}
-                </Dropdown.Item>))
-              }
-              </DropdownButton> : ''}
-
+            {meals ? (
+              <DropdownButton
+                id="meal-item"
+                title="Feed from Pantry!"
+              >
+                {meals.map((meal) => (
+                  <Dropdown.Item
+                    key={meal._id}
+                    onClick={() => {
+                      feedDog(dog, meal);
+                    }}
+                  >
+                    {meal.name}
+                  </Dropdown.Item>
+                ))}
+              </DropdownButton>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </Card.Body>

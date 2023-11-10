@@ -75,16 +75,33 @@ router.post('/', (req, res) => {
 
 // **************** PUT ROUTES ********************
 
-//PUT BY DOOG ID
+//PUT BY DOG ID
 
 router.put('/:dogId', (req, res) => {
     const { dogId } = req.params;
-    const { status } = req.body;
+    const { status, cost } = req.body;
 
     Dog.findByIdAndUpdate(dogId, status, { returnDocument: 'after' })
         .then((updatedDog) => {
-            if (updatedDog) {
-                res.status(200).send(updatedDog);
+            if (updatedDog && cost === -3) {
+                User.findByIdAndUpdate(updatedDog.owner, { $inc: { coinCount: cost } })
+                    .then((updatedUser) => {
+                        console.log(updatedUser);
+                        res.status(200).send(updatedUser);
+                    })
+                    .catch((err) => {
+                        console.error('SERVER ERROR: failed to UPDATE user coins by id', err);
+                        res.sendStatus(500);
+                    });
+            } else if (updatedDog) {
+                User.findById(updatedDog.owner)
+                    .then((updatedUser) => {
+                        res.status(200).send(updatedUser);
+                    })
+                    .catch((err) => {
+                        console.error('SERVER ERROR: failed to UPDATE user coins by id', err);
+                        res.sendStatus(500);
+                    });
             } else {
                 res.sendStatus(404);
             }

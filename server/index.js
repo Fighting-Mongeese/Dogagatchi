@@ -91,7 +91,7 @@ app.post('/auth/register', (req, res) => {
       }
       bcrypt.hash(password, 10)
         .then((pass) => {
-          User.create({ username: username, password: pass })
+          User.create({ username: username, password: pass, coinCount: 14 })
             .then((user) => {
               //console.log('final', user)
               return res.status(201).json({ message: 'success', user })

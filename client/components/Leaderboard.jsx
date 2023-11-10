@@ -28,7 +28,7 @@ function LeaderBoard(props) {
   // leader board defaults to smartest parents on rendering
   useEffect(() => {
     getLeaders()
-  }, []);
+  }, [board]);
 
   return (
     <Container>

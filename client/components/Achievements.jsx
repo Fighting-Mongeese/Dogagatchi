@@ -139,7 +139,7 @@ axios.get(`/user/${user}`) //slash users slash achievements refactor
   return (
   <div className="achievement-container">
     <div className="user-achievements">
-      <p className="achievement-header">ACHIEVEMENTS EARNED</p>
+      <p className="achievement-header">Achievements Earned</p>
       <div>
         {achievementsEarned.map((achievement) => (
           <Achieve 

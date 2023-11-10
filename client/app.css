@@ -92,9 +92,10 @@ body {
 }
 
 .achievement-header {
-  font-family: "Arial Black", Gadget, sans-serif;
-  text-decoration: underline solid rgb(68, 68, 68);
+  /* font-family: "Arial Black", Gadget, sans-serif; */
+  text-decoration: solid rgb(68, 68, 68);
   text-align: center;
+  font-weight: bold;
 }
 
 .achievement-icon {

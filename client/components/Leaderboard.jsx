@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
+import { Container, Col, Row } from 'react-bootstrap';
 import Leader from './Leader.jsx';
 
 function LeaderBoard(props) {
@@ -30,46 +31,57 @@ function LeaderBoard(props) {
   }, []);
 
   return (
-    <div>
-      <h2>Leader Board</h2>
-      <Button onClick={() => {
-        changeBoard('smartest');
-        getLeaders()
-      }
-    }
-      >Smartest Parents</Button>
-      <Button onClick={() => {
-        changeBoard('richest');
-        getLeaders()
-        }
-      }
-        >Richest Parents</Button>
-      <Table bordered>
-        <thead className="leader-table">
-          <tr size="sm">
-            <th scope="col" width="100" className="header-name">Username</th>
-            <th scope="col" width="100" className="header-name">
-              {
-            board === 'smartest'
-              ? 'Correct Questions'
-              : 'Tokens'
-              }
+    <Container>
+      <Row>
+        <Col xs={1}>
 
-            </th>
-          </tr>
-        </thead>
+        </Col>
+        <Col xs={10} className='d-flex flex-column align-items-center'>
+          <h2>Leader Board</h2>
+          <div className='d-flex flex-row my-2'>
+            <Button onClick={() => {
+              changeBoard('smartest');
+              getLeaders()
+            }
+            }
+            >Smartest Parents</Button>
+            <Button onClick={() => {
+              changeBoard('richest');
+              getLeaders()
+            }
+            }
+            >Richest Parents</Button>
+          </div>
+          <Table bordered>
+            <thead className="leader-table">
+              <tr size="sm">
+                <th scope="col" width="100" className="header-name">Username</th>
+                <th scope="col" width="100" className="header-name">
+                  {
+                    board === 'smartest'
+                      ? 'Correct Questions'
+                      : 'Tokens'
+                  }
 
-        {leaders.map((leaderObj) => (
-          <Leader
-            leader={leaderObj}
-            key={leaderObj._id}
-            view={board}
-            setSearchedUserData={props.setSearchedUserData}
-          />
-        ))}
+                </th>
+              </tr>
+            </thead>
 
-      </Table>
-    </div>
+            {leaders.map((leaderObj) => (
+              <Leader
+                leader={leaderObj}
+                key={leaderObj._id}
+                view={board}
+                setSearchedUserData={props.setSearchedUserData}
+              />
+            ))}
+
+          </Table>
+
+        </Col>
+        <Col xs={1}></Col>
+      </Row>
+    </Container>
   );
 }
 

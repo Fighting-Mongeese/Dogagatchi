@@ -13,15 +13,14 @@ function Leader(props) {
   }
   return (
     <tbody >
-      <tr>
-        <th scope="row" className="leader-username"
-        onClick={() => { console.log(props.leader.username); seeLeader() }}
+      <tr >
+        <th scope="row" className="leader-info"
         >{`${props.leader.username} `}</th>
         <th scope="row" className="leader-info">
           {
           props.view === 'smartest'
-            ? `${props.leader.questionCount} quest`
-            : `${props.leader.coinCount} coin`
+            ? `${props.leader.questionCount}`
+            : `${props.leader.coinCount}`
           }
 
         </th>
@@ -32,3 +31,4 @@ function Leader(props) {
   );
 }
 export default Leader;
+//aa602c

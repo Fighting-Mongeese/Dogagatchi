@@ -145,8 +145,8 @@ const About = () => (
                 <h1 className="display-3">🎲 How to Play</h1>
                 <h3>Dogagatchi+ features three interdependent game modes</h3>
                 <ul>
-                    <li> My Kennel: Be a pack leader! Add dogs to your kennel with the coins earned, and walk, feed and treat them as needed. Find your kennel on your user page.</li>
-                    <li> Pooch Picker: Earn coins by correctly identifying the breeds of pictured pups.</li>
+                    <li> Pooch Picker: Earn coins by correctly identifying the breeds of pictured pups. Each correct guess earns you a coin and the dog will be added to your list of purchasable dogs! </li>
+                    <li> My Kennel: Be a pack leader! Add dogs to your kennel with the coins earned You manage their hunger and happiness levels by walking, feeding and treating them as needed.</li>
                     <li> Bone Appetite Cafe: Spend your loot to treat your canine besties to finest snacks on the internet. </li>
                 </ul>
                 <h1 className="display-3">About the Developers 😎</h1>

@@ -3,6 +3,7 @@ const path = require('path');
 const axios = require('axios');
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
+const GoogleStrategy = require('passport-google-oauth20').Strategy
 const session = require('express-session')
 const bcrypt = require('bcrypt')
 const flash = require('express-flash')
@@ -15,6 +16,9 @@ const app = express();
 const routeHandler = express.Router()
 const port = 4000;
 const { User, Dog } = require('./db/index');
+
+const clientId = process.env.GOOGLE_CLIENT_ID
+const clientSecret = process.env.GOOGLE_CLIENT_SECRET
 
 
 const distPath = path.resolve(__dirname, '..', 'dist');
@@ -53,6 +57,16 @@ passport.use(new LocalStrategy({
     })
 }))
 
+passport.use(new GoogleStrategy({
+  clientID: clientId, 
+  clientSecret: clientSecret, 
+  callbackURL: 'http://localhost:3001/auth/google/callback'
+},
+(accessToken, refreshToken, profile, done) => {
+return done(null, profile)
+}
+))
+
 passport.serializeUser((user, done) => {
   done(null, user.id)
 })
@@ -79,32 +93,33 @@ app.post('/auth/register', (req, res) => {
 
 
   if (!username || !password) {
-    console.log('none')
     return res.status(400).json({ message: "Must enter a usernme and password" })
   }
 
   User.findOne({ username: username })
     .then((user) => {
       if (user) {
-        //console.log('user', user)
         return res.status(400).json({ message: "User already exists" })
       }
       bcrypt.hash(password, 10)
         .then((pass) => {
           User.create({ username: username, password: pass, coinCount: 14, questionCount: 0 })
             .then((user) => {
-              //console.log('final', user)
               return res.status(201).json({ message: 'success', user })
             })
         })
     })
 })
 
+app.get('auth/google', passport.authenticate('google', {scope: ['profile', 'email']}))
+
 app.get('/fail', (req, res) => {
   res.json({ message: req.flash('error')[0] })
 })
 
-
+app.get('auth/google/callback', passport.authenticate('google', {failureRedirect: '/fail'}), (req, res) => {
+  res.redirect('/home')
+})
 
 // **************** API ROUTE ********************
 
@@ -114,7 +129,7 @@ app.get('/api/quiz', (req, res) => {
     .then((response) => {
       res.status(200).send(response.data.message);
     })
-    .catch((err) => { console.log(err) })
+    .catch((err) => { console.error(err) })
 });
 
 

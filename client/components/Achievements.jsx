@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Achieve from './Achieve.jsx'
+const{uniq}= require("lodash");
 //JS
 // CHILD OF USER PARENT OF ACHIEVE
 //POSSIBLY ADD ANIMATION ON TRIGGERING ACHIEVEMENT
@@ -19,7 +20,7 @@ function Achievements(props) { //access props.user to get id for subsequent get 
   useEffect(() => {
     axios.get(`/user/${user}`) //slash users slash achievements refactor
     .then((userArray) => {
-    setActiveUser(userArray[0]);
+    setActiveUser(userArray.data[0]);
     setCoinsEarned(userArray.data[0].coinCount)
     const thriftyCheck =  userArray.data[0].achievements.findIndex((item) => {
       if (item.name === 'Thrifty') {
@@ -46,7 +47,6 @@ function Achievements(props) { //access props.user to get id for subsequent get 
       return true
       }
     })
-    console.log('coin count', userArray.data[0].coinCount)
     if (userArray.data[0].coinCount >= 20 && thriftyCheck === -1) {
       axios.put(`/user/achievements/${userArray.data[0]._id}`, {
         name: 'Thrifty',
@@ -85,7 +85,6 @@ function Achievements(props) { //access props.user to get id for subsequent get 
     axios.get(`/dog/users/${user}`) //slash users slash achievements refactor
   .then((dogArray) => {
   //bypasses error on first render
-  //console.log('dog get', dogArray.data.dogsArr.length)
   if (dogArray.data.dogsArr.length) {
   const hasOneDog = userArray.data[0].achievements.findIndex((item) => {
     if (item.name === 'Good Puppy') {
@@ -102,7 +101,7 @@ function Achievements(props) { //access props.user to get id for subsequent get 
     return true
     }
   })
-  if (dogArray.data.dogsArr[0].owner === use._id && hasOneDog === -1) {
+  if (dogArray.data.dogsArr.length >= 1 && hasOneDog === -1) {
     axios.put(`/user/achievements/${use._id}`, {
       name: 'Good Puppy',
       image: 'https://www.trueachievements.com/imagestore/0006879400/6879454.jpg',
@@ -128,7 +127,16 @@ function Achievements(props) { //access props.user to get id for subsequent get 
 .then(() => {
   axios.get(`/user/${user}`) //slash users slash achievements refactor
   .then((userArray) => {
-  setAchievementsEarned(userArray.data[0].achievements)
+    const newArr = {}
+    const unique =  userArray.data[0].achievements.filter(item => {
+      if(!newArr[item.name]){
+        newArr[item.name] = true
+        return true
+      }
+      return false
+    })
+    
+  setAchievementsEarned(unique)
 })
 })
 .catch((err) => {
@@ -136,7 +144,7 @@ function Achievements(props) { //access props.user to get id for subsequent get 
 })
 
 })
-}, [activeUser])
+}, [])
 
 
   return (

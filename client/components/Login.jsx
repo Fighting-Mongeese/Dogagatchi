@@ -133,15 +133,16 @@ const Login = () => {
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
-                    <div className='d-flex flex-row mb-4'>
+                    <div className='d-flex flex-row'>
                         <Button variant='outline-light' name='Login' type='submit'>Login</Button>
                         <Button variant='outline-light' name='Register' type='submit'>Register</Button>
                     </div>
+                        <p style={{marginBottom: '0px', color: 'white'}}> OR </p>
+                        <Button className='mt-2' onClick={()=>login()}>Sign in with Google</Button>
+                        {error && <p style={{ color: 'red' }}>{error}</p>}
                 </Form>
-                        <button onClick={()=>login()}>Sign in with Google</button>
 
 
-                {error && <p style={{ color: 'red' }}>{error}</p>}
             </Col>
             <Col xs={3}></Col>
         </Row>

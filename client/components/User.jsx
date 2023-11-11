@@ -21,7 +21,7 @@ function User(props) {
   const navigate = useNavigate();
 
   const userObj = JSON.parse(sessionStorage.getItem("user"));
-  
+
   useEffect(() => {
     axios
       .get("/user/leaderboard/smartest")
@@ -63,9 +63,14 @@ function User(props) {
   };
 
   const deleteUser = () => {
+
     axios.delete(`/user/${userObj._id}`)
-    .then(({ data }) => {
-      console.log(data)
+    .then(() => {
+      axios.delete(`/dog/all/${userObj._id}`)
+      .then(() => console.log('deleted user dogs deleted'))
+      .catch((err) => console.error('deleted dogs', err))
+    })
+    .then(() => {
       navigate('/deleted')
     })
     .then(() => setTimeout(() => navigate('/'), 4000))
@@ -129,7 +134,18 @@ function User(props) {
             <Card
               style={{ backgroundColor: "#4c5f63" }}
             >
-              <Card.Img src={user.img}></Card.Img>
+              <Card.Header style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center"}}>
+              <Card.Img style={{
+                maxWidth: "200px", 
+                maxHeight: "200px",
+                alignItems: "center",
+                border: 'white 5px solid'
+                }} src={user.img} />
+
+              </Card.Header>
       <Card.Header
         style={{
           display: "flex",

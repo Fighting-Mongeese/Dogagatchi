@@ -54,7 +54,6 @@ const Login = () => {
         }
     }
 
-// '#ade3e3'
 
 
     return (

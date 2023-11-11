@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
-import { ListGroup, Table, Card, Col, Container, Row } from "react-bootstrap";
-import NavBar from "./Navbar.jsx";
-import DogShop from "./DogShop.jsx";
-import Achievements from "./Achievements.jsx";
-import Kennel from "./Kennel.jsx";
-import Pantry from "./Pantry.jsx";
-import axios from "axios";
+import React, { useState, useEffect, useRef } from 'react';
+import { ListGroup, Table, Card, Col, Container, Row, Button, Modal } from "react-bootstrap";
+import NavBar from './Navbar.jsx';
+import DogShop from './DogShop.jsx'
+import Achievements from './Achievements.jsx';
+import Kennel from './Kennel.jsx';
+import { useNavigate, Link } from 'react-router-dom';
+import axios from 'axios'
 
 function User(props) {
   const [loading, setLoading] = useState(true)
@@ -17,7 +17,8 @@ function User(props) {
   const [color, setColor] = useState("#ade3e3");
   const [correctQuestionCount, setCorrectQuestionCount] = useState(0);
   const [dogs, setDogs] = useState([]);
-  const dogsRef = useRef(dogs);
+  const [showModal, setShowModal] = useState(false)
+  const navigate = useNavigate();
 
   const userObj = JSON.parse(sessionStorage.getItem("user"));
   useEffect(() => {
@@ -59,6 +60,20 @@ function User(props) {
         console.error(err);
       });
   };
+
+  const deleteUser = () => {
+    axios.delete(`/user/${userObj._id}`)
+    .then(({ data }) => {
+      console.log(data)
+      navigate('/deleted')
+    })
+    .then(() => setTimeout(() => navigate('/'), 4000))
+    .catch((err) => console.error('delete user ERROR', err))
+  }
+
+  const handleCloseModal = () => {
+    setShowModal(false)
+  }
 
   return (
     <Container>
@@ -194,10 +209,34 @@ function User(props) {
           getKennel={getKennel}
           setCoins={setCoins}
           />
-        </div>) 
+        </div>)
        }
         </Col>
       </Row>
+      <Row>
+        <Col>
+        <Button
+            variant='danger'
+            onClick={() => setShowModal(true)}
+            >Delete Account
+          </Button>
+        </Col>
+      </Row>
+
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>{`WARNING! Are you sure you want to delete ${userObj.username}'s account?`}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{`By deleting your account, you will lose ${coins} coins and ${ownDogs} dogs. If you are PAW-sitive you want to delete your account, click delete.`}</Modal.Body>
+        <Modal.Footer>
+          <Button variant="danger" onClick={deleteUser}>
+            DELETE
+          </Button>
+          <Button variant="primary" onClick={handleCloseModal}>
+            NEVERMIND
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 }

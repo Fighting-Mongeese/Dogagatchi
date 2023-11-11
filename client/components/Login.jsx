@@ -135,12 +135,12 @@ const Login = () => {
                     <div className='d-flex flex-row mb-4'>
                         <Button variant='outline-light' name='Login' type='submit'>Login</Button>
                         <Button variant='outline-light' name='Register' type='submit'>Register</Button>
+                        <Button size='sm' onClick={()=>login()}>Sign in with Google</Button>
                     </div>
+                        {error && <p style={{ color: 'red' }}>{error}</p>}
                 </Form>
-                        <button onClick={()=>login()}>Sign in with Google</button>
 
 
-                {error && <p style={{ color: 'red' }}>{error}</p>}
             </Col>
             <Col xs={3}></Col>
         </Row>

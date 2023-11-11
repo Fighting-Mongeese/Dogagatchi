@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from "react";
 import { ListGroup, Table, Card, Col, Container, Row } from "react-bootstrap";
-import NavBar from './Navbar.jsx';
-import DogShop from './DogShop.jsx'
-import Achievements from './Achievements.jsx';
-import Kennel from './Kennel.jsx';
-import Pantry from './Pantry.jsx'
-import axios from 'axios'
+import NavBar from "./Navbar.jsx";
+import DogShop from "./DogShop.jsx";
+import Achievements from "./Achievements.jsx";
+import Kennel from "./Kennel.jsx";
+import Pantry from "./Pantry.jsx";
+import axios from "axios";
 
 function User(props) {
   const [loading, setLoading] = useState(true)
@@ -14,7 +14,7 @@ function User(props) {
   const [dogCount, setDogCount] = useState(0);
   const [ownDogs, setOwnDogs] = useState(0);
   const [coins, setCoins] = useState(0);
-  const [color, setColor] = useState("#ade3e3")
+  const [color, setColor] = useState("#ade3e3");
   const [correctQuestionCount, setCorrectQuestionCount] = useState(0);
   const [dogs, setDogs] = useState([]);
   const dogsRef = useRef(dogs);
@@ -31,25 +31,22 @@ function User(props) {
       })
       .catch((err) => console.error("getLeaders ERROR (client):", err));
 
-   setPage()
-    axios.get(`/dog/users/${userObj._id}`)
-      .then((dogArr) => {
-        setOwnDogs(dogArr.data.dogsArr.length)
-
-      })
+    setPage();
+    axios.get(`/dog/users/${userObj._id}`).then((dogArr) => {
+      setOwnDogs(dogArr.data.dogsArr.length);
+    });
 
     getKennel();
-  }, [coins])
+  }, [coins]);
 
   const setPage = () => {
-    axios.get(`/user/${userObj._id}`)
-      .then((user) => {
-        setUser(user.data[0])
-        setCorrectQuestionCount(user.data[0].questionCount)
-        setDogCount(user.data[0].dogCount)
-        setCoins(user.data[0].coinCount)
-      })
-  }
+    axios.get(`/user/${userObj._id}`).then((user) => {
+      setUser(user.data[0]);
+      setCorrectQuestionCount(user.data[0].questionCount);
+      setDogCount(user.data[0].dogCount);
+      setCoins(user.data[0].coinCount);
+    });
+  };
 
   const getKennel = () => {
     axios
@@ -63,21 +60,21 @@ function User(props) {
       });
   };
 
-
   return (
     <Container>
-
-      <Row  >
-        <Col style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }} >
-          <DogShop />
+      <Row>
+        <Col
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <DogShop setCoins={setCoins} />
         </Col>
       </Row>
-      <Row >
+      <Row>
         <Col xs={4}>
           <div className="user-stats">
 
@@ -92,8 +89,13 @@ function User(props) {
                  ) :
             globalRank === 3 ?(
               <div>
-                <h1 id="heady">🥉</h1>
-               <h1 id="heady" className='shimmer'>{user.username}'s Kennel</h1>
+                <h2 id="heady">🥉</h2>
+                <h2
+                  id="heady"
+                  className="shimmer"
+                >
+                  {user.username}'s Kennel
+                </h2>
               </div>
                ): globalRank === 2 ?(
                 <div>
@@ -142,7 +144,7 @@ function User(props) {
                   alignItems: "center",
                   fontWeight: "bold",
                   fontSize: "large",
-                  backgroundColor: color
+                  backgroundColor: color,
                 }}
               >
                 Correct Answers: {correctQuestionCount}
@@ -155,28 +157,26 @@ function User(props) {
                   alignItems: "center",
                   fontWeight: "bold",
                   fontSize: "large",
-                  backgroundColor: color
+                  backgroundColor: color,
                 }}
               >
                 Purchasable Dogs: {dogCount}
               </Card.Header>
 
-      <Card.Header
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          fontWeight: "bold",
-          fontSize: "large",
-          backgroundColor: color
-        }}
-      >
-        <p>Owned Dogs: {ownDogs}</p>
-      </Card.Header>
+              <Card.Header
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  fontWeight: "bold",
+                  fontSize: "large",
+                  backgroundColor: color,
+                }}
+              >
+                <p>Owned Dogs: {ownDogs}</p>
+              </Card.Header>
             </Card>
-
           </div>
-
 
           <Achievements
             user={user}
@@ -198,7 +198,6 @@ function User(props) {
        }
         </Col>
       </Row>
-      
     </Container>
   );
 }

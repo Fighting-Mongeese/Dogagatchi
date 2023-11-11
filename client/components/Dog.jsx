@@ -6,7 +6,7 @@ import {
   Dropdown,
   DropdownButton,
 } from "react-bootstrap";
-import {Link} from 'react-router-dom'
+import { Link } from "react-router-dom";
 import axios from "axios";
 import barkSound from "../../server/barking-123909.mp3";
 
@@ -15,8 +15,6 @@ const bark = new Audio(barkSound);
 function Dog(props) {
   const { dogObj, setCoins } = props;
   const [dog, setDog] = useState(dogObj);
-  const [userId, setUserId] = useState("");
-  const [coinCount, setCoin] = useState(0);
   const [hungry, setHunger] = useState(true);
   const [happy, setHappy] = useState(false);
   const [feedStatus, setFeedStatus] = useState("");
@@ -24,14 +22,12 @@ function Dog(props) {
   const [feedTimer, setFeedTimer] = useState(0);
   const [walkTimer, setWalkTimer] = useState(0);
   const [meals, setMeals] = useState([]);
+  const user = JSON.parse(sessionStorage.getItem("user"));
 
   const hungryRef = useRef(null);
   const happyRef = useRef(null);
 
   useEffect(() => {
-    const user = JSON.parse(sessionStorage.getItem("user"));
-    setUserId(user._id);
-    setCoin(user.coinCount);
     getSignedInUserMeals(user._id);
   }, []);
 
@@ -51,7 +47,7 @@ function Dog(props) {
         const sortedMeals = data.meals.sort((a, b) =>
           a.name > b.name ? 1 : b.name > a.name ? -1 : 0
         );
-        console.log('meals', sortedMeals)
+        console.log("meals", sortedMeals);
         setMeals(sortedMeals);
       })
       .catch((err) => console.error("get signed in user ERROR", err));
@@ -72,22 +68,35 @@ function Dog(props) {
       .then(getDog())
       .then(() => {
         axios
-          .put(`user/meals/${userId}`, {
+          .put(`user/meals/${user._id}`, {
             update: {
               type: "deleteMeal",
             },
             mealToDelete: mealToFeedObj,
           })
-          .then(() => getSignedInUserMeals(userId));
+          .then(() => getSignedInUserMeals(user._id));
       })
       .catch((err) => console.error("feed dog meal ERROR:", err));
   };
 
   const handleClick = (e) => {
     const status = {};
-    if (coinCount < 5) {
+
+    if (e === "walk") {
+      setHappy(true);
+      happyRef.current = happy;
+      const walkDeadline = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+      status.walkDeadline = walkDeadline;
+      setWalkTimer(walkDeadline);
+      axios
+        .put(`/dog/${dog._id}`, { status })
+        .then(() => getDog())
+        .catch((err) => {
+          console.error(err);
+        });
+    } else if (e === "feed" && user.coinCount < 3) {
       alert("Not enough coins!");
-    } else if (e === "feed") {
+    } else if (e === "feed" && user.coinCount >= 3) {
       setHunger(false);
       hungryRef.current = hungry;
       const feedDeadline = Date.parse(dog.feedDeadline) + 12 * 60 * 60 * 1000;
@@ -96,21 +105,8 @@ function Dog(props) {
       axios
         .put(`/dog/${dog._id}`, { status, cost: -3 })
         .then(({ data }) => {
-          setCoins(data.coinCount)
-          setCoin(data.coinCount)
+          setCoins(data.coinCount);
         })
-        .then(() => getDog())
-        .catch((err) => {
-          console.error(err);
-        });
-    } else if (e === "walk") {
-      setHappy(true);
-      happyRef.current = happy;
-      const walkDeadline = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-      status.walkDeadline = walkDeadline;
-      setWalkTimer(walkDeadline);
-      axios
-        .put(`/dog/${dog._id}`, { status })
         .then(() => getDog())
         .catch((err) => {
           console.error(err);
@@ -255,15 +251,16 @@ function Dog(props) {
                     }}
                   >
                     {meal.name}
-                  </Dropdown.Item>))
-                }
-              </DropdownButton>) :  
-              (<DropdownButton title='Feed from Pantry!'>
-                  <Dropdown.Item>
-                    Visit Bone Appétit Café to buy your first meal!
                   </Dropdown.Item>
-                
-              </DropdownButton>) }
+                ))}
+              </DropdownButton>
+            ) : (
+              <DropdownButton title="Feed from Pantry!">
+                <Dropdown.Item>
+                  Visit Bone Appétit Café to buy your first meal!
+                </Dropdown.Item>
+              </DropdownButton>
+            )}
           </div>
         </Card.Body>
       </div>

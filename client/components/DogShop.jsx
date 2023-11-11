@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Button, Form, Image } from "react-bootstrap";
 import axios from "axios";
 
-function DogShop() {
+function DogShop(props) {
+  const { setCoins } = props 
   const [dogShop, setShop] = useState(false);
   const [breeds, setList] = useState([]);
-  const [coinCount, setCoin] = useState(0);
   const [dogView, setDogView] = useState("");
   const [dogName, setDogName] = useState("");
   const user = JSON.parse(sessionStorage.getItem("user"));
@@ -15,7 +15,7 @@ function DogShop() {
     setUserId(user._id);
     getDogs()
     axios.get(`/user/${user._id}`).then((userData) => {
-      setCoin(userData.data[0].coinCount);
+      setCoins(userData.data[0].coinCount);
     });
   }, []);
 
@@ -31,7 +31,7 @@ function DogShop() {
   const handleSubmit = () => {
     if (dogView === "" || dogName === "") {
       alert("Fill all fields");
-    } else if (coinCount >= 15) {
+    } else if (user.coinCount >= 15) {
       axios
         .post("/dog", {
           name: dogName,
@@ -39,7 +39,7 @@ function DogShop() {
           owner: userId,
         })
         .then(({ data }) => {
-          setCoin(data.coinCount);
+          setCoins(data.coinCount);
         });
       getDogs();
       setDogs([]);

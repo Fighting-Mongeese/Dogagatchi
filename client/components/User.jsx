@@ -213,7 +213,7 @@ function User(props) {
        }
         </Col>
       </Row>
-      <Row>
+      <Row className='mt-3 mb-5'>
         <Col>
         <Button
             variant='danger'
@@ -237,6 +237,7 @@ function User(props) {
           </Button>
         </Modal.Footer>
       </Modal>
+
     </Container>
   );
 }

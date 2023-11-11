@@ -109,6 +109,7 @@ function User(props) {
             <Card
               style={{ backgroundColor: "#4c5f63" }}
             >
+              <Card.Img src={user.img}></Card.Img>
       <Card.Header
         style={{
           display: "flex",

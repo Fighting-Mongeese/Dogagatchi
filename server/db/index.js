@@ -19,7 +19,8 @@ const userSchema = new mongoose.Schema({
   dogCount: Number, // increments when dogogachi is creates and decrements if dogogachi is deleted
   breeds: [String], // array of image strings that are correctly answered
   achievements: [{name: String, image: String, description: String}],
-  meals: [{name:String, image:String, idMeal:Number, cost:Number, fullTime:String}]
+  meals: [{name:String, image:String, idMeal:Number, cost:Number, fullTime:String}],
+  img: String
 });
 // creates user docs in the db
 const User = mongoose.model('User', userSchema);

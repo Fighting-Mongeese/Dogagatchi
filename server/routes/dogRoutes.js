@@ -67,7 +67,6 @@ router.post('/', (req, res) => {
         })
     })
     .then((updatedUser) => {
-        console.log('user', updatedUser)
         res.status(201).send(updatedUser)
     })
     .catch((err) => {

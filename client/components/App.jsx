@@ -12,8 +12,10 @@ import User from './User.jsx';
 import NavBar from './Navbar.jsx';
 import Restaurant from './Restaurant.jsx';
 import About from './About.jsx';
+
 function App() {
   return (
+    
     <Context>
     <Router>
         <Routes>
@@ -30,6 +32,7 @@ function App() {
         </Routes>
     </Router>
     </Context>
+   
 
     
   );

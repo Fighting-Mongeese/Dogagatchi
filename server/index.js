@@ -89,21 +89,21 @@ app.post('/auth/login', passport.authenticate('local', { failureRedirect: '/fail
 })
 
 app.post('/auth/register', (req, res) => {
-  const { username, password } = req.body
+  const { username, password, img } = req.body
 
 
   if (!username || !password) {
     return res.status(400).json({ message: "Must enter a usernme and password" })
   }
 
-  User.findOne({ username: username })
+  User.findOne({ username })
     .then((user) => {
       if (user) {
         return res.status(400).json({ message: "User already exists" })
       }
       bcrypt.hash(password, 10)
-        .then((pass) => {
-          User.create({ username: username, password: pass, coinCount: 14, questionCount: 0 })
+        .then((password) => {
+          User.create({ username, password, coinCount: 14, questionCount: 0, img })
             .then((user) => {
               return res.status(201).json({ message: 'success', user })
             })

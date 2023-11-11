@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 const WebpackBar = require('webpackbar');
 const path = require('path');
 
@@ -6,6 +7,21 @@ const SRC_DIR = path.resolve(__dirname, 'client');
 const DIST_DIR = path.resolve(__dirname, 'dist');
 
 module.exports = {
+
+  resolve: {
+    fallback: {
+      "fs": false,
+      "os": false,
+      "path": false,
+      "crypto": false
+    }
+  },
+
+  performance: {
+    hints: false,
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000
+},
   entry: {
     app: path.resolve(SRC_DIR, 'index.jsx'),
   },

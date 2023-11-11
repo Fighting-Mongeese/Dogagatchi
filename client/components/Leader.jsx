@@ -1,14 +1,12 @@
 import React from 'react';
-import Table from 'react-bootstrap/Table';
 import axios from 'axios';
 
 function Leader(props) {
   function seeLeader(){
     axios.get(`/searchUser/${props.leader.username}`)
-    .then(( {data} ) => console.log('see user page:', data) )//props.setSearchedUserData(data))
+    .then(( {data} ) => console.log('see user page:', data) )
     .catch((err) =>{
       console.error('search user error (client)', err)
-      //props.setSearchedUserData('not found')
     })
   }
   return (
@@ -32,4 +30,3 @@ function Leader(props) {
   );
 }
 export default Leader;
-//aa602c

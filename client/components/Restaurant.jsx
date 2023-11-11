@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Button, Col, Row, Container } from 'react-bootstrap/';
+import { Col, Row, Container } from 'react-bootstrap/';
 import Meals from '../../server/Categories.js'
 import Meal from './Meal.jsx';
 
 function Restaurant() {
-  //const [meals, setMeals] = useState([])
   const [user, setUser] = useState({});
   const [coins, setCoins] = useState(0);
   const signedInUser = JSON.parse(sessionStorage.user)

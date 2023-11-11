@@ -12,6 +12,7 @@ import User from './User.jsx';
 import NavBar from './Navbar.jsx';
 import Restaurant from './Restaurant.jsx';
 import About from './About.jsx';
+import DeletedUser from './DeletedUser.jsx';
 function App() {
   return (
     <Context>
@@ -27,6 +28,7 @@ function App() {
             <Route path='/about' element={<div><NavBar/><About/></div>}/>
             </Route>
             <Route path='/' element={<Login/>}/>
+            <Route path='deleted' element={<DeletedUser/>}/>
         </Routes>
     </Router>
     </Context>

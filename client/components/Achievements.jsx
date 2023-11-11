@@ -51,21 +51,21 @@ function Achievements(props) { //access props.user to get id for subsequent get 
       axios.put(`/user/achievements/${userArray.data[0]._id}`, {
         name: 'Thrifty',
         image: "https://www.trueachievements.com/imagestore/0007101900/7101902.jpg",
-        description: 'Awarded for obtaining 50 Coins'
+        description: 'Awarded for obtaining 20 Coins'
       })
     }
     if (userArray.data[0].coinCount >= 40 && superSaverCheck === -1) {
           axios.put(`/user/achievements/${userArray.data[0]._id}`, {
             name: 'Super Saver',
             image: 'https://www.trueachievements.com/imagestore/0006900900/6900915.jpg',
-            description: 'Awarded for obtaining 100 Coins'
+            description: 'Awarded for obtaining 40 Coins'
           })
         }
     if (userArray.data[0].coinCount >= 60 && moneyBagsCheck === -1) {
       axios.put(`/user/achievements/${userArray.data[0]._id}`, {
         name: 'Money Bags',
         image: 'https://www.trueachievements.com/imagestore/0006900800/6900859.jpg',
-        description: 'Awarded for obtaining 150 Coins'
+        description: 'Awarded for obtaining 60 Coins'
       })
     }
     if (userArray.data[0].questionCount >= 50 && quizzicalCheck === -1) {

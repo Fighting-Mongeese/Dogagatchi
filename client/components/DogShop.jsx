@@ -3,7 +3,7 @@ import { Button, Form, Image } from "react-bootstrap";
 import axios from "axios";
 
 function DogShop(props) {
-  const { setCoins } = props 
+  const { coins, setCoins } = props 
   const [dogShop, setShop] = useState(false);
   const [breeds, setList] = useState([]);
   const [dogView, setDogView] = useState("");
@@ -31,7 +31,7 @@ function DogShop(props) {
   const handleSubmit = () => {
     if (dogView === "" || dogName === "") {
       alert("Fill all fields");
-    } else if (user.coinCount >= 15) {
+    } else if (coins >= 15) {
       axios
         .post("/dog", {
           name: dogName,

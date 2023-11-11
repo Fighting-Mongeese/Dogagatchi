@@ -211,6 +211,7 @@ function User(props) {
           <Kennel className="user-kennel" 
           dogs={dogs}
           getKennel={getKennel}
+          coins={coins}
           setCoins={setCoins}
           />
         </div>)

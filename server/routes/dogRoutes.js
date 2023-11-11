@@ -115,8 +115,22 @@ router.put('/:dogId', (req, res) => {
 
 // **************** DELETE ROUTES ********************
 
-//DELETE BY DOG ID
 
+// DELETE ALL DOGS BY USER ID
+router.delete('/all/:ownerId', (req, res) => {
+  const { ownerId } = req.params
+  
+  Dog.deleteMany({ owner: ownerId})
+  .then((deleted) => {
+    console.log(deleted)
+    res.sendStatus(200)
+  })
+  .catch((err) => {
+    console.error('deleted all dogs by user ERROR', err)
+  })
+} )
+
+//DELETE BY DOG ID
 router.delete('/:dogId', (req, res) => {
   const { dogId } = req.params;
 

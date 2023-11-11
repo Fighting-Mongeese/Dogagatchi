@@ -60,7 +60,7 @@ passport.use(new LocalStrategy({
 passport.use(new GoogleStrategy({
   clientID: clientId, 
   clientSecret: clientSecret, 
-  callbackURL: 'http://localhost:3001/auth/google/callback'
+  callbackURL: 'http://ec2-13-58-125-52.us-east-2.compute.amazonaws.com/auth/google/callback'
 },
 (accessToken, refreshToken, profile, done) => {
 return done(null, profile)

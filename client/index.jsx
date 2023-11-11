@@ -3,9 +3,7 @@ import { createRoot } from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.min.css'; // imports bootstrap library
 import App from './components/App.jsx';
 import { GoogleOAuthProvider } from '@react-oauth/google';
-//import { GOOGLE_CLIENT_ID } from '../server/config.js';
 
-//const clientId = process.env.GOOGLE_CLIENT_ID
 const container = document.getElementById('app');
 const root = createRoot(container);
 

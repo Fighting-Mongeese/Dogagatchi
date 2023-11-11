@@ -62,6 +62,7 @@ passport.use(new GoogleStrategy({
   clientSecret: clientSecret, 
   callbackURL: 'http://ec2-13-58-125-52.us-east-2.compute.amazonaws.com/auth/google/callback'
 },
+
 (accessToken, refreshToken, profile, done) => {
 return done(null, profile)
 }

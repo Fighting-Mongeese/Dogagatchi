@@ -16,6 +16,7 @@ const Login = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
+        localStorage.setItem('isAuthenticated', JSON.stringify(false))
         if (user) {
             axios
                 .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {

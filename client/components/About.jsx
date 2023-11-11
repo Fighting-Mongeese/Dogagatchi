@@ -142,19 +142,19 @@ const About = () => (
                 alignItems: 'center',
                 justifyContent: 'center',
             }}>
-                <h1 class="display-3">🎲 How to Play</h1>
+                <h1 className="display-3">🎲 How to Play</h1>
                 <h3>Dogagatchi+ features three interdependent game modes</h3>
                 <ul>
                     <li> My Kennel: Be a pack leader! Add dogs to your kennel with the coins earned, and walk, feed and treat them as needed. Find your kennel on your user page.</li>
                     <li> Pooch Picker: Earn coins by correctly identifying the breeds of pictured pups.</li>
                     <li> Bone Appetite Cafe: Spend your loot to treat your canine besties to finest snacks on the internet. </li>
                 </ul>
-                <h1 class="display-3">About the Developers 😎</h1>
+                <h1 className="display-3">About the Developers 😎</h1>
                 <h3>The Fighting Mongeese is a quixotic, quotable quintuple featuring the following players: </h3>
                 <div style={{ width: '100%', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(15em, 100%), 1fr))', }}>
                     {mappedMongeese}
                 </div>
-                <h1 class="display-3">🖥️ Tech Stack</h1>
+                <h1 className="display-3">🖥️ Tech Stack</h1>
                 <h3>Dogagatchi+ was built with the following technologies: </h3>
                 <div style={{ width: '100%', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(12rem, 100%), 1fr))', }}>
                     {mappedTechStack}

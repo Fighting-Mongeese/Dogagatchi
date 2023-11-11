@@ -93,16 +93,16 @@ function User(props) {
             globalRank === 3 ?(
               <div>
                 <h1 id="heady">🥉</h1>
-               <h1 id="heady" className='shimmer'>{user.username}'s kennel</h1>
+               <h1 id="heady" className='shimmer'>{user.username}'s Kennel</h1>
               </div>
                ): globalRank === 2 ?(
                 <div>
                   <h1 id="heady">🥈</h1>
-                 <h1 id="heady" className='shimmer'>{user.username}'s kennel</h1>
+                 <h1 id="heady" className='shimmer'>{user.username}'s Kennel</h1>
                 </div>
                  ): (
                   <div>
-                    <h1>{user.username}'s kennel</h1>
+                    <h1>{user.username}'s Kennel</h1>
                   </div>
                    )
                }

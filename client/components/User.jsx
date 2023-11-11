@@ -82,8 +82,14 @@ function User(props) {
           <div className="user-stats">
 
             {
+              loading ? (<h1></h1>):
 
-              globalRank > 3 ? (<h1>{user.username}'s kennel</h1>) :
+              globalRank === 1 ? (
+                <div>
+                  <h2 id="heady">🥇</h2>
+                 <h2 id="heady" className='shimmer'>{user.username}'s Kennel</h2>
+                </div>
+                 ) :
             globalRank === 3 ?(
               <div>
                 <h1 id="heady">🥉</h1>

@@ -21,6 +21,7 @@ function User(props) {
   const navigate = useNavigate();
 
   const userObj = JSON.parse(sessionStorage.getItem("user"));
+  
   useEffect(() => {
     axios
       .get("/user/leaderboard/smartest")
@@ -86,7 +87,9 @@ function User(props) {
             justifyContent: "center",
           }}
         >
-          <DogShop setCoins={setCoins} />
+          <DogShop 
+          coins={coins}
+          setCoins={setCoins} />
         </Col>
       </Row>
       <Row>

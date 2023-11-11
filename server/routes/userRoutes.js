@@ -47,18 +47,6 @@ router.get('/meals/:userId', (req, res) => {
         .catch((err) => console.error('meals put req server ERROR:', err))
 })
 
-router.get('/search/:username', (req, res) => {
-    const { username } = req.params
-    User.findOne({ username })
-        .then((user) => {
-            user ? res.status(200).send(user) : res.sendStatus(404);
-        })
-        .catch((err) => {
-            console.error('search user (server) error:', err)
-            res.sendStatus(500);
-        })
-})
-
 //GET USER BY USER ID
 
 router.get('/:userId', (req, res) => {
@@ -146,7 +134,19 @@ router.put('/:_id', (req, res) => {
         });
 });
 
+// **************** DELETE ROUTES ********************
 
+// DELETE USER BY USER ID
+router.delete('/:_id', (req, res) => {
+    const { _id } = req.params;
+
+    User.findByIdAndDelete(_id)
+    .then((deletedUser) => res.status(200).send(deletedUser))
+    .catch((err) => {
+        console.error('delete user ERROR server', err)
+        res.sendStatus(500);
+    })
+})
 
 
 module.exports = router

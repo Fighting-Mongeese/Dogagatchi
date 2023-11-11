@@ -1,18 +1,16 @@
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import React, { useState, useEffect } from 'react';
-import { Modal, Card, Image } from 'react-bootstrap'
+import { Card, Image } from 'react-bootstrap'
 
 function Meal(props) {
-  //put request to add meal to user's meal array and subtract coins from user's coinCount
   const { user, meal, setUser, setCoins } = props
-  //const [purchaseStatus, setPurchaseStatus] = useState('true')
   const [purchaseText, setPurchaseText] = useState('')
-
+  
+  //put request to add meal to user's meal array and subtract coins from user's coinCount
   const buyMeal = () => {
     const newCoinCount = user.coinCount - meal.cost
     if (newCoinCount < 0) {
-      //setPurchaseStatus(false)
       setPurchaseText('Sorry! You do not have enough tokens. Head over to Pooch Picker to get more!')
     } else {
       axios.put(`/user/meals/${props.user._id}`, {
@@ -28,7 +26,6 @@ function Meal(props) {
       })
         .then(({ data }) => {
           setUser(data._id)
-          //setPurchaseStatus(true)
           setPurchaseText(`Awesome! You bought your pup some delicious ${meal.name} and now have ${data.coinCount} tokens!`)
           setCoins(data.coinCount)
         })

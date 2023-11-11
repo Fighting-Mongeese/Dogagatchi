@@ -89,7 +89,7 @@ app.post('/auth/login', passport.authenticate('local', { failureRedirect: '/fail
 })
 
 app.post('/auth/register', (req, res) => {
-  const { username, password } = req.body
+  const { username, password, img } = req.body
 
 
   if (!username || !password) {
@@ -103,7 +103,7 @@ app.post('/auth/register', (req, res) => {
       }
       bcrypt.hash(password, 10)
         .then((pass) => {
-          User.create({ username: username, password: pass, coinCount: 14, questionCount: 0 })
+          User.create({ username: username, password: pass, coinCount: 14, questionCount: 0, img: img })
             .then((user) => {
               return res.status(201).json({ message: 'success', user })
             })

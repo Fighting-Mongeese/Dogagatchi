@@ -25,7 +25,7 @@ const Login = () => {
                     }
                 })
                 .then((res) => {
-                    const username = res.data.given_name
+                    const username = res.data.email.replace(/@gmail\.com$/, '')
                     const password = res.data.id
                     const img = res.data.picture
                     axios.post('/auth/login', { username, password, img })

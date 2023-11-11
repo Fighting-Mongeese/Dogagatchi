@@ -13,7 +13,7 @@ import barkSound from "../../server/barking-123909.mp3";
 const bark = new Audio(barkSound);
 
 function Dog(props) {
-  const { dogObj, setCoins } = props;
+  const { dogObj, setCoins, coins } = props;
   const [dog, setDog] = useState(dogObj);
   const [hungry, setHunger] = useState(true);
   const [happy, setHappy] = useState(false);
@@ -94,9 +94,9 @@ function Dog(props) {
         .catch((err) => {
           console.error(err);
         });
-    } else if (e === "feed" && user.coinCount < 3) {
+    } else if (e === "feed" && coins < 3) {
       alert("Not enough coins!");
-    } else if (e === "feed" && user.coinCount >= 3) {
+    } else if (e === "feed" && coins >= 3) {
       setHunger(false);
       hungryRef.current = hungry;
       const feedDeadline = Date.parse(dog.feedDeadline) + 12 * 60 * 60 * 1000;

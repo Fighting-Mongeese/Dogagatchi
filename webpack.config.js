@@ -2,6 +2,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const WebpackBar = require('webpackbar');
 const path = require('path');
+const Dotenv = require('dotenv-webpack')
 
 const SRC_DIR = path.resolve(__dirname, 'client');
 const DIST_DIR = path.resolve(__dirname, 'dist');
@@ -40,7 +41,23 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve(SRC_DIR, 'index.html'),
     }),
+
+    new Dotenv()
   ],
+  
+  resolve: {
+    fallback: {
+      "fs": false,
+      "os": false,
+      "path": false,
+      "crypto": false
+    }
+  },
+  performance: {
+    hints: false,
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000
+},
 
   module: {
     rules: [

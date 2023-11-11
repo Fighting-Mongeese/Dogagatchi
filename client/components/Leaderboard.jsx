@@ -12,16 +12,14 @@ function LeaderBoard(props) {
   
   function getLeaders(type) {
     axios.get(`/user/leaderboard/${type}`)
-      .then(({ data }) => {
+      .then(({ data }) => { // sets leaders to data property from User query obj
         const topTen = data.slice(0,10)
-        setLeaders(topTen); // sets leaders to data property from User query obj
+        setLeaders(topTen); 
       })
       .catch((err) => console.error('getLeaders ERROR (client):', err));
   }
 
   function changeBoard(type){
-    // console.log('board', board)
-    // console.log('type', type)
 
     return new Promise((resolve, reject) => {
       if (type === 'smartest') {
@@ -33,6 +31,7 @@ function LeaderBoard(props) {
       }
     })
   }
+
   // leader board defaults to smartest parents on rendering
   useEffect(() => {
     getLeaders('smartest')

@@ -102,8 +102,7 @@ function User(props) {
                 </div>
                  ): (
                   <div>
-                    <h1 id="heady">🥇</h1>
-                   <h1 id="heady" className='shimmer'>{user.username}'s kennel</h1>
+                    <h1>{user.username}'s kennel</h1>
                   </div>
                    )
                }

@@ -8,6 +8,7 @@ import Pantry from './Pantry.jsx'
 import axios from 'axios'
 
 function User(props) {
+  const [loading, setLoading] = useState(true)
   const [user, setUser] = useState("");
   const [globalRank, setGlobalRank] = useState(0);
   const [dogCount, setDogCount] = useState(0);
@@ -55,6 +56,7 @@ function User(props) {
       .get(`/dog/users/${userObj._id}`)
       .then(({ data }) => {
         setDogs(data.dogsArr);
+        setLoading(false)
       })
       .catch((err) => {
         console.error(err);
@@ -80,6 +82,7 @@ function User(props) {
           <div className="user-stats">
 
             {
+              loading ? (<h1></h1>):
 
               globalRank === 1 ? (
                 <div>
@@ -89,16 +92,20 @@ function User(props) {
                  ) :
             globalRank === 3 ?(
               <div>
-                <h2 id="heady">🥉</h2>
-               <h2 id="heady" className='shimmer'>{user.username}'s Kennel</h2>
+                <h1 id="heady">🥉</h1>
+               <h1 id="heady" className='shimmer'>{user.username}'s kennel</h1>
               </div>
                ): globalRank === 2 ?(
                 <div>
-                  <h2 id="heady">🥈</h2>
-                 <h2 id="heady" className='shimmer'>{user.username}'s Kennel</h2>
+                  <h1 id="heady">🥈</h1>
+                 <h1 id="heady" className='shimmer'>{user.username}'s kennel</h1>
                 </div>
-                 ): 
-                 (<h2>{user.username}'s Kennel</h2>)
+                 ): (
+                  <div>
+                    <h1 id="heady">🥇</h1>
+                   <h1 id="heady" className='shimmer'>{user.username}'s kennel</h1>
+                  </div>
+                   )
                }
             <Card
               style={{ backgroundColor: "#4c5f63" }}
@@ -180,15 +187,15 @@ function User(props) {
 
         <Col xs={8}>
 
-          {
-            dogs.length !== 0 ? (
+          {loading ? (<h1>Fetching...</h1>):
+            dogs.length === 0 ? (<h1>Start playing Pooch Picker to earn dogs to adopt!</h1>) : (
         <div className="dogs">
           <Kennel className="user-kennel" 
           dogs={dogs}
           getKennel={getKennel}
           setCoins={setCoins}
           />
-        </div>): (<h1>Start playing Pooch Picker to earn dogs to adopt!</h1>)
+        </div>) 
        }
         </Col>
       </Row>

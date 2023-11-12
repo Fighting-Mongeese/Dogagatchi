@@ -138,12 +138,15 @@ function User(props) {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center"}}>
-              <Card.Img style={{
+
+                  {user.img ? <Card.Img style={{
                 maxWidth: "200px", 
                 maxHeight: "200px",
                 alignItems: "center",
                 border: 'white 5px solid'
-                }} src={user.img} />
+                }} src={user.img} /> : null
+                }
+              
 
               </Card.Header>
       <Card.Header

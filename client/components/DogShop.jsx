@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Form, Image } from "react-bootstrap";
+import { Button, Form, Image, Dropdown, DropdownButton } from "react-bootstrap";
 import axios from "axios";
 
 function DogShop(props) {
@@ -27,6 +27,11 @@ function DogShop(props) {
         console.error(err);
       });
   };
+
+  const handleSelect = (img) => {
+    console.log('hit', img)
+    setDogView(img)
+  }
 
   const handleSubmit = () => {
     if (dogView === "" || dogName === "") {
@@ -76,8 +81,17 @@ function DogShop(props) {
                 />
               </Form.Group>
               <Form.Group>
-                <Form.Label>Dog</Form.Label>
-                <Form.Select onChange={(e) => setDogView(e.target.value)}>
+                  <Dropdown>
+                    <Dropdown.Toggle style={{width: '300px'}} onSelect={() => {handleSelect(dog)}} variant="succes" id="dropdown-basic">Select Dog</Dropdown.Toggle>
+                    <Dropdown.Menu style={{maxHeight: '300px', overflowY: 'auto'}}>
+                    {breeds.map((dog, index) => (
+                      <Dropdown.Item onClick={() => setDogView(dog)} eventKey={dog} key={index}>
+                        <img src={dog} style={{width: '250px'}}/>
+                      </Dropdown.Item>
+                    ))}
+                    </Dropdown.Menu>
+                  </Dropdown>
+                {/* <Form.Select onChange={(e) => setDogView(e.target.value)}>
                   <option>Choose Dog</option>
                   {breeds.map((dog, index) => {
                     return (
@@ -89,7 +103,7 @@ function DogShop(props) {
                       </option>
                     );
                   })}
-                </Form.Select>
+                </Form.Select> */}
               </Form.Group>
               <Form.Group>
                 <Form.Label>15 coins:</Form.Label>

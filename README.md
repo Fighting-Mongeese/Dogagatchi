@@ -2,11 +2,16 @@
 
 Dogagatchi+ combines trivia, collecting and caretaking game components to create an immersive dog-owning experience.
 
+# Basic Instructions for End User
+
+The first thing you wanna do is answer questions on the Pooch Picker page. Every correct answer earns you one coin, with which you can spend to purchase dogs and buy your dogs treats. You must keep the dogs in your kennel happy and well fed, otherwise they'll run away. Walking your dog does not cost any coins; a treat from le Bone Appétit Cafe will make your dog full and happy. Enjoy.
+
 # Starting the app for local development
 
 Clone the repository down and then...
 
 ### Install dependencies
+
 > npm install
 
 ### Set the database connection string
@@ -15,22 +20,45 @@ Create an untracked .env file in the root of the project. In that file, declare 
 
 > ATLAS_URI=mongodb+srv://database-User:database-Password@database-Cluster>>.mongodb.net/database-Name
 
-(You'll have to set up the connection string for a deployed version a bit differently, and that process is spelled out later in this document.)
+(You'll have to set up the connection string for a deployed version a bit differently, and that process is spelled out later in this document. See the 'Database' section below for details on MongoDB's Atlas service (which is dope).)
 
 ### Compile with webpack
+
 > npm run build-dev
 
 This runs webpack in watch mode.
 
 ### Start express server
+
 > npm run start
 
+# Environment Variables
+
+Environment variables are loaded from the .env file through the config.js file using the dotenv package.
+
+Only three environment variables require assigning to serve/deploy Dogagatchi+:
+1. MongoDB Atlas database connection string (see above and below)
+2. Google Passport Client ID
+3. Google Passport Client Secret
+
+Checkout config.js in the server folder to see the three in action, and define them for your version in the .env file (which is not tracked by git and will therefore not show up when you pull the repo down).
+
+Your .env file should look like this:
+
+ATLAS_URI=<<someConnectionString>>
+GOOGLE_CLIENT_ID=<<someClientId>>
+GOOGLE_CLIENT_SECRET=<<someClientSecret>>
+
+Checkout this link to learn about configuring Passport for Google Authentication: https://developers.google.com/identity/protocols/oauth2. You'll need to set up a project in Google Cloud Platform and configure the Client ID and Secret in the API's & Services section.
+
 # Database
-The app is built to use a database hosted on MongoDB's Atlas service. The uri to connect to the database from the app is stored as an environment variable; the uri is loaded into the database connection method through the server's config.js file. 
+
+The app is built to use a database hosted on MongoDB's Atlas service. The uri to connect to the database from the app is stored as an environment variable; the uri is loaded into the database connection method through the server's config.js file.
 
 MongoDB's Atlas service requires the whitelisting of IP addresses that are allowed access to the database. To add an IP address to the whitelist, go to the project's page on Atlas' site (cloud.mongodb.com), and use the sidebar navigation to go to Network Access, located under the Security tab.  For local development, add your personal IP address to the whitelist. For deployment, add the VM's public IPv4 address once the instance is spun up.
 
 # Deployment
+
 Deploy to an AWS EC2 Ubuntu machine with the following steps:
 
 ### 1. Set up AWS root account
@@ -84,7 +112,6 @@ Double-check versions with the following commands:
   >npm --version  
 
 ### 6. Clone repo, download dependencies, configure db
-
 From the instance's root folder, clone down the app's repo from Github.
 
 > git clone https://github.com/use-Name/repo-Name
@@ -100,7 +127,6 @@ To load the database connection in deployment, run the following command from th
 Check out https://www.mongodb.com/docs/manual/reference/connection-string/#std-label-connections-connection-examples for more.
 
 ### 7. Build the app, start the server, and access
-
 Run the following commands to a build the app for deployment and start the server:
 
 > npm run build
@@ -112,7 +138,6 @@ Make sure you've whitelisted your VM's public IP address in MongoDB Atlas. You c
 
 
 # Updating Source Code & Redeployment
-
 To update the code running on the VM, cd into the project's folder on the VM and run a git pull from the origin.
 
 > git pull your-Origin your-Branch
@@ -129,14 +154,12 @@ Finally, build the app and start the server:
 > npm run start
 
 ### Troubleshooting
-
 Most issues with deployment stem from problems connecting to the MongoDB Atlas database. Please be sure to both:
 
 1) Whitelist any IP addresses in MongoDB Atlas that need access to the hosted database
 2) Set up the connection string as an environment variable, either by including it locally in a .env file or by loading it into the production build by running the 'export' command included above.
 
 ### Contact
-
 Reach out to one of the following with issues.
 
 AJ Bell:  https://github.com/abell10101

@@ -4,7 +4,7 @@ Dogagatchi+ combines trivia, collecting and caretaking game components to create
 
 # Basic Instructions for End User
 
-The first thing you wanna do is answer questions on the Pooch Picker page. Every correct answer earns you one coin, with which you can spend to purchase dogs and buy your dogs treats. You must keep the dogs in your kennel happy and well fed, otherwise they'll run away. Walking your dog does not cost any coins; a treat from le Bone Appétit Cafe will make your dog full and happy. Enjoy.
+The first thing you want to do is answer questions on the Pooch Picker page. Every correct answer earns you one coin, with which you can spend to purchase dogs and buy your dogs treats. You must keep the dogs in your kennel happy and well fed, otherwise they'll run away. Walking your dog does not cost any coins, a treat costs 3 coins, and a meal from le Bone Appétit Cafe will make your dog full and happy. Enjoy.
 
 # Starting the app for local development
 
@@ -162,9 +162,18 @@ Most issues with deployment stem from problems connecting to the MongoDB Atlas d
 ### Contact
 Reach out to one of the following with issues.
 
-AJ Bell:  https://github.com/abell10101
-Geremy Fisher: https://github.com/gfish94
-Evan Perry: https://github.com/evmaperry
-Sydney Andre: https://github.com/saandre0217
+AJ Bell:  https://github.com/abell10101\
+Geremy Fisher: https://github.com/gfish94\
+Evan Perry: https://github.com/evmaperry\
+Sydney Andre: https://github.com/saandre0217\
 James Sheppard: https://github.com/Jshep23prog
 
+### FAQ
+*If my dog runs away, can I get it back?*\
+Nope, make sure to check on your dog at least once a day. A dog will run away if it is not fed or walked in 24h.
+
+*How do I earn the moneybags achievement*\
+You must obtain and hold 60 or more coins.
+
+*How are you getting the photos of the dog breeds?*\
+The [Dog API](https://dog.ceo/dog-api/).

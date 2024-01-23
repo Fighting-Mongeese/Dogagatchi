@@ -58,9 +58,9 @@ passport.use(new LocalStrategy({
 }))
 
 passport.use(new GoogleStrategy({
-  clientID: clientId, 
-  clientSecret: clientSecret, 
-  callbackURL: 'http://ec2-13-58-125-52.us-east-2.compute.amazonaws.com/auth/google/callback'
+  clientID: clientId,
+  clientSecret: clientSecret,
+  callbackURL: 'http://127.0.0.1:4000/auth/google/callback'
 },
 
 (accessToken, refreshToken, profile, done) => {
@@ -142,6 +142,6 @@ app.get('/*', (req, res) => {
 // SERVER CONNECTION
 app.listen(port, () => {
   console.log(`
-  Listening at: http://127.0.0.1:${port}
+  Listening at: http://localhost:${port}
   `);
 });

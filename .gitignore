@@ -128,3 +128,6 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# clientId file in assets, variable for GoogleAuthProvider component in index.jsx
+client/components/assets/clientId.js
